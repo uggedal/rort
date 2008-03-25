@@ -9,6 +9,7 @@ module Roert
     Thin::Logging.silent = true if defined? Thin
 
     require 'roert/controller'
+    require 'roert/persistence'
 
     @app = Halcyon::Runner.new
   end
