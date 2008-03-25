@@ -1,3 +1,0 @@
-port: 5000
-pid_file: halcyon.{port}.pid
-log_file: halcyon.log

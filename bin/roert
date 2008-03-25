@@ -1,9 +1,0 @@
-#!/usr/bin/env ruby
-
-$: << File.expand_path("../../lib", __FILE__)
-
-require 'roert'
-
-$debug = true if ARGV.include? '-d'
-
-Roert.serve
