@@ -2,9 +2,8 @@ require 'halcyon'
 
 module Roert
 
-  def self.serve
-    puts "(Starting in #{Halcyon.root})"
 
+  def self.start
     Halcyon::Runner.load_config Halcyon.root/'config'/'config.yml'
     Thin::Logging.silent = true if defined? Thin
 
