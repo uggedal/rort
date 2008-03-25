@@ -1,5 +1,5 @@
+require 'roert/persistence'
 class Controller < Halcyon::Controller
-  require 'roert/persistence'
   include Roert::Persistence
 
   def greet
