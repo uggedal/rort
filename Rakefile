@@ -1,12 +1,10 @@
-APPLICATION = "#{File.dirname(__FILE__)}"
-BASEDIR = File.expand_path(File.dirname(__FILE__))
-
-%w(rubygems rake).each{|dep|require dep}
+$: << File.expand_path("../lib", __FILE__)
+%w(rubygems rake roert).each{|dep|require dep}
 
 PORT = 8080
 PID = "/tmp/thin.#{PORT}.pid"
 
-#task :default => Rake::Task['start']
+task :default => :start
 
 desc "Start the application"
 task :start do
@@ -16,4 +14,9 @@ end
 desc "Stop the application"
 task :stop do
   `thin stop -P #{PID}`
+end
+
+desc "Migrate database schema"
+task :migrate do
+  DataMapper::Persistence.auto_migrate!
 end

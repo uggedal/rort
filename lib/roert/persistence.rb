@@ -13,5 +13,3 @@ module Roert::Persistence
     property :suffix, :string
   end
 end
-
-DataMapper::Persistence.auto_migrate!
