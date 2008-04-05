@@ -1,7 +1,7 @@
 require 'halcyon'
 
 module Roert
-  require 'roert/controller'
+  require 'roert/server'
   require 'roert/persistence'
 
 
