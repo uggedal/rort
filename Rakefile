@@ -8,7 +8,7 @@ task :default => :start
 
 desc "Start the application"
 task :start do
-  `thin start -r run.ru -d -p #{PORT} -P #{PID}`
+  `thin start -R run.ru -d -p #{PORT} -P #{PID}`
 end
 
 desc "Stop the application"
