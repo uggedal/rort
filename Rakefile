@@ -1,22 +1,18 @@
-$: << File.expand_path("../lib", __FILE__)
-%w(rubygems rake roert).each{|dep|require dep}
-
-PORT = 8080
-PID = "/tmp/thin.#{PORT}.pid"
+NAME = File.basename(Dir.pwd)
+SOCK = "/tmp/thin.#{NAME}.sock"
+PID = "/tmp/thin.#{NAME}.pid"
 
 task :default => :start
 
-desc "Start the application"
+desc "Start #{NAME}"
 task :start do
-  `thin start -R run.ru -d -p #{PORT} -P #{PID}`
+  `thin start -R run.ru -d -S #{SOCK} -P #{PID}`
 end
 
-desc "Stop the application"
+desc "Stop #{NAME}"
 task :stop do
   `thin stop -P #{PID}`
 end
 
-desc "Migrate database schema"
-task :migrate do
-  DataMapper::Persistence.auto_migrate!
-end
+desc "Restart #{NAME}"
+task :restart => [:stop, :start]
