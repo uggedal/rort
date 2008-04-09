@@ -3,4 +3,6 @@ $: << File.expand_path("../lib", __FILE__)
 
 require 'roert'
 
-run Roert.start
+Halcyon::Runner.load_config Halcyon.root/'config'/'config.yml'
+
+run Halcyon::Runner.new
