@@ -1,18 +1,14 @@
 require File.join(File.dirname(__FILE__), '..', 'spec_helper')
 
-include Roert::Fetch
+include Roert
 
 describe Roert::Fetch, 'artist' do
 
-  before(:all) do
-    @artist = artist('uggedal')
-  end
-
   it 'should provide the artists name' do
-    @artist[:name].should == 'Eivind Uggedal'
+    Fetch::Artist['uggedal'].name.should == 'Eivind Uggedal'
   end
 
   it 'should provide the artists favorites' do
-    @artist[:favorites].size.should == 2
+    Fetch::Artist['uggedal'].favorites.size.should == 2
   end
 end
