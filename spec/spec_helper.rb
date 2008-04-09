@@ -5,17 +5,13 @@ require 'halcyon'
 require 'roert'
 require 'rack/mock'
 
-$config = {:allow_from => :all,
-           :logger => nil,
-           :log_level => 'debug'}
-
 Spec::Runner.configure do |config|
   config.before(:all) do
     @log = ''
     @logger = Logger.new(StringIO.new(@log))
-    @config = $config.dup
-    @config[:logger] = @logger
-    Halcyon.config = @config
+    Halcyon::Runner.load_config Halcyon.root/'config'/'config.yml'
+    Halcyon.config[:logger] = @logger
+    Halcyon.config[:log_level] = 'debug'
     @app = Halcyon::Runner.new
   end
 end
