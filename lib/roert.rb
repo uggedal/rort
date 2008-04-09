@@ -3,6 +3,7 @@ require 'halcyon'
 module Roert
   require 'roert/controllers'
   require 'roert/persistence'
+  require 'roert/fetch'
 
 
   def self.start
