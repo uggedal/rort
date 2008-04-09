@@ -1,5 +1,5 @@
 require 'roert/persistence'
-class Server < Halcyon::Controller
+class Test < Halcyon::Controller
   include Roert::Persistence
 
   def greet
