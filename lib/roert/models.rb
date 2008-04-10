@@ -6,10 +6,4 @@ DataMapper::Database.setup({
 })
 
 module Roert::Models
-
-  class Sentence < DataMapper::Base
-    property :interjection, :string
-    property :noun, :string
-    property :suffix, :string
-  end
 end
