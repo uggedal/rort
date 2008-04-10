@@ -4,7 +4,7 @@ module Roert::Fetch
   class Fetchable
 
     def initialize(*args)
-      yield if block_given?
+      yield self if block_given?
     end
 
     class << self
@@ -22,10 +22,10 @@ module Roert::Fetch
   class Artist < Fetchable
 
     def initialize(slug)
-      @doc = fetch "Artist/#{slug}"
       @slug = slug
+      @doc = fetch "Artist/#@slug"
 
-      
+      super
     end
 
     def name

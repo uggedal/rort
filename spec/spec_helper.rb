@@ -16,3 +16,11 @@ Spec::Runner.configure do |config|
   end
 end
 
+
+def should_not_use_http_request
+  before = Time.now.to_f
+  yield
+  after = Time.now.to_f
+
+  (after - before).should < 0.05
+end
