@@ -31,7 +31,7 @@ describe Roert::Fetch::Artist do
     end
   end
 
-  it 'should only fetch the main document once within a block' do
+  it 'should only fetch the main document once for one object' do
     Fetch::Artist.as('uggedal') do |a|
       should_not_use_http_request do
         a.name.should == 'Eivind Uggedal'
