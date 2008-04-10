@@ -1,6 +1,8 @@
 require 'halcyon'
 
 module Roert
+  VERSION = %w(0 0 1).join('.').freeze
+
   require 'roert/controllers'
   require 'roert/models'
   require 'roert/fetch'
