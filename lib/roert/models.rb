@@ -5,7 +5,7 @@ DataMapper::Database.setup({
   :database => 'roert.db'
 })
 
-module Roert::Persistence
+module Roert::Models
 
   class Sentence < DataMapper::Base
     property :interjection, :string

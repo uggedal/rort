@@ -1,11 +1,13 @@
-require 'roert/persistence'
-include Roert
+require 'roert/models'
+include Roert::Models
 
-class Test < Halcyon::Controller
+class Application < Halcyon::Controller; end
+
+class Test < Application
 
   def greet
     msg = {:interjection => 'hello', :noun => 'world', :suffix => '!'}
-    obj = Persistence::Sentence.new(msg)
+    obj = Sentence.new(msg)
     obj.save
     ok(obj)
   end

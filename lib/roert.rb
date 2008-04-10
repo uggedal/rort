@@ -2,7 +2,7 @@ require 'halcyon'
 
 module Roert
   require 'roert/controllers'
-  require 'roert/persistence'
+  require 'roert/models'
   require 'roert/fetch'
 
 
