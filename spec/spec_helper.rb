@@ -16,6 +16,10 @@ Spec::Runner.configure do |config|
   end
 end
 
+def url(name, params={})
+  controller = Application.new(Rack::MockRequest.env_for("/"))
+  controller.url(name, params)
+end
 
 def should_not_use_http_request
   before = Time.now.to_f
