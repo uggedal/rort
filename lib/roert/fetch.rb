@@ -33,7 +33,8 @@ module Roert::Fetch
     end
 
     def name
-      @doc.at("h2#ctl00_ContentCPH_Menu1_title").inner_html
+      @doc.at("h2#ctl00_ContentCPH_Menu1_title").
+        inner_text.scan(/^([\w ]+)/).first.first
     end
 
     def favorites

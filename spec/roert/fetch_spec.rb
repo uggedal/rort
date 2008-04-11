@@ -19,6 +19,7 @@ describe Roert::Fetch::Artist do
 
   it 'should provide the artists name' do
     Fetch::Artist.as('uggedal').name.should == 'Eivind Uggedal'
+    Fetch::Artist.as('YTO').name.should == 'YTO'
   end
 
   it 'should provide the artists favorites' do
