@@ -1,6 +1,10 @@
 module Roert::Fetch
   %w(hpricot open-uri).each { |lib| require lib }
 
+  # Increase the buffer because of unpredictable ASP.NET viewstates.
+  # Should possibly patch Hpricot to handle arbitrarily sized elements.
+  Hpricot.buffer_size = 262144
+
   class Fetchable
 
     def initialize(*args)
