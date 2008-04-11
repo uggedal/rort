@@ -11,6 +11,14 @@ module Roert::Fetch
       yield self if block_given?
     end
 
+    def doc?
+      true
+    end
+
+    def existing?
+      @doc && doc?
+    end
+
     class << self
       alias :as :new
     end
@@ -19,7 +27,20 @@ module Roert::Fetch
       URL = 'http://www11.nrk.no/urort/'
 
       def fetch(path)
-        Hpricot(open("#{URL}#{path}"))
+        if res = request("#{URL}#{path}")
+          Hpricot(res)
+        else
+          nil
+        end
+      end
+
+    private
+      def request(uri)
+        begin
+          open(uri)
+        rescue OpenURI::HTTPError => e
+          nil
+        end
       end
   end
 
@@ -30,6 +51,14 @@ module Roert::Fetch
       @doc = fetch "Artist/#@slug"
 
       super
+    end
+
+    def doc?
+      if h1 = @doc.at("h1")
+        h1.inner_text =~ /^Fant ikke personen \/ artisten$/
+      else
+        true
+      end
     end
 
     def name

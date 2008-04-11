@@ -13,6 +13,23 @@ describe Roert::Fetch::Fetchable do
       f.class.should == Fetch::Fetchable
     end
   end
+
+  it 'should not be initlialized on erroneousness requests' do
+    Fetch::Artist.as('MrUnknownAndUnfound') do |a|
+      a.instance_eval("@doc = fetch('http://nonexistant.none')")
+      a.instance_eval('@doc').should be_nil
+    end.should_not be_existing
+  end
+
+  it 'should be existing if it has a valid doc' do
+    Fetch::Artist.as('uggedal').should be_existing
+  end
+
+  it 'should not be existing if it has an invalid doc' do
+    Fetch::Artist.as('uggedal') do |a|
+      a.instance_eval('@doc = nil')
+    end.should_not be_existing
+  end
 end
 
 describe Roert::Fetch::Artist do
@@ -41,5 +58,9 @@ describe Roert::Fetch::Artist do
         a.favorites.size.should == 2
       end
     end
+  end
+
+  it 'should not be existing if the artist is not found' do
+    Fetch::Artist.as('MrUnknownAndUnfound').should_not be_existing
   end
 end
