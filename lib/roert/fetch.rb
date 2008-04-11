@@ -63,16 +63,20 @@ module Roert::Fetch
 
     def name
       @doc.at("h2#ctl00_ContentCPH_Menu1_title").
-        inner_text.scan(/^([\w ]+)/).first.first
+        inner_text.scan(/^([\w -]+)/).first.first
     end
 
     def favorites
-      favorites = @doc.at("h2[text()*='Favoritter p']").
+      @doc.at("h2[text()*='Favoritter p']").
         next_sibling.next_sibling.
         search("a[@href^='../../Artist']").collect do |e|
-          e[:href].scan(/\/Artist\/(\w+)$/).first
+          fav = e[:href].scan(/\/Artist\/(\w+)$/).first
+          if fav && fav.instance_of?(Array)
+            fav.first 
+          else
+            fav
+          end
       end
-      favorites
     end
   end
 end
