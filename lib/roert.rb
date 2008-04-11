@@ -9,7 +9,7 @@ module Roert
 
 
   def self.start
-    Halcyon::Runner.load_config Halcyon.root/'config'/'config.yml'
+    Halcyon::Runner.load_config
     Thin::Logging.silent = true if defined? Thin
 
     @app = Halcyon::Runner.new
