@@ -67,10 +67,13 @@ module Roert::Fetch
     end
 
     def favorites
-      @doc.at("h2[text()*='Favoritter p']").
-        next_sibling.next_sibling.
-        search("a[@href^='../../Artist']").collect do |e|
-          e[:href].scan(/\/Artist\/(\w+)$/).first.first
+
+      favs_el = @doc.at("h2[text()*='Favoritter p']").
+        next_sibling.next_sibling
+
+      favs_el.search("a[@href^='../../Artist']").collect do |e|
+        { :slug => e[:href].scan(/\/Artist\/(\w+)$/).first.first,
+          :name => e.at("img.Thumb")[:title] }
       end
     end
   end

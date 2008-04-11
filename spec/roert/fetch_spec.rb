@@ -34,13 +34,18 @@ end
 
 describe Roert::Fetch::Artist do
 
-  it 'should provide the artists name' do
+  it 'should provide the name of the artist' do
     Fetch::Artist.as('TheMegaphonicThrift').
       name.should == 'The Megaphonic Thrift'
   end
 
-  it 'should provide the artists favorites' do
-    Fetch::Artist.as('uggedal').favorites.size.should == 2
+  it 'should provide the favorites of the artist' do
+    res = Fetch::Artist.as('uggedal').favorites
+    res.size.should == 2
+    res.each do |fav|
+      fav.should be_include(:slug)
+      fav.should be_include(:name)
+    end
   end
 
   it 'should provide access by block' do

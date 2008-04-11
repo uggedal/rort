@@ -37,7 +37,7 @@ module Roert::Models
     def external_favorites
       if external
         associated_favorites << external.favorites.collect do |fav|
-          self.class.find_or_fetch(fav)
+          self.class.find_or_create({:slug => fav[:slug]}, fav)
         end
       end
     end
@@ -47,8 +47,9 @@ module Roert::Models
         existing
       else
         if fetched = Roert::Fetch::Artist.as(slug)
-          new = Artist.create(:slug => slug)
+          new = Artist.new(:slug => slug)
           new.external = fetched
+          new.save
           new
         else
           nil

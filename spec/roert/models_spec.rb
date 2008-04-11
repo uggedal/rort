@@ -6,7 +6,7 @@ describe Artist do
 
   before(:each) do
     DataMapper::Persistence.auto_migrate!
-    @artist = Artist.create(:slug => 'uggedal')
+    @artist = Artist.find_or_fetch('uggedal')
   end
 
   it 'should be createable' do
@@ -27,15 +27,7 @@ describe Artist do
   end
 
   it 'could have and belong to many favorites' do
-    a = Artist.create(:slug => 'artist_a')
-    b = Artist.create(:slug => 'artist_b')
-    c = Artist.create(:slug => 'artist_c')
-
-    @artist.update_attributes(:favorites => [a, b, c])
-    @artist.favorites.last.should == c
-
-    a.favorites << @artist
-    a.favorites.first.should == @artist
+    @artist.favorites.last.name.should == '-The Fernets-'
   end
 
   it 'should be serializable' do
@@ -64,9 +56,18 @@ describe Artist do
     @artist.name.should == 'Eivind Uggedal'
   end
 
-  it 'should be able to fetch the artists of an initialized artist' do
+  it 'should be able to fetch the favorites of an initialized artist' do
     @artist.favorites.each do |fav|
       fav.should be_instance_of(Artist)
+    end
+  end
+
+  it 'should be able to fetch the names of favorites on initialization' do
+    @artist.favorites.size.should == 2
+    should_not_use_http_request do
+      @artist.favorites.each do |fav|
+        fav.name.should_not be_nil
+      end
     end
   end
 end
