@@ -4,13 +4,13 @@ include Roert
 
 describe Roert::Fetch::Fetchable do
 
-  it 'should provide initialization with *as*' do
-    Fetch::Fetchable.new.class.should == Fetch::Fetchable.as.class
+  it 'should be initializated with *as* if existing' do
+    Fetch::Artist.as('uggedal').should be_kind_of(Fetch::Fetchable)
   end
 
   it 'should provide access by block' do
-    Fetch::Fetchable.new do |f|
-      f.class.should == Fetch::Fetchable
+    Fetch::Artist.as('uggedal') do |f|
+      f.should be_kind_of(Fetch::Fetchable)
     end
   end
 
@@ -18,7 +18,7 @@ describe Roert::Fetch::Fetchable do
     Fetch::Artist.as('MrUnknownAndUnfound') do |a|
       a.instance_eval("@doc = fetch('http://nonexistant.none')")
       a.instance_eval('@doc').should be_nil
-    end.should_not be_existing
+    end.should be_nil
   end
 
   it 'should be existing if it has a valid doc' do
@@ -60,7 +60,7 @@ describe Roert::Fetch::Artist do
     end
   end
 
-  it 'should not be existing if the artist is not found' do
-    Fetch::Artist.as('MrUnknownAndUnfound').should_not be_existing
+  it 'should not be initialized if the artist is not found' do
+    Fetch::Artist.as('MrUnknownAndUnfound').should be_nil
   end
 end

@@ -15,7 +15,7 @@ describe Artist do
   end
 
   it 'should be updateable' do
-    @artist.name = 'Eivind Uggedal'
+    @artist.slug = 'eivind'
     @artist.should be_dirty
     @artist.save
     @artist.should_not be_dirty
@@ -52,11 +52,16 @@ describe Artist do
     fetched.should_not be_new_record
   end
 
-  it'should should return nil for fetching an nonexistent artist' do
+  it 'should should return nil for fetching an nonexistent artist' do
     Artist.find_or_fetch('SomeCrazyNonExistentArtist').should be_nil
   end
 
+  it 'should provide access to external fetched data about itself' do
+    @artist.external.name.should == 'Eivind Uggedal'
+  end
+
   it'should be able to fetch the name of an initialized artist' do
+    @artist.name.should == 'Eivind Uggedal'
   end
 
 end

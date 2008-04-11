@@ -11,6 +11,16 @@ module Roert::Models
     property :slug, :string
     property :name, :string
 
+    attr_writer :external
+
+    def external
+      @external ||= Roert::Fetch::Artist.as(slug)
+    end
+
+    def name
+      @name ||= external.name if external
+    end
+
     has_and_belongs_to_many :favorites,
       :join_table => 'favorites',
       :left_foreign_key => 'parent_id',
@@ -21,9 +31,10 @@ module Roert::Models
       if existing = Artist.first(:slug => slug)
         existing
       else
-        fetched = Roert::Fetch::Artist.as(slug)
-        if fetched.existing?
-          Artist.create(:slug => slug)
+        if fetched = Roert::Fetch::Artist.as(slug)
+          new = Artist.create(:slug => slug)
+          new.external = fetched
+          new
         else
           nil
         end

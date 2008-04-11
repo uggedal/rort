@@ -7,10 +7,6 @@ module Roert::Fetch
 
   class Fetchable
 
-    def initialize(*args)
-      yield self if block_given?
-    end
-
     def doc?
       true
     end
@@ -19,8 +15,14 @@ module Roert::Fetch
       @doc && doc?
     end
 
-    class << self
-      alias :as :new
+    def self.as(*args)
+      item = new(*args)
+      if item && item.existing?
+        yield item if block_given?
+        item
+      else
+        nil
+      end
     end
 
     protected
@@ -49,8 +51,6 @@ module Roert::Fetch
     def initialize(slug)
       @slug = slug
       @doc = fetch "Artist/#@slug"
-
-      super
     end
 
     def doc?
