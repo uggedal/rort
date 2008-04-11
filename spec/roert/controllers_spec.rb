@@ -25,3 +25,11 @@ describe 'controllers in general' do
     JSON.parse(res.body)['body'].should == hash
   end
 end
+
+describe Artists, 'controller' do
+
+  it 'should show a given artist' do
+    res = Rack::MockRequest.new(@app).get('/artists/show/YTO')
+    JSON.parse(res.body)['body'].should be_has_key('name')
+  end
+end
