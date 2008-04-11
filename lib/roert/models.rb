@@ -16,5 +16,18 @@ module Roert::Models
       :left_foreign_key => 'parent_id',
       :right_foreign_key => 'child_id',
       :class => 'Artist'
+
+    def self.find_or_fetch(slug)
+      if existing = Artist.first(:slug => slug)
+        existing
+      else
+        fetched = Roert::Fetch::Artist.as(slug)
+        if fetched.existing?
+          Artist.create(:slug => slug)
+        else
+          nil
+        end
+      end
+    end
   end
 end

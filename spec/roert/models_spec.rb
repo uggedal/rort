@@ -43,4 +43,20 @@ describe Artist do
     JSON.parse(@artist.to_json) == hash
   end
 
+  it 'should find an existing artist' do
+    Artist.find_or_fetch('uggedal').should == @artist
+  end
+
+  it 'should fetch an unfound artist' do
+    fetched = Artist.find_or_fetch('YTO')
+    fetched.should_not be_new_record
+  end
+
+  it'should should return nil for fetching an nonexistent artist' do
+    Artist.find_or_fetch('SomeCrazyNonExistentArtist').should be_nil
+  end
+
+  it'should be able to fetch the name of an initialized artist' do
+  end
+
 end
