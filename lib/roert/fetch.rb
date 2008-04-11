@@ -70,12 +70,7 @@ module Roert::Fetch
       @doc.at("h2[text()*='Favoritter p']").
         next_sibling.next_sibling.
         search("a[@href^='../../Artist']").collect do |e|
-          fav = e[:href].scan(/\/Artist\/(\w+)$/).first
-          if fav && fav.instance_of?(Array)
-            fav.first 
-          else
-            fav
-          end
+          e[:href].scan(/\/Artist\/(\w+)$/).first.first
       end
     end
   end
