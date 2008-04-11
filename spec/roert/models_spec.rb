@@ -22,7 +22,7 @@ describe Artist do
   end
 
   it 'should be findable' do
-    found = Artist.first(:slug => 'uggedal')
+    found = Artist.first('uggedal')
     @artist.should == found
   end
 
@@ -32,7 +32,7 @@ describe Artist do
     c = Artist.create(:slug => 'artist_c')
 
     @artist.update_attributes(:favorites => [a, b, c])
-    @artist.favorites.first.should == a
+    @artist.favorites.last.should == c
 
     a.favorites << @artist
     a.favorites.first.should == @artist

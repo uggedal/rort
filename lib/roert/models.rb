@@ -8,7 +8,7 @@ DataMapper::Database.setup({
 module Roert::Models
 
   class Artist < DataMapper::Base
-    property :slug, :string
+    property :slug, :string, :key => true
     property :name, :string
 
     has_and_belongs_to_many :favorites,
@@ -43,7 +43,7 @@ module Roert::Models
     end
 
     def self.find_or_fetch(slug)
-      if existing = Artist.first(:slug => slug)
+      if existing = Artist.first(slug)
         existing
       else
         if fetched = Roert::Fetch::Artist.as(slug)
