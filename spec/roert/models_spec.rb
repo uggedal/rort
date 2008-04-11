@@ -60,8 +60,13 @@ describe Artist do
     @artist.external.name.should == 'Eivind Uggedal'
   end
 
-  it'should be able to fetch the name of an initialized artist' do
+  it 'should be able to fetch the name of an initialized artist' do
     @artist.name.should == 'Eivind Uggedal'
   end
 
+  it 'should be able to fetch the artists of an initialized artist' do
+    @artist.favorites.each do |fav|
+      fav.should be_instance_of(Artist)
+    end
+  end
 end
