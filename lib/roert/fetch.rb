@@ -1,5 +1,8 @@
 module Roert::Fetch
-  %w(hpricot open-uri).each { |lib| require lib }
+  %w(hpricot openuri_memcached).each { |lib| require lib }
+
+  OpenURI::Cache.enable!
+  OpenURI::Cache.expiry = 60 * 60
 
   # Increase the buffer because of unpredictable ASP.NET viewstates.
   # Should possibly patch Hpricot to handle arbitrarily sized elements.
