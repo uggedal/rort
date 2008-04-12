@@ -9,7 +9,7 @@ module Rort::Models
 
   class Artist < DataMapper::Base
     property :slug, :string, :key => true
-    property :name, :string
+    property :name, :string, :lazy => true
 
     has_and_belongs_to_many :favorites,
       :join_table => 'favorites',
