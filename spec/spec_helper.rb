@@ -5,6 +5,8 @@ require 'halcyon'
 require 'rort'
 require 'rack/mock'
 
+$http_requests = 0
+
 Spec::Runner.configure do |config|
   config.before(:all) do
     @log = ''
@@ -13,6 +15,13 @@ Spec::Runner.configure do |config|
     Halcyon.config[:logger] = @logger
     Halcyon.config[:log_level] = 'debug'
     @app = Halcyon::Runner.new
+  end
+
+  config.after(:all) do
+    if $http_requests
+      puts "\nHTTP Requests: #$http_requests\n"
+      $http_requests = 0
+    end
   end
 end
 

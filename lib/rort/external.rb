@@ -42,6 +42,7 @@ module Rort::External
     private
       def request(uri)
         begin
+          $http_requests += 1 if $http_requests # debug counter
           open(uri)
         rescue OpenURI::HTTPError => e
           nil
