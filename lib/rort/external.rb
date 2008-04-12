@@ -69,31 +69,25 @@ module Rort::External
         inner_text.strip.scan(/^NRK Ur\303\270rt - (.+)/).first.first
     end
 
-    def favorites
+    def thumb_elements(header, path, klass)
+      elements = @doc.at("h2[text()='#{header}']")
 
-      favs_el = @doc.at("h2[text()='Favoritter p\303\245 Ur\303\270rt']")
+      return [] unless elements
 
-      return [] unless favs_el
+      elements = elements.next_sibling.next_sibling
 
-      favs_el = favs_el.next_sibling.next_sibling
-
-      favs_el.search("a[@href^='../../Artist']").collect do |e|
-        { :slug => e[:href].scan(/\/Artist\/(\w+)$/).first.first,
-          :name => e.at("img.Thumb")[:title] }
+      elements.search("a[@href^='../../#{path}']").collect do |e|
+        { :slug => e[:href].scan(/\/#{path}\/(\w+)$/).first.first,
+          :name => e.at("img.#{klass}")[:title] }
       end
     end
 
+    def favorites
+      thumb_elements("Favoritter p\303\245 Ur\303\270rt", 'Artist', 'Thumb')
+    end
+
     def fans
-      fans_el = @doc.at("h2[text()='Fans']")
-
-      return [] unless fans_el
-
-      fans_el = fans_el.next_sibling.next_sibling
-
-      fans_el.search("a[@href^='../../Person']").collect do |e|
-        { :slug => e[:href].scan(/\/Person\/(\w+)$/).first.first,
-          :name => e.at("img.MiniThumb")[:title] }
-      end
+      thumb_elements('Fans', 'Person', 'MiniThumb')
     end
   end
 end
