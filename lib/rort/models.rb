@@ -47,6 +47,15 @@ module Rort::Models
       associated_fans
     end
 
+    def friends
+      friends = []
+      favorites.each do |fav|
+        friends.concat(fav.fans.to_a)
+      end
+      friends
+
+    end
+
     def self.find_or_fetch(slug)
       if existing = Artist.first(slug)
         existing

@@ -82,4 +82,8 @@ describe Artist do
       fan.name.should_not be_nil
     end
   end
+
+  it 'could have several friends' do
+    @artist.friends.size.should > 250
+  end
 end
