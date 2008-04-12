@@ -40,27 +40,11 @@ module Rort::Models
       associated_favorites
     end
 
-    def external_favorites
-      if external
-        associated_favorites << external.favorites.collect do |fav|
-          self.class.find_or_create({:slug => fav[:slug]}, fav)
-        end
-      end
-    end
-
     alias :associated_fans :fans
 
     def fans
       external_fans unless @fans && @fans.size > 0
       associated_fans
-    end
-
-    def external_fans
-      if external
-        associated_fans << external.fans.collect do |fan|
-          self.class.find_or_create({:slug => fan[:slug]}, fan)
-        end
-      end
     end
 
     def self.find_or_fetch(slug)
@@ -77,5 +61,23 @@ module Rort::Models
         end
       end
     end
+    
+    private
+
+      def external_favorites
+        if external
+          associated_favorites << external.favorites.collect do |fav|
+            self.class.find_or_create({:slug => fav[:slug]}, fav)
+          end
+        end
+      end
+
+      def external_fans
+        if external
+          associated_fans << external.fans.collect do |fan|
+            self.class.find_or_create({:slug => fan[:slug]}, fan)
+          end
+        end
+      end
   end
 end
