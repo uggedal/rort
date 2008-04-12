@@ -65,8 +65,8 @@ module Rort::External
     end
 
     def name
-      @doc.at("h2#ctl00_ContentCPH_Menu1_title").
-        inner_text.scan(/^([\w -]+)/).first.first
+      @doc.at("head > title").
+        inner_text.strip.scan(/^NRK Ur\303\270rt - (.+)/).first.first
     end
 
     def favorites

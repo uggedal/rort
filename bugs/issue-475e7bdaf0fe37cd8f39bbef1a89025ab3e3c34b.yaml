@@ -3,10 +3,10 @@ title: Retrieve the artist name from title instead of h2
 desc: ""
 type: :bugfix
 component: server
-release: 
+release: 0.1.0
 reporter: Eivind Uggedal <eu@redflavor.com>
-status: :unstarted
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2008-04-12 10:42:11.395336 Z
 references: []
 
@@ -15,4 +15,12 @@ log_events:
 - - 2008-04-12 10:42:14.483329 Z
   - Eivind Uggedal <eu@redflavor.com>
   - created
+  - ""
+- - 2008-04-12 12:25:25.840173 Z
+  - Eivind Uggedal <eu@redflavor.com>
+  - closed issue with disposition fixed
+  - ""
+- - 2008-04-12 12:25:38.272180 Z
+  - Eivind Uggedal <eu@redflavor.com>
+  - assigned to release 0.1.0 from unassigned
   - ""
