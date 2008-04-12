@@ -34,20 +34,6 @@ end
 
 describe Rort::External::Artist do
 
-  it 'should provide the name of the artist' do
-    External::Artist.as('TheMegaphonicThrift').
-      name.should == 'The Megaphonic Thrift'
-  end
-
-  it 'should provide the favorites of the artist' do
-    res = External::Artist.as('uggedal').favorites
-    res.size.should == 2
-    res.each do |fav|
-      fav.should be_include(:slug)
-      fav.should be_include(:name)
-    end
-  end
-
   it 'should provide access by block' do
     External::Artist.as('uggedal') do |a|
       a.name.should == 'Eivind Uggedal'
@@ -65,5 +51,19 @@ describe Rort::External::Artist do
 
   it 'should not be initialized if the artist is not found' do
     External::Artist.as('MrUnknownAndUnfound').should be_nil
+  end
+
+  it 'should provide the name of the artist' do
+    External::Artist.as('TheMegaphonicThrift').
+      name.should == 'The Megaphonic Thrift'
+  end
+
+  it 'should provide the favorites of the artist' do
+    res = External::Artist.as('uggedal').favorites
+    res.size.should == 2
+    res.each do |fav|
+      fav.should be_include(:slug)
+      fav.should be_include(:name)
+    end
   end
 end
