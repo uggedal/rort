@@ -3,7 +3,7 @@ title: Throw error on open in without_http_req block
 desc: Make without_http_request monkey patch open-uri::open() temporarily to throw an error.
 type: :bugfix
 component: server
-release: 
+release: 0.1.0
 reporter: Eivind Uggedal <eu@redflavor.com>
 status: :closed
 disposition: :fixed
@@ -23,3 +23,7 @@ log_events:
     Now raises an exception when open is called within the block.
     When this happens the current example is set to pending, and
     the following examples using open will fail.
+- - 2008-04-12 12:09:14.447275 Z
+  - Eivind Uggedal <eu@redflavor.com>
+  - assigned to release 0.1.0 from unassigned
+  - ""
