@@ -79,5 +79,14 @@ module Rort::External
           :name => e.at("img.Thumb")[:title] }
       end
     end
+
+    def fans
+      fans_el = @doc.at("h2[text()='Fans']").next_sibling.next_sibling
+
+      fans_el.search("a[@href^='../../Person']").collect do |e|
+        { :slug => e[:href].scan(/\/Person\/(\w+)$/).first.first,
+          :name => e.at("img.MiniThumb")[:title] }
+      end
+    end
   end
 end

@@ -66,4 +66,13 @@ describe Rort::External::Artist do
       fav.should be_include(:name)
     end
   end
+
+  it 'should provide the fans of the artist' do
+    res = External::Artist.as('TheFernets').fans
+    res.size.should > 150
+    res.each do |fan|
+      fan.should be_include(:slug)
+      fan.should be_include(:name)
+    end
+  end
 end
