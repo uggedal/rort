@@ -42,7 +42,10 @@ module Rort::External
     private
       def request(uri)
         begin
-          $http_requests += 1 if $http_requests # debug counter
+          if $HTTP_DEBUG
+            $http_requests += 1
+            puts "Fetch: #{uri}"
+          end
           open(uri)
         rescue OpenURI::HTTPError => e
           nil

@@ -5,6 +5,7 @@ require 'halcyon'
 require 'rort'
 require 'rack/mock'
 
+$HTTP_DEBUG = true
 $http_requests = 0
 
 Spec::Runner.configure do |config|
@@ -18,7 +19,7 @@ Spec::Runner.configure do |config|
   end
 
   config.after(:all) do
-    if $http_requests
+    if $HTTP_DEBUG
       puts "\nHTTP Requests: #$http_requests\n"
       $http_requests = 0
     end
