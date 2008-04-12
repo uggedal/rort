@@ -71,7 +71,7 @@ module Rort::External
 
     def favorites
 
-      favs_el = @doc.at("h2[text()*='Favoritter p\303\245 Ur\303\270rt']").
+      favs_el = @doc.at("h2[text()='Favoritter p\303\245 Ur\303\270rt']").
         next_sibling.next_sibling
 
       favs_el.search("a[@href^='../../Artist']").collect do |e|
