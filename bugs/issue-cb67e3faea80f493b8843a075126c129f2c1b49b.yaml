@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Rename Fetch to External
+desc: ""
+type: :bugfix
+component: server
+release: 
+reporter: Eivind Uggedal <eu@redflavor.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-04-12 10:38:09.423015 Z
+references: []
+
+id: cb67e3faea80f493b8843a075126c129f2c1b49b
+log_events: 
+- - 2008-04-12 10:38:11.631211 Z
+  - Eivind Uggedal <eu@redflavor.com>
+  - created
+  - ""

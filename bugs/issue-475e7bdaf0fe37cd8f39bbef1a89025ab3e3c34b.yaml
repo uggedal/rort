@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Retrieve the artist name from title instead of h2
+desc: ""
+type: :bugfix
+component: server
+release: 
+reporter: Eivind Uggedal <eu@redflavor.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-04-12 10:42:11.395336 Z
+references: []
+
+id: 475e7bdaf0fe37cd8f39bbef1a89025ab3e3c34b
+log_events: 
+- - 2008-04-12 10:42:14.483329 Z
+  - Eivind Uggedal <eu@redflavor.com>
+  - created
+  - ""

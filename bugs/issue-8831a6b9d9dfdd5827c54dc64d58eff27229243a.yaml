@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Throw error on open in without_http_req block
+desc: Make without_http_request monkey patch open-uri::open() temporarily to throw an error.
+type: :bugfix
+component: server
+release: 
+reporter: Eivind Uggedal <eu@redflavor.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-04-12 10:34:41.052036 Z
+references: []
+
+id: 8831a6b9d9dfdd5827c54dc64d58eff27229243a
+log_events: 
+- - 2008-04-12 10:34:48.171472 Z
+  - Eivind Uggedal <eu@redflavor.com>
+  - created
+  - ""

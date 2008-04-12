@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Retrive the fans of your favorites
+desc: The fans of your favorites should be analogous to friends. Both the slug and name can be retrieved of all these fans in one request.
+type: :feature
+component: server
+release: 0.1.0
+reporter: Eivind Uggedal <eu@redflavor.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-04-12 10:46:37.511643 Z
+references: []
+
+id: 960aabb6e6b423eea5cc13542c3cf5f91eebd087
+log_events: 
+- - 2008-04-12 10:46:39.064522 Z
+  - Eivind Uggedal <eu@redflavor.com>
+  - created
+  - ""

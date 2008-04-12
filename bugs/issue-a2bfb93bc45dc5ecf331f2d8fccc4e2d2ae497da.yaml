@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Patch Hpricot for dynamic buffer handeling
+desc: Patch Hpricot so that it can handle arbitrarily sized elements. Do some benchmarks afterwards to check the impact.
+type: :bugfix
+component: server
+release: 
+reporter: Eivind Uggedal <eu@redflavor.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-04-12 10:40:30.433713 Z
+references: []
+
+id: a2bfb93bc45dc5ecf331f2d8fccc4e2d2ae497da
+log_events: 
+- - 2008-04-12 10:40:31.842110 Z
+  - Eivind Uggedal <eu@redflavor.com>
+  - created
+  - ""
