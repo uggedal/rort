@@ -1,0 +1,20 @@
+--- !ditz.rubyforge.org,2008-03-06/project 
+name: Rort
+version: "0.2"
+components: 
+- !ditz.rubyforge.org,2008-03-06/component 
+  name: rort
+- !ditz.rubyforge.org,2008-03-06/component 
+  name: server
+- !ditz.rubyforge.org,2008-03-06/component 
+  name: client
+releases: 
+- !ditz.rubyforge.org,2008-03-06/release 
+  name: 0.1.0
+  status: :unreleased
+  release_time: 
+  log_events: 
+  - - 2008-04-12 10:29:14.549433 Z
+    - Eivind Uggedal <eu@redflavor.com>
+    - created
+    - Be able to get a list of friends (artist with the same favorite as yourself).
