@@ -82,7 +82,7 @@ module Rort::External
 
       elements.search("a[@href^='../../#{path}']").collect do |e|
         { :slug => e[:href].scan(/\/#{path}\/(\w+)$/).first.first,
-          :name => e.at("img.#{klass}")[:title] }
+          :name => e.at("img.#{klass}")[:alt] }
       end
     end
 
