@@ -44,7 +44,7 @@ describe Rort::External::Artist do
     External::Artist.as('uggedal') do |a|
       should_not_use_http_request do
         a.name.should == 'Eivind Uggedal'
-        a.favorites.size.should == 2
+        a.favorites.size.should > 1
       end
     end
   end
@@ -60,7 +60,7 @@ describe Rort::External::Artist do
 
   it 'should provide the favorites of the artist' do
     res = External::Artist.as('uggedal').favorites
-    res.size.should == 2
+    res.size.should > 1
     res.each do |fav|
       fav.should be_include(:slug)
       fav.should be_include(:name)
@@ -68,7 +68,7 @@ describe Rort::External::Artist do
   end
 
   it 'should provide an empty array when there are no favorites' do
-    External::Artist.as('TheFernets').favorites.size.should == 0
+    External::Artist.as('TheFernets').favorites.size.should be_zero
   end
 
   it 'should provide the fans of the artist' do
@@ -81,6 +81,6 @@ describe Rort::External::Artist do
   end
 
   it 'should provide an empty array when there are no fans' do
-    External::Artist.as('uggedal').fans.size.should == 0
+    External::Artist.as('uggedal').fans.size.should be_zero
   end
 end
