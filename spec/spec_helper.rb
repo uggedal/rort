@@ -21,10 +21,31 @@ def url(name, params={})
   controller.url(name, params)
 end
 
-def should_not_use_http_request
-  before = Time.now.to_f
-  yield
-  after = Time.now.to_f
+module OpenURI
+  class HTTPNotAllowedError < StandardError
+    def initialize(message)
+      super(message)
+    end
+  end
+end
 
-  (after - before).should < 0.05
+def should_not_use_http_request
+
+  Kernel.module_eval do
+    alias original_open_uri_open open
+
+    def open(name, *rest, &block)
+      raise OpenURI::HTTPNotAllowedError, 'OpenURI::open should not be called'
+    end
+  end
+
+  begin
+    yield
+  rescue OpenURI::HTTPNotAllowedError => e
+    pending e
+  end
+  
+  Kernel.module_eval do
+    alias open original_open_uri_open
+  end
 end
