@@ -3,10 +3,10 @@ title: Rename Fetch to External
 desc: ""
 type: :bugfix
 component: server
-release: 
+release: 0.1.0
 reporter: Eivind Uggedal <eu@redflavor.com>
-status: :unstarted
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2008-04-12 10:38:09.423015 Z
 references: []
 
@@ -15,4 +15,12 @@ log_events:
 - - 2008-04-12 10:38:11.631211 Z
   - Eivind Uggedal <eu@redflavor.com>
   - created
+  - ""
+- - 2008-04-12 12:14:35.507937 Z
+  - Eivind Uggedal <eu@redflavor.com>
+  - closed issue with disposition fixed
+  - ""
+- - 2008-04-12 12:15:10.676755 Z
+  - Eivind Uggedal <eu@redflavor.com>
+  - assigned to release 0.1.0 from unassigned
   - ""

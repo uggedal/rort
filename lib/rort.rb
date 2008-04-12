@@ -5,7 +5,7 @@ module Rort
 
   require 'rort/controllers'
   require 'rort/models'
-  require 'rort/fetch'
+  require 'rort/external'
 
 
   def self.start

@@ -20,7 +20,7 @@ module Rort::Models
     attr_writer :external
 
     def external
-      @external ||= Rort::Fetch::Artist.as(slug)
+      @external ||= Rort::External::Artist.as(slug)
     end
 
     def name
@@ -46,7 +46,7 @@ module Rort::Models
       if existing = Artist.first(slug)
         existing
       else
-        if fetched = Rort::Fetch::Artist.as(slug)
+        if fetched = Rort::External::Artist.as(slug)
           new = Artist.new(:slug => slug)
           new.external = fetched
           new.save

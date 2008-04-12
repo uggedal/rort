@@ -1,4 +1,4 @@
-module Rort::Fetch
+module Rort::External
   %w(hpricot openuri_memcached).each { |lib| require lib }
 
   OpenURI::Cache.enable!
