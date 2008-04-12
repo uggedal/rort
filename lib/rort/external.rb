@@ -71,8 +71,11 @@ module Rort::External
 
     def favorites
 
-      favs_el = @doc.at("h2[text()='Favoritter p\303\245 Ur\303\270rt']").
-        next_sibling.next_sibling
+      favs_el = @doc.at("h2[text()='Favoritter p\303\245 Ur\303\270rt']")
+
+      return [] unless favs_el
+
+      favs_el = favs_el.next_sibling.next_sibling
 
       favs_el.search("a[@href^='../../Artist']").collect do |e|
         { :slug => e[:href].scan(/\/Artist\/(\w+)$/).first.first,
@@ -81,7 +84,11 @@ module Rort::External
     end
 
     def fans
-      fans_el = @doc.at("h2[text()='Fans']").next_sibling.next_sibling
+      fans_el = @doc.at("h2[text()='Fans']")
+
+      return [] unless fans_el
+
+      fans_el = fans_el.next_sibling.next_sibling
 
       fans_el.search("a[@href^='../../Person']").collect do |e|
         { :slug => e[:href].scan(/\/Person\/(\w+)$/).first.first,
