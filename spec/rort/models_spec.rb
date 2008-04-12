@@ -73,14 +73,11 @@ describe Artist do
   it 'should be able to fetch the names of fans on initialization' do
     artist = Artist.find_or_fetch('TheFernets')
     artist.fans.size.should > 150
-    artist.fans.each do |fan|
 
-      fan.slug.should_not be_nil
-      if fan.name == nil
-        puts fan.slug
+      artist.fans.each do |fan|
+        fan.slug.should_not be_nil
+        fan.name.should_not be_nil
       end
-      fan.name.should_not be_nil
-    end
   end
 
   it 'could have several friends' do
