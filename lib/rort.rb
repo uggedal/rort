@@ -1,11 +1,11 @@
 require 'halcyon'
 
-module Roert
+module Rort
   VERSION = %w(0 0 1).join('.').freeze
 
-  require 'roert/controllers'
-  require 'roert/models'
-  require 'roert/fetch'
+  require 'rort/controllers'
+  require 'rort/models'
+  require 'rort/fetch'
 
 
   def self.start

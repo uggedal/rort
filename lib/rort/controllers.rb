@@ -1,9 +1,9 @@
-require 'roert/models'
-include Roert::Models
+require 'rort/models'
+include Rort::Models
 
 class Application < Halcyon::Controller
   def index
-    ok({ :application => Roert.name, :version => Roert::VERSION })
+    ok({ :application => Rort.name, :version => Rort::VERSION })
   end
 end
 

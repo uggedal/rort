@@ -22,7 +22,7 @@ desc "Migrate the db"
 task :migrate do
   $: << File.expand_path("../../halcyon/lib", __FILE__)
   $: << File.expand_path("../lib", __FILE__)
-  require 'roert'
+  require 'rort'
 
   DataMapper::Persistence.auto_migrate!
 end

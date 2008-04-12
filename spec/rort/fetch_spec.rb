@@ -1,8 +1,8 @@
 require File.join(File.dirname(__FILE__), '..', 'spec_helper')
 
-include Roert
+include Rort
 
-describe Roert::Fetch::Fetchable do
+describe Rort::Fetch::Fetchable do
 
   it 'should be initializated with *as* if existing' do
     Fetch::Artist.as('uggedal').should be_kind_of(Fetch::Fetchable)
@@ -32,7 +32,7 @@ describe Roert::Fetch::Fetchable do
   end
 end
 
-describe Roert::Fetch::Artist do
+describe Rort::Fetch::Artist do
 
   it 'should provide the name of the artist' do
     Fetch::Artist.as('TheMegaphonicThrift').

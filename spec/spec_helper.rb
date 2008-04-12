@@ -2,7 +2,7 @@ $: << File.expand_path("../../../halcyon/lib", __FILE__)
 $: << File.expand_path("../../lib", __FILE__)
 
 require 'halcyon'
-require 'roert'
+require 'rort'
 require 'rack/mock'
 
 Spec::Runner.configure do |config|

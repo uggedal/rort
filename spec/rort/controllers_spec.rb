@@ -21,7 +21,7 @@ describe 'controllers in general' do
 
   it 'should return serializable json' do
     res = Rack::MockRequest.new(@app).get('/')
-    hash = { 'application' => Roert.name, 'version' => Roert::VERSION }
+    hash = { 'application' => Rort.name, 'version' => Rort::VERSION }
     JSON.parse(res.body)['body'].should == hash
   end
 end

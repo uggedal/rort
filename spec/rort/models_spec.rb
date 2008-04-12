@@ -1,6 +1,6 @@
 require File.join(File.dirname(__FILE__), '..', 'spec_helper')
 
-include Roert::Models
+include Rort::Models
 
 describe Artist do
 

@@ -2,10 +2,10 @@ require 'data_mapper'
 
 DataMapper::Database.setup({
   :adapter  => 'sqlite3',
-  :database => 'roert.db'
+  :database => 'rort.db'
 })
 
-module Roert::Models
+module Rort::Models
 
   class Artist < DataMapper::Base
     property :slug, :string, :key => true
@@ -20,7 +20,7 @@ module Roert::Models
     attr_writer :external
 
     def external
-      @external ||= Roert::Fetch::Artist.as(slug)
+      @external ||= Rort::Fetch::Artist.as(slug)
     end
 
     def name
@@ -46,7 +46,7 @@ module Roert::Models
       if existing = Artist.first(slug)
         existing
       else
-        if fetched = Roert::Fetch::Artist.as(slug)
+        if fetched = Rort::Fetch::Artist.as(slug)
           new = Artist.new(:slug => slug)
           new.external = fetched
           new.save
