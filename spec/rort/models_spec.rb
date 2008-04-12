@@ -54,12 +54,32 @@ describe Artist do
     end
   end
 
+  it 'should be able to fetch the fans of an initialized artist' do
+    artist = Artist.find_or_fetch('TheFernets')
+    artist.fans.each do |fan|
+      fan.should be_instance_of(Artist)
+    end
+  end
+
   it 'should be able to fetch the names of favorites on initialization' do
     @artist.favorites.size.should > 1
     should_not_use_http_request do
       @artist.favorites.each do |fav|
         fav.name.should_not be_nil
       end
+    end
+  end
+
+  it 'should be able to fetch the names of fans on initialization' do
+    artist = Artist.find_or_fetch('TheFernets')
+    artist.fans.size.should > 150
+    artist.fans.each do |fan|
+
+      fan.slug.should_not be_nil
+      if fan.name == nil
+        puts fan.slug
+      end
+      fan.name.should_not be_nil
     end
   end
 end
