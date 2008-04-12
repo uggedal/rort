@@ -17,6 +17,12 @@ module Rort::Models
       :right_foreign_key => 'child_id',
       :class => 'Artist'
 
+    has_and_belongs_to_many :fans,
+      :join_table => 'fans',
+      :left_foreign_key => 'parent_id',
+      :right_foreign_key => 'child_id',
+      :class => 'Artist'
+
     attr_writer :external
 
     def external
@@ -30,7 +36,7 @@ module Rort::Models
     alias :associated_favorites :favorites
 
     def favorites
-      external_favorites unless @artists && @artists.size > 0
+      external_favorites unless @favorites && @favorites.size > 0
       associated_favorites
     end
 
@@ -38,6 +44,21 @@ module Rort::Models
       if external
         associated_favorites << external.favorites.collect do |fav|
           self.class.find_or_create({:slug => fav[:slug]}, fav)
+        end
+      end
+    end
+
+    alias :associated_fans :fans
+
+    def fans
+      external_fans unless @fans && @fans.size > 0
+      associated_fans
+    end
+
+    def external_fans
+      if external
+        associated_fans << external.fans.collect do |fan|
+          self.class.find_or_create({:slug => fan[:slug]}, fan)
         end
       end
     end

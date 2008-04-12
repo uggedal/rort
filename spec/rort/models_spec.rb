@@ -9,18 +9,6 @@ describe Artist do
     @artist = Artist.find_or_fetch('uggedal')
   end
 
-  it 'should be createable' do
-    a = Artist.create(:slug => 'supersuper')
-    a.should_not be_new_record
-  end
-
-  it 'should be updateable' do
-    @artist.slug = 'eivind'
-    @artist.should be_dirty
-    @artist.save
-    @artist.should_not be_dirty
-  end
-
   it 'should be findable' do
     found = Artist.first('uggedal')
     @artist.should == found
@@ -31,7 +19,7 @@ describe Artist do
   end
 
   it 'could have and belong to many fans' do
-    #@artist.fans.size.should > 150
+    Artist.find_or_fetch('TheFernets').fans.size.should > 150
   end
 
   it 'should be serializable' do
