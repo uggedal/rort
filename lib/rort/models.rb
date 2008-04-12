@@ -24,7 +24,7 @@ module Rort::Models
     end
 
     def name
-      @name ||= external.name if external
+      @name ? @name : external.name
     end
 
     alias :associated_favorites :favorites
