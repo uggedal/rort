@@ -84,6 +84,6 @@ describe Artist do
   end
 
   it 'could have several friends' do
-    @artist.friends.size.should > 250
+    @artist.friends.size.should > 260
   end
 end

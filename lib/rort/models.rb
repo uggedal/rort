@@ -50,7 +50,7 @@ module Rort::Models
     def friends
       friends = []
       favorites.each do |fav|
-        friends.concat(fav.fans.to_a)
+        friends = friends | fav.fans.to_a
       end
       friends
 
