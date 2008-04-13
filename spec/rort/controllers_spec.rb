@@ -33,3 +33,27 @@ describe Artists, 'controller' do
     JSON.parse(res.body)['body'].should be_has_key('name')
   end
 end
+
+describe Favorites, 'controller' do
+
+  it 'should list the favorites of an artist' do
+    res = Rack::MockRequest.new(@app).get('/artists/uggedal/favorites')
+    JSON.parse(res.body)['body'].size.should > 1
+  end
+end
+
+describe Fans, 'controller' do
+
+  it 'should list the fans of an artist' do
+    res = Rack::MockRequest.new(@app).get('/artists/Katzenjammer/fans')
+    JSON.parse(res.body)['body'].size.should > 120
+  end
+end
+
+describe Friends, 'controller' do
+
+  it 'should list the friends of an artist' do
+    res = Rack::MockRequest.new(@app).get('/artists/uggedal/friends')
+    JSON.parse(res.body)['body'].size.should > 250
+  end
+end
