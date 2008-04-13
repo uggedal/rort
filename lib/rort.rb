@@ -3,10 +3,9 @@ require 'halcyon'
 module Rort
   VERSION = %w(0 0 1).join('.').freeze
 
-  require 'rort/controllers'
-  require 'rort/models'
   require 'rort/external'
-
+  require 'rort/models'
+  require 'rort/controllers'
 
   def self.start
     Halcyon::Runner.load_config
