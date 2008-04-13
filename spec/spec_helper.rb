@@ -2,10 +2,11 @@ $: << File.expand_path("../../../halcyon/lib", __FILE__)
 $: << File.expand_path("../../lib", __FILE__)
 
 require 'halcyon'
+require 'logger'
 require 'rort'
 require 'rack/mock'
 
-$HTTP_DEBUG = true
+$HTTP_DEBUG = false
 $http_requests = 0
 
 Spec::Runner.configure do |config|
