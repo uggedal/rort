@@ -20,6 +20,11 @@ describe Artist do
     Artist.find_or_fetch('SomeCrazyNonExistentArtist').should be_nil
   end
 
+  it 'should be serializable' do
+    hash = {'slug' => 'uggedal', 'name' => 'Eivind Uggedal'}
+    JSON.parse(@person.to_json).should === hash
+  end
+
   it 'should be able to retrieve the slug of an initialized artist' do
     @person.slug.should == 'uggedal'
   end
@@ -69,9 +74,4 @@ describe Artist do
   end
 
 end
-__END__
 
-  it 'should be serializable' do
-    hash = {:id => 1, :slug => 'uggedal', :name => nil}
-    JSON.parse(@person.to_json) == hash
-  end

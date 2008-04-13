@@ -80,6 +80,11 @@ module Rort::Models
       friends
     end
 
+    def to_json(*arg)
+      { 'slug' => slug,
+        'name' => name}.to_json(*arg)
+    end
+
     def self.find_or_fetch(slug)
       if cached = Cache.get(slug)
         cached
