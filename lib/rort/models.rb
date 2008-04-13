@@ -1,92 +1,124 @@
-require 'data_mapper'
+require 'rort/external'
 
-DataMapper::Database.setup({
-  :adapter  => 'sqlite3',
-  :database => 'rort.db'
-})
 
 module Rort::Models
 
-  class Artist < DataMapper::Base
-    property :slug, :string, :key => true
-    property :name, :string, :lazy => true
+  class Cache
+    @enabled = false
 
-    has_and_belongs_to_many :favorites,
-      :join_table => 'favorites',
-      :left_foreign_key => 'parent_id',
-      :right_foreign_key => 'child_id',
-      :class => 'Artist'
+    class << self
+      attr_writer :expiry, :host
+      
+      def enable!
+        @cache ||= MemCache.new(host, :namespace => 'rort')
+        @enabled = true
+      end
 
-    has_and_belongs_to_many :fans,
-      :join_table => 'fans',
-      :left_foreign_key => 'parent_id',
-      :right_foreign_key => 'child_id',
-      :class => 'Artist'
+      def enabled?
+        @enabled
+      end
 
-    attr_writer :external
+      def get(key)
+        @cache.get(key)
+      end
+
+      def gets(keys)
+        @cache.get_multi(keys)
+      end
+      
+      def set(key, value)
+        @cache.set(key, value, expiry)
+      end
+
+      def del(key)
+        @cache.delete(key)
+      end
+            
+      def expiry
+        @expiry ||= 60 * 10
+      end
+      
+      def host
+        @host ||= "localhost:11211"
+      end
+    end
+  end
+
+  Cache.enable!
+
+  class Artist
+
+    def initialize(slug, external=nil)
+      @slug = slug
+      @external = external
+    end
+
+    attr_reader :slug
+    attr_writer :name
 
     def external
       @external ||= Rort::External::Artist.as(slug)
     end
 
     def name
-      @name ? @name : external.name
+      @name ||= external.name
     end
-
-    alias :associated_favorites :favorites
 
     def favorites
-      external_favorites unless @favorites && @favorites.size > 0
-      associated_favorites
+      @favorites ||= external_favorites
     end
 
-    alias :associated_fans :fans
-
     def fans
-      external_fans unless @fans && @fans.size > 0
-      associated_fans
+      @fans ||= external_fans
     end
 
     def friends
       friends = []
       favorites.each do |fav|
-        friends = friends | fav.fans.to_a
+        friends = friends | fav.fans
       end
       friends
-
     end
 
     def self.find_or_fetch(slug)
-      if existing = Artist.first(slug)
-        existing
+      if cached = Cache.get(slug)
+        cached
       else
         if fetched = Rort::External::Artist.as(slug)
-          new = Artist.new(:slug => slug)
-          new.external = fetched
-          new.save
+          new = self.new(slug, fetched)
+          Cache.set(slug, new)
           new
         else
           nil
         end
       end
     end
-    
+
+    def self.find_or_create(artist)
+      if cached = Cache.get(artist[:slug])
+        cached
+      else
+        new = self.new(artist[:slug])
+        new.name = artist[:name]
+        Cache.set(new.slug, new)
+        new
+      end
+    end
+
     private
 
       def external_favorites
-        if external
-          associated_favorites << external.favorites.collect do |fav|
-            self.class.find_or_create({:slug => fav[:slug]}, fav)
-          end
+        external.favorites.collect do |fav|
+          self.class.find_or_create(fav)
         end
       end
 
       def external_fans
-        if external
-          associated_fans << external.fans.collect do |fan|
-            self.class.find_or_create({:slug => fan[:slug]}, fan)
-          end
+        external.fans.collect do |fan|
+          self.class.find_or_create(fan)
         end
       end
+
+
   end
 end
