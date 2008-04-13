@@ -73,7 +73,7 @@ module Rort::External
         inner_text.strip.scan(/^NRK Ur\303\270rt - (.+)/).first.first
     end
 
-    def thumb_elements(header, path, klass)
+    def thumb_elements(header, path)
       elements = @doc.at("h2[text()='#{header}']")
 
       return [] unless elements
@@ -82,16 +82,20 @@ module Rort::External
 
       elements.search("a[@href^='../../#{path}']").collect do |e|
         { :slug => e[:href].scan(/\/#{path}\/(\w+)$/).first.first,
-          :name => e.at("img.#{klass}")[:alt] }
+          :name => yield(e) }
       end
     end
 
     def favorites
-      thumb_elements("Favoritter p\303\245 Ur\303\270rt", 'Artist', 'Thumb')
+      thumb_elements("Favoritter p\303\245 Ur\303\270rt", 'Artist') do |e|
+        e.at("img.Thumb")[:alt]
+      end
     end
 
     def fans
-      thumb_elements('Fans', 'Person', 'MiniThumb')
+      thumb_elements('Fans', 'Person') do |e|
+        e[:title]
+      end
     end
   end
 end

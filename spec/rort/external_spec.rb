@@ -62,8 +62,8 @@ describe Rort::External::Artist do
     res = External::Artist.as('uggedal').favorites
     res.size.should > 1
     res.each do |fav|
-      fav.should be_include(:slug)
-      fav.should be_include(:name)
+      fav[:slug].should_not be_empty
+      fav[:name].should_not be_empty
     end
   end
 
@@ -75,8 +75,8 @@ describe Rort::External::Artist do
     res = External::Artist.as('TheFernets').fans
     res.size.should > 150
     res.each do |fan|
-      fan.should be_include(:slug)
-      fan.should be_include(:name)
+      fan[:slug].should_not be_empty
+      fan[:name].should_not be_empty
     end
   end
 
