@@ -2,6 +2,28 @@ require File.join(File.dirname(__FILE__), '..', 'spec_helper')
 
 include Rort::Models
 
+describe Cache do
+
+  before(:each) do
+    Cache.del('uggedal')
+    Cache.del('TheFernets')
+
+    @person = Artist.find_or_fetch('uggedal')
+    @artist = Artist.find_or_fetch('TheFernets')
+  end
+
+  it 'should be able to retrieve a single record from the cache' do
+    Cache['uggedal'].name.should == @person.name
+  end
+
+  it 'should be able to retrieve several records from the cache' do
+    res = Cache[%w(uggedal TheFernets)]
+    res['uggedal'].name.should == @person.name
+    res['TheFernets'].name.should == @artist.name
+  end
+
+end
+
 describe Artist do
 
   before(:each) do

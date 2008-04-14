@@ -18,12 +18,13 @@ module Rort::Models
         @enabled
       end
 
-      def get(key)
-        @cache.get(key)
-      end
-
-      def gets(keys)
-        @cache.get_multi(keys)
+      def [](key)
+        case key
+        when String
+          @cache.get(key)
+        when Array
+          @cache.get_multi(key)
+        end
       end
       
       def set(key, value)
@@ -86,7 +87,7 @@ module Rort::Models
     end
 
     def self.find_or_fetch(slug)
-      if cached = Cache.get(slug)
+      if cached = Cache[slug]
         cached
       else
         if fetched = Rort::External::Artist.as(slug)
@@ -100,7 +101,7 @@ module Rort::Models
     end
 
     def self.find_or_create(artist)
-      if cached = Cache.get(artist[:slug])
+      if cached = Cache[artist[:slug]]
         cached
       else
         new = self.new(artist[:slug])
