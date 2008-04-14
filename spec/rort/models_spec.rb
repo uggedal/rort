@@ -22,6 +22,18 @@ describe Cache do
     res['TheFernets'].name.should == @artist.name
   end
 
+  it 'should provide nil for non-existant records' do
+    Cache['NonExistant'].should be_nil
+  end
+
+  it 'should be able to set a new record in the cache' do
+    hash = {:key => 'superduper', :name => 'wow'}
+    Cache.del(hash[:key])
+    Cache[hash[:key]].should be_nil
+    Cache[hash[:key]] = hash
+    Cache[hash[:key]][:name].should == hash[:name]
+  end
+
 end
 
 describe Artist do

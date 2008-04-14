@@ -27,7 +27,7 @@ module Rort::Models
         end
       end
       
-      def set(key, value)
+      def []=(key, value)
         @cache.set(key, value, expiry)
       end
 
@@ -92,7 +92,7 @@ module Rort::Models
       else
         if fetched = Rort::External::Artist.as(slug)
           new = self.new(slug, fetched)
-          Cache.set(slug, new)
+          Cache[slug] = new
           new
         else
           nil
@@ -106,7 +106,7 @@ module Rort::Models
       else
         new = self.new(artist[:slug])
         new.name = artist[:name]
-        Cache.set(new.slug, new)
+        Cache[new.slug] = new
         new
       end
     end
