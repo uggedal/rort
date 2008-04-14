@@ -61,8 +61,9 @@ module Rort::External
     end
 
     def doc?
-      if h1 = @doc.at("h1")
-        h1.inner_text =~ /^Fant ikke personen \/ artisten$/
+      if title = @doc.at("head > title")
+        !(title.inner_text.strip =~
+          /^NRK Ur\303\270rt - Ur\303\270rt fant ikke frem$/)
       else
         true
       end
@@ -118,12 +119,5 @@ module Rort::External
         true
       end
     end
-
-    def test
-      if title = @doc.at("head > title")
-        title.inner_text.strip#.scan(/^NRK Ur\303\270rt - Feil$/)
-      end
-    end
-
   end
 end
