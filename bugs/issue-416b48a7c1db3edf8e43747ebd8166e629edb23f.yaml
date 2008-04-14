@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Retrieve latest songs from an artist
+desc: ""
+type: :feature
+component: server
+release: 0.2.0
+reporter: Eivind Uggedal <eu@redflavor.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-04-14 11:01:14.174575 Z
+references: []
+
+id: 416b48a7c1db3edf8e43747ebd8166e629edb23f
+log_events: 
+- - 2008-04-14 11:01:16.186365 Z
+  - Eivind Uggedal <eu@redflavor.com>
+  - created
+  - ""

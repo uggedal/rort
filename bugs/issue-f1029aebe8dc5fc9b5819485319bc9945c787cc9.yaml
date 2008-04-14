@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Retrive latest blog posts from an artist
+desc: ""
+type: :feature
+component: server
+release: 0.2.0
+reporter: Eivind Uggedal <eu@redflavor.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-04-14 10:58:56.921762 Z
+references: []
+
+id: f1029aebe8dc5fc9b5819485319bc9945c787cc9
+log_events: 
+- - 2008-04-14 10:58:58.934044 Z
+  - Eivind Uggedal <eu@redflavor.com>
+  - created
+  - ""

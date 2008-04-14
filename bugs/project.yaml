@@ -22,3 +22,21 @@ releases:
     - Eivind Uggedal <eu@redflavor.com>
     - released
     - We seem to have a stable base with friend functionality. First release.
+- !ditz.rubyforge.org,2008-03-06/release 
+  name: 0.2.0
+  status: :unreleased
+  release_time: 
+  log_events: 
+  - - 2008-04-14 10:55:20.683289 Z
+    - Eivind Uggedal <eu@redflavor.com>
+    - created
+    - Should be able to retrieve a list of recent activity for your favorites.
+- !ditz.rubyforge.org,2008-03-06/release 
+  name: 0.3.0
+  status: :unreleased
+  release_time: 
+  log_events: 
+  - - 2008-04-14 10:57:53.567108 Z
+    - Eivind Uggedal <eu@redflavor.com>
+    - created
+    - Should be able to retrive a list of rencent activity for your friends.
