@@ -112,4 +112,8 @@ describe Rort::External::Blog do
       post[:time].should < Time.now
     end
   end
+
+  it 'should provide an empty array when there are no blog posts' do
+    External::Blog.as('uggedal').posts.size.should be_zero
+  end
 end
