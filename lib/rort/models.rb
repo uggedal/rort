@@ -61,6 +61,10 @@ module Rort::Models
       @external ||= Rort::External::Artist.as(slug)
     end
 
+    def id
+      @name ||= external.id
+    end
+
     def name
       @name ||= external.name
     end
@@ -79,6 +83,10 @@ module Rort::Models
         friends = friends | fav.fans
       end
       friends
+    end
+
+    def blog
+      @blog ||= Rort::External::Blog.as(id)
     end
 
     def to_json(*arg)

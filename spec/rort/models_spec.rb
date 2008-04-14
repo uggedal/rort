@@ -113,5 +113,12 @@ describe Artist do
     @person.friends.size.should > 260
   end
 
+  it 'should have a blog' do
+    @artist.blog.posts.size.should > 10
+  end
+
+  it 'should return an empty array if there are no blog posts' do
+    @person.blog.posts.size.should be_zero
+  end
 end
 
