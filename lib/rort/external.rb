@@ -11,7 +11,8 @@ module Rort::External
   class Fetchable
 
     def doc?
-      true
+      !(@doc.at("head > title").inner_text.strip =~
+          /^NRK Ur\303\270rt - Ur\303\270rt fant ikke frem$/)
     end
 
     def existing?
@@ -60,15 +61,6 @@ module Rort::External
       @doc = fetch "Artist/#@slug"
     end
 
-    def doc?
-      if title = @doc.at("head > title")
-        !(title.inner_text.strip =~
-          /^NRK Ur\303\270rt - Ur\303\270rt fant ikke frem$/)
-      else
-        true
-      end
-    end
-
     def id
       @doc.at("#WebPart_gwpblog > a#rsslink")[:href].
         scan(/subjectid=(\d+)/).first.first
@@ -107,17 +99,9 @@ module Rort::External
 
   class Blog < Fetchable
 
-    def initialize(id)
-      @id = id
-      @doc = fetch "user/news.aspx?id=#@id"
-    end
-
-    def doc?
-      if title = @doc.at("head > title")
-        !(title.inner_text.strip =~ /^NRK Ur\303\270rt - Feil$/)
-      else
-        true
-      end
+    def initialize(slug)
+      @slug = slug
+      @doc = fetch "Blogg/#@slug"
     end
 
     def posts

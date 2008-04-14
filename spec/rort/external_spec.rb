@@ -96,16 +96,16 @@ end
 
 describe Rort::External::Blog do
 
-  it 'should not be initialized if the artist id is not existing' do
-    External::Blog.as(505050505).should be_nil
+  it 'should not be initialized if the artist is non-existent' do
+    External::Blog.as('MrNonExistent').should be_nil
   end
 
-  it 'should be initialized if the artist id is existing' do
-    External::Blog.as(73715).should_not be_nil
+  it 'should be initialized if the artist is existing' do
+    External::Blog.as('uggedal').should_not be_nil
   end
 
   it 'could have several blog posts' do
-    posts = External::Blog.as(32961).posts
+    posts = External::Blog.as('TheFernets').posts
     posts.size.should > 4
     posts.each do |post|
       post[:id].should > 0

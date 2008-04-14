@@ -86,7 +86,7 @@ module Rort::Models
     end
 
     def blog
-      @blog ||= Rort::External::Blog.as(id)
+      @blog ||= Rort::External::Blog.as(slug)
     end
 
     def to_json(*arg)
