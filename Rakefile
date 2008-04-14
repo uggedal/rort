@@ -32,3 +32,21 @@ Spec::Rake::SpecTask.new do |t|
   t.spec_files = FileList['spec/**/*_spec.rb']
   t.spec_opts = ['-c']
 end
+
+desc 'Show code/spec status'
+task :status do
+  code = FileList['lib/**/*.rb']
+  specs = FileList['spec/**/*_spec.rb']
+
+  code_lines = code.inject(0) do |sum, f|
+    sum + File.open(f).readlines.size
+  end
+
+  spec_lines = specs.inject(0) do |sum, f|
+    sum + File.open(f).readlines.size
+  end
+
+  puts "Code/Spec: #{specs.size}/#{code.size} specs/files | "+
+       "#{spec_lines}/#{code_lines} los/loc | " +
+       "#{spec_lines * 100 / code_lines} %"
+end
