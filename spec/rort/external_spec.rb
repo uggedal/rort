@@ -103,4 +103,13 @@ describe Rort::External::Blog do
   it 'should be initialized if the artist id is existing' do
     External::Blog.as(73715).should_not be_nil
   end
+
+  it 'could have several blog posts' do
+    posts = External::Blog.as(32961).posts
+    posts.size.should > 4
+    posts.each do |post|
+      post[:id].should > 0
+      post[:time].should < Time.now
+    end
+  end
 end

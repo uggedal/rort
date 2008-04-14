@@ -119,5 +119,59 @@ module Rort::External
         true
       end
     end
+
+    def posts
+      def parse_date(str)
+        parts = str.scan(/\w+, (\d\d) (\w+), (\d\d\d\d)$/).flatten.reverse
+        parts[1] = case parts[1].downcase
+                   when 'januar'
+                     1
+                   when 'februar'
+                     2
+                   when 'mars'
+                     3
+                   when 'april'
+                     4
+                   when 'mai'
+                     5
+                   when 'juni'
+                     6
+                   when 'juli'
+                     7
+                   when 'august'
+                     8
+                   when 'september'
+                     9
+                   when 'oktober'
+                     10
+                   when 'november'
+                     11
+                   when 'desember'
+                     12
+                   end
+        parts.collect {|part| part.to_i }
+      end
+
+      def parse_time(str)
+        str.split(':').collect {|part| part.to_i }
+      end
+
+      div = (@doc/"#bandprofile-subpage")
+      dates = div.search("div.posted-date").collect do |d|
+        parse_date(d.inner_text.strip)
+      end
+
+      times = div.search("span.posted-by").collect do |s|
+        parse_time(s.inner_text.scan(/klokka (\d\d:\d\d)/).flatten.first)
+      end
+
+      ids = div.search("a[text()$='Kommentarer']").collect do |a|
+        a[:href].scan(/articleid=(\d+)/).flatten.first.to_i
+      end
+
+      [ids, dates, times].transpose.collect do |item|
+        {:id => item[0], :time => Time.local(*(item[1] + item[2]))}
+      end
+    end
   end
 end
