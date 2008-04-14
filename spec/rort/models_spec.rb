@@ -34,6 +34,12 @@ describe Cache do
     Cache[hash[:key]][:name].should == hash[:name]
   end
 
+  it 'should be able to delete a record in the cache' do
+    Cache[@person.slug].should_not be_nil
+    Cache.del(@person.slug).should =~ /^DELETED/
+    Cache[@person.slug].should be_nil
+  end
+
 end
 
 describe Artist do
