@@ -93,3 +93,14 @@ describe Rort::External::Artist do
     External::Artist.as('uggedal').fans.size.should be_zero
   end
 end
+
+describe Rort::External::Blog do
+
+  it 'should not be initialized if the artist id is not existing' do
+    External::Blog.as(505050505).should be_nil
+  end
+
+  it 'should be initialized if the artist id is existing' do
+    External::Blog.as(73715).should_not be_nil
+  end
+end

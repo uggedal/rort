@@ -103,4 +103,27 @@ module Rort::External
       end
     end
   end
+
+  class Blog < Fetchable
+
+    def initialize(id)
+      @id = id
+      @doc = fetch "user/news.aspx?id=#@id"
+    end
+
+    def doc?
+      if title = @doc.at("head > title")
+        !(title.inner_text.strip =~ /^NRK Ur\303\270rt - Feil$/)
+      else
+        true
+      end
+    end
+
+    def test
+      if title = @doc.at("head > title")
+        title.inner_text.strip#.scan(/^NRK Ur\303\270rt - Feil$/)
+      end
+    end
+
+  end
 end
