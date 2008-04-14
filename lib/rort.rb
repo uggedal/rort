@@ -1,7 +1,7 @@
 require 'halcyon'
 
 module Rort
-  VERSION = %w(0 0 1).join('.').freeze
+  VERSION = %w(0 1 0).join('.').freeze
 
   require 'rort/external'
   require 'rort/models'

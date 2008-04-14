@@ -11,10 +11,14 @@ components:
 releases: 
 - !ditz.rubyforge.org,2008-03-06/release 
   name: 0.1.0
-  status: :unreleased
-  release_time: 
+  status: :released
+  release_time: 2008-04-14 08:27:29.956639 Z
   log_events: 
   - - 2008-04-12 10:29:14.549433 Z
     - Eivind Uggedal <eu@redflavor.com>
     - created
     - Be able to get a list of friends (artist with the same favorite as yourself).
+  - - 2008-04-14 08:27:29.956663 Z
+    - Eivind Uggedal <eu@redflavor.com>
+    - released
+    - We seem to have a stable base with friend functionality. First release.
