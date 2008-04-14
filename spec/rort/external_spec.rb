@@ -30,6 +30,10 @@ describe Rort::External::Fetchable do
       a.instance_eval('@doc = nil')
     end.should_not be_existing
   end
+
+  it 'should return nil with *as* if not existing' do
+    External::Artist.as('NonExistantArtist').should be_nil
+  end
 end
 
 describe Rort::External::Artist do
