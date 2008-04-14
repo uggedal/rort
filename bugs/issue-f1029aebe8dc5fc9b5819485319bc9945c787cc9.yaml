@@ -1,5 +1,5 @@
 --- !ditz.rubyforge.org,2008-03-06/issue 
-title: Retrive latest blog posts from an artist
+title: Retrieve latest blog posts from an artist
 desc: ""
 type: :feature
 component: server

@@ -1,5 +1,5 @@
 --- !ditz.rubyforge.org,2008-03-06/issue 
-title: Retrive the fans of your favorites
+title: Retrieve the fans of your favorites
 desc: The fans of your favorites should be analogous to friends. Both the slug and name can be retrieved of all these fans in one request.
 type: :feature
 component: server
