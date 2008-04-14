@@ -68,6 +68,11 @@ module Rort::External
       end
     end
 
+    def id
+      @doc.at("#WebPart_gwpblog > a#rsslink")[:href].
+        scan(/subjectid=(\d+)/).first.first
+    end
+
     def name
       @doc.at("head > title").
         inner_text.strip.scan(/^NRK Ur\303\270rt - (.+)/).first.first

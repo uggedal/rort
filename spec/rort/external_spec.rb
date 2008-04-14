@@ -57,6 +57,11 @@ describe Rort::External::Artist do
     External::Artist.as('MrUnknownAndUnfound').should be_nil
   end
 
+  it 'should provide the id of the artist' do
+    External::Artist.as('TheMegaphonicThrift').
+      id.to_i.should == 70193
+  end
+
   it 'should provide the name of the artist' do
     External::Artist.as('TheMegaphonicThrift').
       name.should == 'The Megaphonic Thrift'
