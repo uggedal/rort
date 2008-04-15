@@ -89,6 +89,10 @@ module Rort::Models
       @blog ||= Rort::External::Blog.as(slug)
     end
 
+    def songs
+      @songs ||= external.songs
+    end
+
     def to_json(*arg)
       { 'slug' => slug,
         'name' => name}.to_json(*arg)

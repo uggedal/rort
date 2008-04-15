@@ -120,5 +120,13 @@ describe Artist do
   it 'should return an empty array if there are no blog posts' do
     @person.blog.posts.size.should be_zero
   end
+
+  it 'could have songs' do
+    @artist.songs.size.should > 5
+  end
+
+  it 'should return an empty array if there are no songs' do
+    @person.songs.size.should be_zero
+  end
 end
 
