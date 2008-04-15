@@ -11,27 +11,27 @@ end
 class Artists < Halcyon::Controller
 
   def show
-    ok(Artist.find_or_fetch(params[:id]))
+    ok Artist.find_or_fetch(params[:id]).activities
   end
 end
 
 class Favorites < Halcyon::Controller
 
   def index
-    ok(Artist.find_or_fetch(params[:artist_id]).favorites)
+    ok Artist.find_or_fetch(params[:artist_id]).favorite_activities
   end
 end
 
 class Fans < Halcyon::Controller
 
   def index
-    ok(Artist.find_or_fetch(params[:artist_id]).fans)
+    ok Artist.find_or_fetch(params[:artist_id]).fans
   end
 end
 
 class Friends < Halcyon::Controller
 
   def index
-    ok(Artist.find_or_fetch(params[:artist_id]).friends)
+    ok Artist.find_or_fetch(params[:artist_id]).friends
   end
 end

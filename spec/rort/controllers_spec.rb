@@ -28,17 +28,17 @@ end
 
 describe Artists, 'controller' do
 
-  it 'should show a given artist' do
-    res = Rack::MockRequest.new(@app).get('/artists/uggedal')
-    JSON.parse(res.body)['body'].should be_has_key('name')
+  it 'should show recent activity of an artist' do
+    res = Rack::MockRequest.new(@app).get('/artists/TheFernets')
+    JSON.parse(res.body)['body'].size.should > 70
   end
 end
 
 describe Favorites, 'controller' do
 
-  it 'should list the favorites of an artist' do
+  it 'should show recent activity for all favorites of an artist' do
     res = Rack::MockRequest.new(@app).get('/artists/uggedal/favorites')
-    JSON.parse(res.body)['body'].size.should > 1
+    JSON.parse(res.body)['body'].size.should > 100
   end
 end
 
