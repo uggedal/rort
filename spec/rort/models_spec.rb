@@ -113,29 +113,16 @@ describe Artist do
     @person.friends.size.should > 260
   end
 
-  it 'should have a blog' do
+  it 'could have blog posts' do
     @artist.blog.posts.size.should > 10
-  end
-
-  it 'should return an empty array if there are no blog posts' do
-    @person.blog.posts.size.should be_zero
   end
 
   it 'could have songs' do
     @artist.songs.size.should > 5
   end
 
-  it 'should return an empty array if there are no songs' do
-    @person.songs.size.should be_zero
-  end
-
-  it 'should have a concert' do
+  it 'could have concert events' do
     @artist.concert.events.size.should > 40
   end
-
-  it 'should return an empty array if there are no concert events' do
-    @person.concert.events.size.should be_zero
-  end
-
 end
 
