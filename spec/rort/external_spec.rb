@@ -102,6 +102,10 @@ describe Rort::External::Artist do
       song[:time].should < Time.now
     end
   end
+
+  it 'should provide an empty array when there are no songs' do
+    External::Artist.as('uggedal').songs.size.should be_zero
+  end
 end
 
 describe Rort::External::Blog do
