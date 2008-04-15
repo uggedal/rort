@@ -120,18 +120,18 @@ module Rort::Models
       end
     end
 
-    def self.find_or_create(artist)
-      if cached = Cache[artist[:slug]]
-        cached
-      else
-        new = self.new(artist[:slug])
-        new.name = artist[:name]
-        Cache[new.slug] = new
-        new
-      end
-    end
-
     private
+
+      def self.find_or_create(artist)
+        if cached = Cache[artist[:slug]]
+          cached
+        else
+          new = self.new(artist[:slug])
+          new.name = artist[:name]
+          Cache[new.slug] = new
+          new
+        end
+      end
 
       def external_favorites
         external.favorites.collect do |fav|
