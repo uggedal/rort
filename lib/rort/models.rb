@@ -93,6 +93,10 @@ module Rort::Models
       @songs ||= external.songs
     end
 
+    def concert
+      @concert ||= Rort::External::Concert.as(slug)
+    end
+
     def to_json(*arg)
       { 'slug' => slug,
         'name' => name}.to_json(*arg)

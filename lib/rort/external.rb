@@ -170,7 +170,6 @@ module Rort::External
     end
 
     def posts
-
       div = (@doc/"#bandprofile-subpage")
       dates = div.search("div.posted-date").collect do |d|
         parse_textual_date(d.inner_text.strip)
@@ -186,6 +185,30 @@ module Rort::External
 
       [ids, dates, times].transpose.collect do |item|
         {:id => item[0], :time => Time.local(*(item[1] + item[2]))}
+      end
+    end
+  end
+
+  class Concert < Fetchable
+
+    def initialize(slug)
+      @slug = slug
+      @doc = fetch "Konserter/#@slug"
+    end
+
+    def events
+      (@doc/"#bandprofile-subpage > ul > li").collect do |event|
+        location = event.at("span[@id$='_Label1']").inner_text.strip
+        datetime = event.at("span[@id$='_Label2']").inner_text.strip.split
+        title = event.at("span[@id$='_Label3']").inner_text.strip
+        body = event.at("span[@id$='_Label4'] > p").inner_text.strip
+
+        time = parse_numeric_date(datetime[0]) + parse_time(datetime[1])
+
+        {:location => location,
+         :time => Time.local(*time),
+         :title => title,
+         :body => body}
       end
     end
   end

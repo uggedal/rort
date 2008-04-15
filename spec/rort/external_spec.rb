@@ -131,3 +131,29 @@ describe Rort::External::Blog do
     External::Blog.as('uggedal').posts.size.should be_zero
   end
 end
+
+describe Rort::External::Concert do
+
+  it 'should not be initialized if the artist is non-existent' do
+    External::Concert.as('MrNonExistent').should be_nil
+  end
+
+  it 'should be initialized if the artist is existing' do
+    External::Concert.as('uggedal').should_not be_nil
+  end
+
+  it 'could have several events' do
+    events = External::Concert.as('TheFernets').events
+    events.size.should > 15
+    events.each do |event|
+      event[:location].should_not be_empty
+      event[:time].should < Time.now
+      event[:title].should_not be_empty
+      event[:body].should_not be_nil
+    end
+  end
+
+  it 'should provide an empty array when there are no events' do
+    External::Concert.as('uggedal').events.size.should be_zero
+  end
+end
