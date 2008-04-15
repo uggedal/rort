@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Make activity urls available in the hashes
+desc: ""
+type: :feature
+component: server
+release: 0.2.0
+reporter: Eivind Uggedal <eu@redflavor.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-04-15 14:09:41.661090 Z
+references: []
+
+id: 61c0dad8a6c693b1f1afecf148e8437b8f6f7417
+log_events: 
+- - 2008-04-15 14:09:42.493142 Z
+  - Eivind Uggedal <eu@redflavor.com>
+  - created
+  - ""

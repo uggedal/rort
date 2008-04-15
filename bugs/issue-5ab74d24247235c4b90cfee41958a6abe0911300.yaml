@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Make the type of activity available in the hashes
+desc: ""
+type: :feature
+component: server
+release: 0.2.0
+reporter: Eivind Uggedal <eu@redflavor.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-04-15 14:08:57.691628 Z
+references: []
+
+id: 5ab74d24247235c4b90cfee41958a6abe0911300
+log_events: 
+- - 2008-04-15 14:08:58.667225 Z
+  - Eivind Uggedal <eu@redflavor.com>
+  - created
+  - ""
