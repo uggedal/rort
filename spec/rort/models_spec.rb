@@ -124,5 +124,9 @@ describe Artist do
   it 'could have concert events' do
     @artist.concert.events.size.should > 40
   end
+
+  it 'could have song reviews' do
+    @artist.reviews.size.should > 1
+  end
 end
 

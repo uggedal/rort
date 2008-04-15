@@ -97,6 +97,10 @@ module Rort::Models
       @concert ||= Rort::External::Concert.as(slug)
     end
 
+    def reviews
+      @reviews ||= external.reviews
+    end
+
     def to_json(*arg)
       { 'slug' => slug,
         'name' => name}.to_json(*arg)
