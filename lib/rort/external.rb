@@ -40,6 +40,45 @@ module Rort::External
         end
       end
 
+    def parse_textual_date(str)
+      parts = str.scan(/\w+, (\d\d) (\w+), (\d\d\d\d)$/).flatten.reverse
+      parts[1] = case parts[1].downcase
+                 when 'januar'
+                   1
+                 when 'februar'
+                   2
+                 when 'mars'
+                   3
+                 when 'april'
+                   4
+                 when 'mai'
+                   5
+                 when 'juni'
+                   6
+                 when 'juli'
+                   7
+                 when 'august'
+                   8
+                 when 'september'
+                   9
+                 when 'oktober'
+                   10
+                 when 'november'
+                   11
+                 when 'desember'
+                   12
+                 end
+      parts.collect {|part| part.to_i }
+    end
+
+    def parse_numeric_date(str)
+      str.split('.').reverse.collect {|part| part.to_i }
+    end
+
+    def parse_time(str)
+      str.split(':').collect {|part| part.to_i }
+    end
+
     private
       def request(uri)
         begin
@@ -71,19 +110,6 @@ module Rort::External
         inner_text.strip.scan(/^NRK Ur\303\270rt - (.+)/).first.first
     end
 
-    def thumb_elements(header, path)
-      elements = @doc.at("h2[text()='#{header}']")
-
-      return [] unless elements
-
-      elements = elements.next_sibling.next_sibling
-
-      elements.search("a[@href^='../../#{path}']").collect do |e|
-        { :slug => e[:href].scan(/\/#{path}\/(\w+)$/).first.first,
-          :name => yield(e) }
-      end
-    end
-
     def favorites
       thumb_elements("Favoritter p\303\245 Ur\303\270rt", 'Artist') do |e|
         e.at("img.Thumb")[:alt]
@@ -95,6 +121,45 @@ module Rort::External
         e[:title]
       end
     end
+
+    def songs
+      songs = (@doc/"#WebPart_gwpBandTracks .songmeta")
+
+      ids = songs.search(".stats a[@href^='../../user/trackreviews']").collect do |a|
+        a[:href].scan(/mmmid=(\d+)/).flatten.first.to_i
+      end
+
+      names = songs.search(".trackname").collect do |name|
+        name.inner_text.strip
+      end
+
+      datetimes = songs.search(".stats").collect do |stat|
+        datetime = stat.inner_text.strip.
+          scan(/^(\d{2}\.\d{2}\.\d{4}) (\d{2}:\d{2}:\d{2})/).first
+
+        parse_numeric_date(datetime[0]) + parse_time(datetime[1])
+      end
+
+      [ids, names, datetimes].transpose.collect do |item|
+        {:id => item[0], :name => item[1], :time => Time.local(*item[2])}
+      end
+
+    end
+
+    private
+
+      def thumb_elements(header, path)
+        elements = @doc.at("h2[text()='#{header}']")
+
+        return [] unless elements
+
+        elements = elements.next_sibling.next_sibling
+
+        elements.search("a[@href^='../../#{path}']").collect do |e|
+          { :slug => e[:href].scan(/\/#{path}\/(\w+)$/).first.first,
+            :name => yield(e) }
+        end
+      end
   end
 
   class Blog < Fetchable
@@ -105,44 +170,10 @@ module Rort::External
     end
 
     def posts
-      def parse_date(str)
-        parts = str.scan(/\w+, (\d\d) (\w+), (\d\d\d\d)$/).flatten.reverse
-        parts[1] = case parts[1].downcase
-                   when 'januar'
-                     1
-                   when 'februar'
-                     2
-                   when 'mars'
-                     3
-                   when 'april'
-                     4
-                   when 'mai'
-                     5
-                   when 'juni'
-                     6
-                   when 'juli'
-                     7
-                   when 'august'
-                     8
-                   when 'september'
-                     9
-                   when 'oktober'
-                     10
-                   when 'november'
-                     11
-                   when 'desember'
-                     12
-                   end
-        parts.collect {|part| part.to_i }
-      end
-
-      def parse_time(str)
-        str.split(':').collect {|part| part.to_i }
-      end
 
       div = (@doc/"#bandprofile-subpage")
       dates = div.search("div.posted-date").collect do |d|
-        parse_date(d.inner_text.strip)
+        parse_textual_date(d.inner_text.strip)
       end
 
       times = div.search("span.posted-by").collect do |s|

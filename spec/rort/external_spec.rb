@@ -92,6 +92,16 @@ describe Rort::External::Artist do
   it 'should provide an empty array when there are no fans' do
     External::Artist.as('uggedal').fans.size.should be_zero
   end
+
+  it 'should provide the songs of the artist' do
+    songs = External::Artist.as('TheFernets').songs
+    songs.size.should > 5
+    songs.each do |song|
+      song[:id].should > 0
+      song[:name].should_not be_empty
+      song[:time].should < Time.now
+    end
+  end
 end
 
 describe Rort::External::Blog do
