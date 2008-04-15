@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Retrieve latest concerts for an artists
+desc: ""
+type: :feature
+component: server
+release: 0.2.0
+reporter: Eivind Uggedal <eu@redflavor.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-04-15 10:49:43.092416 Z
+references: []
+
+id: ed9c7cb21e2cc46bfff75876d0f6e752b1b84bea
+log_events: 
+- - 2008-04-15 10:49:44.228055 Z
+  - Eivind Uggedal <eu@redflavor.com>
+  - created
+  - ""
