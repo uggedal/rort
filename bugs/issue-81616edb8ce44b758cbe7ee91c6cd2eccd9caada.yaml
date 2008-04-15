@@ -3,7 +3,7 @@ title: Retrieve latest guestbook posts from an artist
 desc: ""
 type: :feature
 component: server
-release: 0.2.0
+release: 
 reporter: Eivind Uggedal <eu@redflavor.com>
 status: :unstarted
 disposition: 
@@ -29,3 +29,7 @@ log_events:
     
     Currently avaiting reply from Dag. He's out of office until
     next week.
+- - 2008-04-15 13:27:40.466940 Z
+  - Eivind Uggedal <eu@redflavor.com>
+  - unassigned from release 0.2.0
+  - We have to put this issue on hold. Should be fixed in a later release.
