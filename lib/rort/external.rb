@@ -40,8 +40,7 @@ module Rort::External
         end
       end
 
-    def parse_textual_date(str)
-      parts = str.scan(/\w+, (\d\d) (\w+), (\d\d\d\d)$/).flatten.reverse
+    def parse_textual_date(parts)
       parts[1] = case parts[1].downcase
                  when 'januar'
                    1
@@ -143,7 +142,32 @@ module Rort::External
       [ids, names, datetimes].transpose.collect do |item|
         {:id => item[0], :name => item[1], :time => Time.local(*item[2])}
       end
+    end
 
+    def reviews
+      (@doc/"#WebPart_gwpReviewList .singlereview").collect do |review|
+
+        id = review.at("a[@onclick^='playBandTrack']")[:onclick].
+               scan(/^playBandTrack\((\d+)\)/).flatten.first.to_i
+
+        rating = review.at("img.trackreviewStars")[:src].
+                   scan(/_(\d)\.png$/).flatten.first.to_i
+
+        date = review.at(".Writtenat").inner_text.strip.
+                 scan(/(\d{1,2})\. (\w+) (\d{4})$/).flatten.reverse
+
+        reviewer = review.
+                     at(".trackReviewHeader a[@href^='#{URL}Person']")[:href].
+                       scan(/Person\/(\w+)/).flatten.first
+
+        comment = review.at(".trackReviewFull").inner_text.strip
+
+        {:id => id,
+         :time => Time.local(*parse_textual_date(date)),
+         :reviewer => reviewer,
+         :rating => rating,
+         :comment => comment}
+      end
     end
 
     private
@@ -172,7 +196,9 @@ module Rort::External
     def posts
       div = (@doc/"#bandprofile-subpage")
       dates = div.search("div.posted-date").collect do |d|
-        parse_textual_date(d.inner_text.strip)
+        parts = d.inner_text.strip.
+                  scan(/\w+, (\d\d) (\w+), (\d\d\d\d)$/).flatten.reverse
+        parse_textual_date(parts)
       end
 
       times = div.search("span.posted-by").collect do |s|
@@ -198,17 +224,18 @@ module Rort::External
 
     def events
       (@doc/"#bandprofile-subpage > ul > li").collect do |event|
+
         location = event.at("span[@id$='_Label1']").inner_text.strip
         datetime = event.at("span[@id$='_Label2']").inner_text.strip.split
         title = event.at("span[@id$='_Label3']").inner_text.strip
-        body = event.at("span[@id$='_Label4'] > p").inner_text.strip
+        comment = event.at("span[@id$='_Label4'] > p").inner_text.strip
 
         time = parse_numeric_date(datetime[0]) + parse_time(datetime[1])
 
         {:location => location,
          :time => Time.local(*time),
          :title => title,
-         :body => body}
+         :comment => comment}
       end
     end
   end

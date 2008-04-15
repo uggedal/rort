@@ -67,7 +67,7 @@ describe Rort::External::Artist do
       name.should == 'The Megaphonic Thrift'
   end
 
-  it 'should provide the favorites of the artist' do
+  it 'should provide favorites of the artist' do
     res = External::Artist.as('uggedal').favorites
     res.size.should > 1
     res.each do |fav|
@@ -80,7 +80,7 @@ describe Rort::External::Artist do
     External::Artist.as('TheFernets').favorites.size.should be_zero
   end
 
-  it 'should provide the fans of the artist' do
+  it 'should provide fans of the artist' do
     res = External::Artist.as('TheFernets').fans
     res.size.should > 150
     res.each do |fan|
@@ -93,7 +93,7 @@ describe Rort::External::Artist do
     External::Artist.as('uggedal').fans.size.should be_zero
   end
 
-  it 'should provide the songs of the artist' do
+  it 'should provide songs of the artist' do
     songs = External::Artist.as('TheFernets').songs
     songs.size.should > 5
     songs.each do |song|
@@ -105,6 +105,24 @@ describe Rort::External::Artist do
 
   it 'should provide an empty array when there are no songs' do
     External::Artist.as('uggedal').songs.size.should be_zero
+  end
+
+  it 'should provide reviews of the artist' do
+    reviews = External::Artist.as('dividizzlDVD').reviews
+
+    reviews.size.should > 5
+    reviews.each do |review|
+      review[:id].should > 0
+      review[:time].should < Time.now
+      review[:reviewer].should_not be_empty
+      review[:rating].should < 7
+      review[:rating].should > 0
+      review[:comment].should_not be_empty
+    end
+  end
+
+  it 'should provide an empty array when there are no reviews' do
+    External::Artist.as('uggedal').reviews.size.should be_zero
   end
 end
 
@@ -149,7 +167,7 @@ describe Rort::External::Concert do
       event[:location].should_not be_empty
       event[:time].should < Time.now
       event[:title].should_not be_empty
-      event[:body].should_not be_nil
+      event[:comment].should_not be_nil
     end
   end
 
