@@ -101,6 +101,27 @@ module Rort::Models
       @reviews ||= external.reviews
     end
 
+    def activities
+      activities = blog.posts
+      activities.concat(songs)
+      activities.concat(concert.events)
+      activities.concat(reviews)
+
+      activities.sort do |a,b|
+        b[:time] <=> a[:time]
+      end
+    end
+
+    def favorite_activities
+      activities = favorites.collect do |fav|
+        fav.activities
+      end
+
+      activities.flatten.sort do |a,b|
+        b[:time] <=> a[:time]
+      end
+    end
+
     def to_json(*arg)
       { 'slug' => slug,
         'name' => name}.to_json(*arg)

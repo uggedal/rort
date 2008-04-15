@@ -128,5 +128,17 @@ describe Artist do
   it 'could have song reviews' do
     @artist.reviews.size.should > 1
   end
-end
 
+  it 'should provide a sorted list of activities' do
+    activities = @artist.activities
+    activities.size.should > 70
+    activities.first[:time].should > activities.last[:time]
+
+  end
+
+  it 'should collect a sorted list of recent activity of all favorites' do
+    activities = @person.favorite_activities
+    activities.size.should > 100
+    activities.first[:time].should > activities.last[:time]
+  end
+end
