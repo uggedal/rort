@@ -16,3 +16,16 @@ log_events:
   - Eivind Uggedal <eu@redflavor.com>
   - created
   - ""
+- - 2008-04-15 10:44:47.208455 Z
+  - Eivind Uggedal <eu@redflavor.com>
+  - commented
+  - |-
+    There are some problems with fetching guestbook posts as they are
+    retrieved by javascript after the page is loaded. They are fetched
+    trough a SOAP server.
+    
+    Made some tests with curl for trying to retrieve data from the SOAP
+    server, but was sadly unable to get any results.
+    
+    Currently avaiting reply from Dag. He's out of office until
+    next week.
