@@ -1,0 +1,22 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Store calculated activity lists so they can be cashed
+desc: |-
+  When calculating activity lists, store them as instance variables
+  on the first calculation (@activity =|| calculate_activity) so
+  that the calculation only needs to be processed once while
+  the object is in the cache.
+type: :bugfix
+component: server
+release: 
+reporter: Eivind Uggedal <eu@redflavor.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-04-16 11:12:27.967035 Z
+references: []
+
+id: 8d336ff70b51beef0d7572c048368da4a54f3c1a
+log_events: 
+- - 2008-04-16 11:12:34.478532 Z
+  - Eivind Uggedal <eu@redflavor.com>
+  - created
+  - ""
