@@ -40,13 +40,20 @@ module Rort::External
         end
       end
 
+    def days_ago(days)
+      ago = Time.now - days*60*60*24
+      [ago.year, ago.month, ago.day]
+    end
+
     def parse_textual_date(date, pattern)
       matched = date.scan(pattern).flatten.reverse
 
       if matched.empty?
         matched = case date
-                  when /^Skrevet i dag$/
-                    Time.now.strftime('%Y %m %d').split
+                  when /i dag$/
+                    days_ago 0
+                  when /i g\303\245r$/
+                    days_ago 1
                   end
       else
         matched[1] = case matched[1].downcase
