@@ -66,6 +66,21 @@ describe Rort::External::Fetchable do
                                 yesterday.month,
                                 yesterday.day]
   end
+
+  it 'should be able to parse a numeric date' do
+    fetchable = External::Fetchable.new
+    parsed = fetchable.send(:parse_numeric_date, '24.12.2008')
+    parsed.should == [2008, 12, 24]
+  end
+
+  it 'should be able to parse a numeric time' do
+    fetchable = External::Fetchable.new
+    parsed = fetchable.send(:parse_time, '20:23')
+    parsed_with_sec = fetchable.send(:parse_time, '20:23:45')
+    parsed.should == [20, 23]
+    parsed_with_sec.should == [20, 23, 45]
+  end
+
 end
 
 describe Rort::External::Artist do
