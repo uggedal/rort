@@ -40,34 +40,43 @@ module Rort::External
         end
       end
 
-    def parse_textual_date(parts)
-      parts[1] = case parts[1].downcase
-                 when 'januar'
-                   1
-                 when 'februar'
-                   2
-                 when 'mars'
-                   3
-                 when 'april'
-                   4
-                 when 'mai'
-                   5
-                 when 'juni'
-                   6
-                 when 'juli'
-                   7
-                 when 'august'
-                   8
-                 when 'september'
-                   9
-                 when 'oktober'
-                   10
-                 when 'november'
-                   11
-                 when 'desember'
-                   12
-                 end
-      parts.collect {|part| part.to_i }
+    def parse_textual_date(date, pattern)
+      matched = date.scan(pattern).flatten.reverse
+
+      if matched.empty?
+        matched = case date
+                  when /^Skrevet i dag$/
+                    Time.now.strftime('%Y %m %d').split
+                  end
+      else
+        matched[1] = case matched[1].downcase
+                     when 'januar'
+                       1
+                     when 'februar'
+                       2
+                     when 'mars'
+                       3
+                     when 'april'
+                       4
+                     when 'mai'
+                       5
+                     when 'juni'
+                       6
+                     when 'juli'
+                       7
+                     when 'august'
+                       8
+                     when 'september'
+                       9
+                     when 'oktober'
+                       10
+                     when 'november'
+                       11
+                     when 'desember'
+                       12
+                     end
+      end
+      matched.collect {|part| part.to_i }
     end
 
     def parse_numeric_date(str)
@@ -153,8 +162,9 @@ module Rort::External
         rating = review.at("img.trackreviewStars")[:src].
                    scan(/_(\d)\.png$/).flatten.first.to_i
 
-        date = review.at(".Writtenat").inner_text.strip.
-                 scan(/(\d{1,2})\. (\w+) (\d{4})$/).flatten.reverse
+        date = review.at(".Writtenat").inner_text.strip
+        pattern = /(\d{1,2})\. (\w+) (\d{4})$/
+        time = Time.local(*parse_textual_date(date, pattern))
 
         reviewer = review.
                      at(".trackReviewHeader a[@href^='#{URL}Person']")[:href].
@@ -163,7 +173,7 @@ module Rort::External
         comment = review.at(".trackReviewFull").inner_text.strip
 
         {:id => id,
-         :time => Time.local(*parse_textual_date(date)),
+         :time => time,
          :reviewer => reviewer,
          :rating => rating,
          :comment => comment}
@@ -196,9 +206,9 @@ module Rort::External
     def posts
       div = (@doc/"#bandprofile-subpage")
       dates = div.search("div.posted-date").collect do |d|
-        parts = d.inner_text.strip.
-                  scan(/\w+, (\d\d) (\w+), (\d\d\d\d)$/).flatten.reverse
-        parse_textual_date(parts)
+        date = d.inner_text.strip
+        pattern = /\w+, (\d\d) (\w+), (\d\d\d\d)$/
+        parse_textual_date(date, pattern)
       end
 
       times = div.search("span.posted-by").collect do |s|
