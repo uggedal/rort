@@ -1,6 +1,5 @@
 require 'rort/external'
 
-
 module Rort::Models
 
   class Cache
@@ -165,7 +164,5 @@ module Rort::Models
           self.class.find_or_create(fan)
         end
       end
-
-
   end
 end
