@@ -1,0 +1,20 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Add verbose time description in activity hashes
+desc: |-
+  Use verbose descriptions as in activesupport and use the
+  actual iso date as an abbr element. Check microformats.
+type: :feature
+component: rort
+release: 
+reporter: Eivind Uggedal <eu@redflavor.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-04-16 17:05:29.231984 Z
+references: []
+
+id: 092dd1498322db43e2118e1241bd90cd3698fa13
+log_events: 
+- - 2008-04-16 17:05:33.241748 Z
+  - Eivind Uggedal <eu@redflavor.com>
+  - created
+  - ""
