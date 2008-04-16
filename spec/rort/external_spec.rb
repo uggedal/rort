@@ -34,53 +34,6 @@ describe Rort::External::Fetchable do
   it 'should return nil with *as* if not existing' do
     External::Artist.as('NonExistantArtist').should be_nil
   end
-
-  it 'should be able to get a given date X days ago as array' do
-    fetchable = External::Fetchable.new
-    five_days = 60*60*24*5
-    time = Time.now - five_days
-    fetchable.send(:days_ago, 5).should == [time.year, time.month, time.day]
-  end
-
-  it 'should be able to parse a textual date' do
-    fetchable = External::Fetchable.new
-    date = 'Mandag 12. FEBRUAR, 2008'
-    pattern = /(\d{2})\. (\w+), (\d{4})/
-    parsed = fetchable.send(:parse_textual_date, date, pattern)
-    parsed.should == [2008, 2, 12]
-  end
-
-  it 'should be able to parse a verbose textual date' do
-    fetchable = External::Fetchable.new
-    today = 'i dag'
-    yesterday = "i g\303\245r"
-    pattern = /(\d{2})\. (\w+), (\d{4})/
-
-    parsed_today = fetchable.send(:parse_textual_date, today, pattern)
-    parsed_yesterday = fetchable.send(:parse_textual_date, yesterday, pattern)
-
-    today = Time.now
-    yesterday = today - 60*60*24
-    parsed_today.should == [today.year, today.month, today.day]
-    parsed_yesterday.should == [yesterday.year,
-                                yesterday.month,
-                                yesterday.day]
-  end
-
-  it 'should be able to parse a numeric date' do
-    fetchable = External::Fetchable.new
-    parsed = fetchable.send(:parse_numeric_date, '24.12.2008')
-    parsed.should == [2008, 12, 24]
-  end
-
-  it 'should be able to parse a numeric time' do
-    fetchable = External::Fetchable.new
-    parsed = fetchable.send(:parse_time, '20:23')
-    parsed_with_sec = fetchable.send(:parse_time, '20:23:45')
-    parsed.should == [20, 23]
-    parsed_with_sec.should == [20, 23, 45]
-  end
-
 end
 
 describe Rort::External::Artist do
