@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Partition code into folders for each module
+desc: ""
+type: :feature
+component: server
+release: 
+reporter: Eivind Uggedal <eu@redflavor.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-04-16 16:15:07.302417 Z
+references: []
+
+id: 2d93e2e6213db4b9c472f3cd39763ab93d047830
+log_events: 
+- - 2008-04-16 16:15:08.505726 Z
+  - Eivind Uggedal <eu@redflavor.com>
+  - created
+  - ""
