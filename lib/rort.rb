@@ -3,6 +3,7 @@ require 'halcyon'
 module Rort
   VERSION = %w(0 1 0).join('.').freeze
 
+  require 'rort/parsers'
   require 'rort/external'
   require 'rort/models'
   require 'rort/controllers'
