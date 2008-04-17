@@ -97,7 +97,7 @@ module Rort::External
     end
 
     def song_review_path(review_id)
-      "user/trackreviews.aspx?mmmid=#{review_id}&id=#@id"
+      "user/trackreviews.aspx?mmmid=#{review_id}&id=#{id}"
     end
 
     def songs
@@ -148,7 +148,7 @@ module Rort::External
         activity(:review,
                  time,
                  song_review_path(id),
-                 name,
+                 'name',
                  { :rating => rating,
                    :comment => comment,
                    :reviewer => reviewer })
@@ -178,6 +178,14 @@ module Rort::External
       @doc = fetch "Blogg/#@slug"
     end
 
+    def id
+      Artist.as(@slug).id
+    end
+
+    def post_path(post_id)
+      "user/news2entry.aspx?articleid=#{post_id}&id=#{id}"
+    end
+
     def posts
       div = (@doc/"#bandprofile-subpage")
       dates = div.search("div.posted-date").collect do |d|
@@ -194,8 +202,11 @@ module Rort::External
         a[:href].scan(/articleid=(\d+)/).flatten.first.to_i
       end
 
-      [ids, dates, times].transpose.collect do |item|
-        {:id => item[0], :time => Time.local(*(item[1] + item[2]))}
+      [dates, times, ids].transpose.collect do |item|
+        activity(:blog_post,
+                 Time.local( *(item[0] + item[1]) ),
+                 post_path(item[2]),
+                 'name')
       end
     end
   end

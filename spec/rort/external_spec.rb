@@ -116,6 +116,7 @@ describe Rort::External::Artist do
       review[:type].should == :review
       review[:time].should < Time.now
       review[:url].should_not be_empty
+      review[:name].should_not be_empty
       review[:reviewer].should_not be_empty
       review[:rating].should < 7
       review[:rating].should > 0
@@ -142,8 +143,10 @@ describe Rort::External::Blog do
     posts = External::Blog.as('TheFernets').posts
     posts.size.should > 4
     posts.each do |post|
-      post[:id].should > 0
+      post[:type].should == :blog_post
       post[:time].should < Time.now
+      post[:url].should_not be_empty
+      post[:name].should_not be_empty
     end
   end
 
