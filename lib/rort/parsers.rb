@@ -14,6 +14,8 @@ module Rort::Parsers
                   days_ago 0
                 when /i g\303\245r$/
                   days_ago 1
+                when /(\d{1,2}) dager siden$/
+                  days_ago $1.to_i
                 end
     else
       matched[1] = case matched[1].downcase
