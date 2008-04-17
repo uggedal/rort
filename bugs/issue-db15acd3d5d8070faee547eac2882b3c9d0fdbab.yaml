@@ -1,0 +1,21 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Profile application
+desc: |-
+  Profile the application to find the worst bottlenecks.
+  Use ruby-prof and include some of the graphs it represents
+  in the Selection of Tools chapter in my thesis as an example.
+type: :bugfix
+component: server
+release: 
+reporter: Eivind Uggedal <eu@redflavor.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-04-17 09:40:36.159224 Z
+references: []
+
+id: db15acd3d5d8070faee547eac2882b3c9d0fdbab
+log_events: 
+- - 2008-04-17 09:40:37.375023 Z
+  - Eivind Uggedal <eu@redflavor.com>
+  - created
+  - ""
