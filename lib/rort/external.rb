@@ -100,8 +100,18 @@ module Rort::External
       "user/trackreviews.aspx?mmmid=#{review_id}&id=#{id}"
     end
 
+    def songs_list
+      (@doc/"#WebPart_gwpBandTracks .songmeta")
+    end
+
+    def song_name(song_id)
+      songs_list.at(".stats a[@href^='../../user/trackreviews" +
+                    ".aspx?mmmid=#{song_id}']").parent.parent.parent.
+                    at(".trackname").inner_text.strip
+    end
+
     def songs
-      songs = (@doc/"#WebPart_gwpBandTracks .songmeta")
+      songs = songs_list
 
       ids = songs.search(".stats a[@href^='../../user/trackreviews']").collect do |a|
         a[:href].scan(/mmmid=(\d+)/).flatten.first.to_i
@@ -148,7 +158,7 @@ module Rort::External
         activity(:review,
                  time,
                  song_review_path(id),
-                 'title',
+                 song_name(id),
                  { :rating => rating,
                    :comment => comment,
                    :reviewer => reviewer })
