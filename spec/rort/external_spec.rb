@@ -97,9 +97,10 @@ describe Rort::External::Artist do
     songs = External::Artist.as('TheFernets').songs
     songs.size.should > 5
     songs.each do |song|
-      song[:id].should > 0
-      song[:name].should_not be_empty
+      song[:type].should == :song
       song[:time].should < Time.now
+      song[:url].should_not be_empty
+      song[:name].should_not be_empty
     end
   end
 

@@ -41,6 +41,18 @@ module Rort::External
         end
       end
 
+      def url(path ='')
+        "#{URL}#{path}"
+      end
+
+      def activity(type, time, url, name, opts={})
+        activity = {:type => type,
+                    :time => time,
+                    :url  => url,
+                    :name => name}
+        activity.merge(opts)
+      end
+
     private
       def request(uri)
         begin
@@ -84,6 +96,10 @@ module Rort::External
       end
     end
 
+    def song_review_path(review_id)
+      "user/trackreviews.aspx?mmmid=#{review_id}&id=#@id"
+    end
+
     def songs
       songs = (@doc/"#WebPart_gwpBandTracks .songmeta")
 
@@ -103,7 +119,10 @@ module Rort::External
       end
 
       [ids, names, datetimes].transpose.collect do |item|
-        {:id => item[0], :name => item[1], :time => Time.local(*item[2])}
+        activity(:song,
+                 Time.local(*item[2]),
+                 song_review_path(item[0]),
+                 item[1])
       end
     end
 
