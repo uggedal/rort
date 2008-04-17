@@ -45,11 +45,11 @@ module Rort::External
         "#{URL}#{path}"
       end
 
-      def activity(type, time, url, name, opts={})
+      def activity(type, time, url, title, opts={})
         activity = {:type => type,
                     :time => time,
                     :url  => url,
-                    :name => name}
+                    :title => title}
         activity.merge(opts)
       end
 
@@ -107,8 +107,8 @@ module Rort::External
         a[:href].scan(/mmmid=(\d+)/).flatten.first.to_i
       end
 
-      names = songs.search(".trackname").collect do |name|
-        name.inner_text.strip
+      titles = songs.search(".trackname").collect do |title|
+        title.inner_text.strip
       end
 
       datetimes = songs.search(".stats").collect do |stat|
@@ -118,7 +118,7 @@ module Rort::External
         parse_numeric_date(datetime[0]) + parse_time(datetime[1])
       end
 
-      [ids, names, datetimes].transpose.collect do |item|
+      [ids, titles, datetimes].transpose.collect do |item|
         activity(:song,
                  Time.local(*item[2]),
                  song_review_path(item[0]),
@@ -148,7 +148,7 @@ module Rort::External
         activity(:review,
                  time,
                  song_review_path(id),
-                 'name',
+                 'title',
                  { :rating => rating,
                    :comment => comment,
                    :reviewer => reviewer })
@@ -206,7 +206,7 @@ module Rort::External
         activity(:blog_post,
                  Time.local( *(item[0] + item[1]) ),
                  post_path(item[2]),
-                 'name')
+                 'title')
       end
     end
   end

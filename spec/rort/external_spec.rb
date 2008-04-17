@@ -100,7 +100,7 @@ describe Rort::External::Artist do
       song[:type].should == :song
       song[:time].should < Time.now
       song[:url].should_not be_empty
-      song[:name].should_not be_empty
+      song[:title].should_not be_empty
     end
   end
 
@@ -116,7 +116,7 @@ describe Rort::External::Artist do
       review[:type].should == :review
       review[:time].should < Time.now
       review[:url].should_not be_empty
-      review[:name].should_not be_empty
+      review[:title].should_not be_empty
       review[:reviewer].should_not be_empty
       review[:rating].should < 7
       review[:rating].should > 0
@@ -146,7 +146,7 @@ describe Rort::External::Blog do
       post[:type].should == :blog_post
       post[:time].should < Time.now
       post[:url].should_not be_empty
-      post[:name].should_not be_empty
+      post[:title].should_not be_empty
     end
   end
 
