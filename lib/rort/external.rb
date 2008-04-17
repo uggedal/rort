@@ -145,11 +145,13 @@ module Rort::External
 
         comment = review.at(".trackReviewFull").inner_text.strip
 
-        {:id => id,
-         :time => time,
-         :reviewer => reviewer,
-         :rating => rating,
-         :comment => comment}
+        activity(:review,
+                 time,
+                 song_review_path(id),
+                 name,
+                 { :rating => rating,
+                   :comment => comment,
+                   :reviewer => reviewer })
       end
     end
 

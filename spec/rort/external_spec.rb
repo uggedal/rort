@@ -113,8 +113,9 @@ describe Rort::External::Artist do
 
     reviews.size.should > 5
     reviews.each do |review|
-      review[:id].should > 0
+      review[:type].should == :review
       review[:time].should < Time.now
+      review[:url].should_not be_empty
       review[:reviewer].should_not be_empty
       review[:rating].should < 7
       review[:rating].should > 0
