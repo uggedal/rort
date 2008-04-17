@@ -105,9 +105,12 @@ module Rort::External
     end
 
     def song_name(song_id)
-      songs_list.at(".stats a[@href^='../../user/trackreviews" +
-                    ".aspx?mmmid=#{song_id}']").parent.parent.parent.
-                    at(".trackname").inner_text.strip
+      if list = songs_list.at(".stats a[@href^='../../user/trackreviews" +
+                              ".aspx?mmmid=#{song_id}']")#
+        list.parent.parent.parent.at(".trackname").inner_text.strip
+      else
+        'En sang som er blitt slettet'
+      end
     end
 
     def songs
