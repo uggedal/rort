@@ -143,7 +143,7 @@ describe Rort::External::Blog do
     posts = External::Blog.as('TheFernets').posts
     posts.size.should > 4
     posts.each do |post|
-      post[:type].should == :blog_post
+      post[:type].should == :blog
       post[:time].should < Time.now
       post[:url].should_not be_empty
       post[:title].should_not be_empty
@@ -169,9 +169,11 @@ describe Rort::External::Concert do
     events = External::Concert.as('TheFernets').events
     events.size.should > 15
     events.each do |event|
-      event[:location].should_not be_empty
+      event[:type].should == :concert
       event[:time].should < Time.now
+      event[:url].should_not be_empty
       event[:title].should_not be_empty
+      event[:location].should_not be_empty
       event[:comment].should_not be_nil
     end
   end

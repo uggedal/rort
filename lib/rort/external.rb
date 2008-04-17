@@ -215,7 +215,7 @@ module Rort::External
       titles = div.search("h4").collect {|h4| h4.inner_text.strip }
 
       [dates, times, ids, titles].transpose.collect do |item|
-        activity(:blog_post,
+        activity(:blog,
                  Time.local( *(item[0] + item[1]) ),
                  post_path(item[2]),
                  item[3])
@@ -240,10 +240,12 @@ module Rort::External
 
         time = parse_numeric_date(datetime[0]) + parse_time(datetime[1])
 
-        {:location => location,
-         :time => Time.local(*time),
-         :title => title,
-         :comment => comment}
+        activity(:concert,
+                 Time.local(*time),
+                 "Konserter/#@slug",
+                 title,
+                 { :location => location,
+                   :comment => comment })
       end
     end
   end
