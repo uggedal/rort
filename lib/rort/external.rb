@@ -202,11 +202,13 @@ module Rort::External
         a[:href].scan(/articleid=(\d+)/).flatten.first.to_i
       end
 
-      [dates, times, ids].transpose.collect do |item|
+      titles = div.search("h4").collect {|h4| h4.inner_text.strip }
+
+      [dates, times, ids, titles].transpose.collect do |item|
         activity(:blog_post,
                  Time.local( *(item[0] + item[1]) ),
                  post_path(item[2]),
-                 'title')
+                 item[3])
       end
     end
   end
