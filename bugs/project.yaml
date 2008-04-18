@@ -24,13 +24,17 @@ releases:
     - We seem to have a stable base with friend functionality. First release.
 - !ditz.rubyforge.org,2008-03-06/release 
   name: 0.2.0
-  status: :unreleased
-  release_time: 
+  status: :released
+  release_time: 2008-04-18 11:50:32.930915 Z
   log_events: 
   - - 2008-04-14 10:55:20.683289 Z
     - Eivind Uggedal <eu@redflavor.com>
     - created
     - Should be able to retrieve a list of recent activity for your favorites.
+  - - 2008-04-18 11:50:32.930941 Z
+    - Eivind Uggedal <eu@redflavor.com>
+    - released
+    - ""
 - !ditz.rubyforge.org,2008-03-06/release 
   name: 0.3.0
   status: :unreleased
