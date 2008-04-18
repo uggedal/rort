@@ -1,0 +1,21 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Use icons to distinguish events
+desc: |-
+  Include icons for different types of events. Use data: URI scheme for
+  including the graphics into the js file. Such an encoder can be found
+  at http://www.scalora.org/projects/uriencoder/
+type: :feature
+component: client
+release: 
+reporter: Eivind Uggedal <eu@redflavor.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-04-18 12:33:55.302509 Z
+references: []
+
+id: 5f51d23f2d0fa7f03e332ab8e38d7097975deb87
+log_events: 
+- - 2008-04-18 12:33:56.622464 Z
+  - Eivind Uggedal <eu@redflavor.com>
+  - created
+  - ""
