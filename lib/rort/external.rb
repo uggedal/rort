@@ -48,7 +48,7 @@ module Rort::External
       def activity(type, time, url, title, opts={})
         activity = {:type => type,
                     :time => time,
-                    :url  => url,
+                    :url  => url(url),
                     :title => title}
         activity.merge(opts)
       end

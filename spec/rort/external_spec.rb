@@ -99,7 +99,7 @@ describe Rort::External::Artist do
     songs.each do |song|
       song[:type].should == :song
       song[:time].should < Time.now
-      song[:url].should_not be_empty
+      song[:url].should =~ /^http:\/\/\w+/
       song[:title].should_not be_empty
     end
   end
@@ -115,7 +115,7 @@ describe Rort::External::Artist do
     reviews.each do |review|
       review[:type].should == :review
       review[:time].should < Time.now
-      review[:url].should_not be_empty
+      review[:url].should =~ /^http:\/\/\w+/
       review[:title].should_not be_empty
       review[:reviewer].should_not be_empty
       review[:rating].should < 7
@@ -145,7 +145,7 @@ describe Rort::External::Blog do
     posts.each do |post|
       post[:type].should == :blog
       post[:time].should < Time.now
-      post[:url].should_not be_empty
+      post[:url].should =~ /^http:\/\/\w+/
       post[:title].should_not be_empty
     end
   end
@@ -171,7 +171,7 @@ describe Rort::External::Concert do
     events.each do |event|
       event[:type].should == :concert
       event[:time].should < Time.now
-      event[:url].should_not be_empty
+      event[:url].should =~ /^http:\/\/\w+/
       event[:title].should_not be_empty
       event[:location].should_not be_empty
       event[:comment].should_not be_nil
