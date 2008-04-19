@@ -40,7 +40,8 @@ function withJQuery() {
     $('#frontpage .mainnewsspot').prepend(text);
   }
 
-  var user = $('ul#loggedinuser > li.item > a:first').attr('href');
+  var userHref = $('ul#loggedinuser > li.item > a:first').attr('href');
+  var user = userHref;
   display(user);
 
   get('http://roert.redflavor.com/', display);
