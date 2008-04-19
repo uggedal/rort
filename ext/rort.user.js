@@ -4,8 +4,9 @@
 // @author         Eivind Uggedal <eu@redflavor.com>
 // @namespace      http://redflavor.com/
 // @description    Rører ved Urørt
-// @include        http://www11.nrk.no/urort/default.aspx
+// @include        http://redflavor.com/urort.html
 // ==/UserScript==
+
 
 // Add jQuery
 var GM_JQ = document.createElement('script');
@@ -28,21 +29,47 @@ GM_wait();
 function get(url, callback) {
   GM_xmlhttpRequest({
     method: "GET",
-     url: url,
-     onload: function(xhr) { callback(xhr.responseText); }
+    url: url,
+    onload: function(xhr) {
+      callback(xhr.responseText);
+    }
   });
+}
+
+function parseJson(data) {
+  return eval("(" + data + ")");
 }
 
 // jQuery enabled scope
 function withJQuery() {
 
+  var userHref = $('ul#loggedinuser > li.item > a:first').attr('href');
+  var user = userHref.match(/\/Person\/(\w+)/)[1];
+
   function display(text) {
     $('#frontpage .mainnewsspot').prepend(text);
   }
 
-  var userHref = $('ul#loggedinuser > li.item > a:first').attr('href');
-  var user = userHref;
-  display(user);
+  function displayActivities(data) {
+    var parsed = parseJson(data);
 
-  get('http://roert.redflavor.com/', display);
+    if ( parsed.status == 200 ) {
+      data = parsed.body;
+      $.each(data, function() {
+        formatActivities(this);
+      });
+    } else {
+      display('Connection error');
+    }
+  }
+
+  function formatActivities(activities) {
+    $.each(activities, function() {
+      display('<p>'+this+'</p>');
+    });
+  }
+
+  get('http://rort.redflavor.com/artists/' + user + '/favorites',
+      displayActivities);
+  
 }
