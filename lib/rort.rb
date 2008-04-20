@@ -5,8 +5,11 @@ module Rort
 
   require 'rort/parsers'
   require 'rort/external'
+  require 'rort/cache'
   require 'rort/models'
   require 'rort/controllers'
+
+  Cache.enable!
 
   def self.start
     Halcyon::Runner.load_config

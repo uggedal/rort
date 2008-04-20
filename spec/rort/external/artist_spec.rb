@@ -1,96 +1,104 @@
-require File.join(File.dirname(__FILE__), '..', '..', 'spec_helper')
+require File.join(File.dirname(__FILE__), '..', '..',  'spec_helper')
 
-include Rort
+include Rort::Models
 
-describe Rort::External::Artist do
+describe Artist do
 
-  it 'should provide access by block' do
-    External::Artist.as('uggedal') do |a|
-      a.name.should == 'Eivind Uggedal'
+  before(:each) do
+    Rort::Cache.del('uggedal')
+    Rort::Cache.del('TheFernets')
+
+    @person = Artist.find_or_fetch('uggedal')
+    @artist = Artist.find_or_fetch('TheFernets')
+  end
+
+  it 'should be able to find an existing artist' do
+    Artist.find_or_fetch('uggedal').name.should == @person.name
+  end
+
+  it 'should should return nil for fetching an nonexistent artist' do
+    Artist.find_or_fetch('SomeCrazyNonExistentArtist').should be_nil
+  end
+
+  it 'should be serializable' do
+    hash = {'slug' => 'uggedal', 'name' => 'Eivind Uggedal'}
+    JSON.parse(@person.to_json).should === hash
+  end
+
+  it 'should be able to retrieve the slug of an initialized artist' do
+    @person.slug.should == 'uggedal'
+  end
+
+  it 'should be able to retrieve the name of an initialized artist' do
+    @person.name.should == 'Eivind Uggedal'
+  end
+
+  it 'could have several favorites' do
+    @person.favorites.size > 1
+  end
+
+  it 'should be able to fetch the favorites of an initialized artist' do
+    @person.favorites.each do |fav|
+      fav.should be_instance_of(Artist)
     end
   end
 
-  it 'should only fetch the main document once for one object' do
-    External::Artist.as('uggedal') do |a|
-      should_not_use_http_request do
-        a.name.should == 'Eivind Uggedal'
-        a.favorites.size.should > 1
+  it 'should be able to fetch the names of favorites on initialization' do
+    should_not_use_http_request do
+      @person.favorites.each do |fav|
+        fav.name.should_not be_nil
       end
     end
   end
 
-  it 'should not be initialized if the artist is not found' do
-    External::Artist.as('MrUnknownAndUnfound').should be_nil
+  it 'could have several fans' do
+    @artist.fans.size > 150
   end
 
-  it 'should provide the id of the artist' do
-    External::Artist.as('TheMegaphonicThrift').
-      id.to_i.should == 70193
-  end
-
-  it 'should provide the name of the artist' do
-    External::Artist.as('TheMegaphonicThrift').
-      name.should == 'The Megaphonic Thrift'
-  end
-
-  it 'should provide favorites of the artist' do
-    res = External::Artist.as('uggedal').favorites
-    res.size.should > 1
-    res.each do |fav|
-      fav[:slug].should_not be_empty
-      fav[:name].should_not be_empty
+  it 'should be able to fetch the fans of an initialized artist' do
+    @artist.fans.each do |fan|
+      fan.should be_instance_of(Artist)
     end
   end
 
-  it 'should provide an empty array when there are no favorites' do
-    External::Artist.as('TheFernets').favorites.size.should be_zero
-  end
-
-  it 'should provide fans of the artist' do
-    res = External::Artist.as('TheFernets').fans
-    res.size.should > 150
-    res.each do |fan|
-      fan[:slug].should_not be_empty
-      fan[:name].should_not be_empty
+  it 'should be able to fetch the names of fans on initialization' do
+    should_not_use_http_request do
+      @artist.fans.each do |fan|
+        fan.name.should_not be_nil
+      end
     end
   end
 
-  it 'should provide an empty array when there are no fans' do
-    External::Artist.as('uggedal').fans.size.should be_zero
+  it 'could have several friends' do
+    @person.friends.size.should > 260
   end
 
-  it 'should provide songs of the artist' do
-    songs = External::Artist.as('TheFernets').songs
-    songs.size.should > 5
-    songs.each do |song|
-      song[:type].should == :song
-      song[:time].should < Time.now
-      song[:url].should =~ /^http:\/\/\w+/
-      song[:title].should_not be_empty
-    end
+  it 'could have blog posts' do
+    @artist.blog.posts.size.should > 10
   end
 
-  it 'should provide an empty array when there are no songs' do
-    External::Artist.as('uggedal').songs.size.should be_zero
+  it 'could have songs' do
+    @artist.songs.size.should > 5
   end
 
-  it 'should provide reviews of the artist' do
-    reviews = External::Artist.as('dividizzlDVD').reviews
-
-    reviews.size.should > 5
-    reviews.each do |review|
-      review[:type].should == :review
-      review[:time].should < Time.now
-      review[:url].should =~ /^http:\/\/\w+/
-      review[:title].should_not be_empty
-      review[:reviewer].should_not be_empty
-      review[:rating].should < 7
-      review[:rating].should > 0
-      review[:comment].should_not be_empty
-    end
+  it 'could have concert events' do
+    @artist.concert.events.size.should > 40
   end
 
-  it 'should provide an empty array when there are no reviews' do
-    External::Artist.as('uggedal').reviews.size.should be_zero
+  it 'could have song reviews' do
+    @artist.reviews.size.should > 1
+  end
+
+  it 'should provide a sorted list of activities' do
+    activities = @artist.activities
+    activities.size.should > 70
+    activities.first[:time].should > activities.last[:time]
+
+  end
+
+  it 'should collect a sorted list of recent activity of all favorites' do
+    activities = @person.favorite_activities
+    activities.size.should > 100
+    activities.first[:time].should > activities.last[:time]
   end
 end
