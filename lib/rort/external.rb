@@ -114,28 +114,19 @@ module Rort::External
     end
 
     def songs
-      songs = songs_list
+      songs_list.collect do |song|
 
-      ids = songs.search(".stats a[@href^='../../user/trackreviews']").collect do |a|
-        a[:href].scan(/mmmid=(\d+)/).flatten.first.to_i
-      end
+        id = song.at(".stats a[@href^='../../user/trackreviews']")[:href].
+               scan(/mmmid=(\d+)/).flatten.first.to_i
 
-      titles = songs.search(".trackname").collect do |title|
-        title.inner_text.strip
-      end
+        title = song.at(".trackname").inner_text.strip
 
-      datetimes = songs.search(".stats").collect do |stat|
-        datetime = stat.inner_text.strip.
-          scan(/^(\d{2}\.\d{2}\.\d{4}) (\d{2}:\d{2}:\d{2})/).first
+        datetime = song.search(".stats").inner_text.strip.
+            scan(/^(\d{2}\.\d{2}\.\d{4}) (\d{2}:\d{2}:\d{2})/).first
 
-        parse_numeric_date(datetime[0]) + parse_time(datetime[1])
-      end
+        time = parse_numeric_date(datetime[0]) + parse_time(datetime[1])
 
-      [ids, titles, datetimes].transpose.collect do |item|
-        activity(:song,
-                 Time.local(*item[2]),
-                 song_review_path(item[0]),
-                 item[1])
+        activity(:song, Time.local(*time), song_review_path(id), title)
       end
     end
 
