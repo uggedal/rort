@@ -2,51 +2,11 @@ require File.join(File.dirname(__FILE__), '..', '..', 'spec_helper')
 
 include Rort::Models
 
-describe Cache do
-
-  before(:each) do
-    Cache.del('uggedal')
-    Cache.del('TheFernets')
-
-    @person = Artist.find_or_fetch('uggedal')
-    @artist = Artist.find_or_fetch('TheFernets')
-  end
-
-  it 'should be able to retrieve a single record from the cache' do
-    Cache['uggedal'].name.should == @person.name
-  end
-
-  it 'should be able to retrieve several records from the cache' do
-    res = Cache[%w(uggedal TheFernets)]
-    res['uggedal'].name.should == @person.name
-    res['TheFernets'].name.should == @artist.name
-  end
-
-  it 'should provide nil for non-existant records' do
-    Cache['NonExistant'].should be_nil
-  end
-
-  it 'should be able to set a new record in the cache' do
-    hash = {:key => 'superduper', :name => 'wow'}
-    Cache.del(hash[:key])
-    Cache[hash[:key]].should be_nil
-    Cache[hash[:key]] = hash
-    Cache[hash[:key]][:name].should == hash[:name]
-  end
-
-  it 'should be able to delete a record in the cache' do
-    Cache[@person.slug].should_not be_nil
-    Cache.del(@person.slug).should =~ /^DELETED/
-    Cache[@person.slug].should be_nil
-  end
-
-end
-
 describe Artist do
 
   before(:each) do
-    Cache.del('uggedal')
-    Cache.del('TheFernets')
+    Rort::Cache.del('uggedal')
+    Rort::Cache.del('TheFernets')
 
     @person = Artist.find_or_fetch('uggedal')
     @artist = Artist.find_or_fetch('TheFernets')
