@@ -17,16 +17,6 @@ end
 desc "Restart #{NAME}"
 task :restart => [:stop, :start]
 
-
-desc "Migrate the db"
-task :migrate do
-  $: << File.expand_path("../../halcyon/lib", __FILE__)
-  $: << File.expand_path("../lib", __FILE__)
-  require 'rort'
-
-  DataMapper::Persistence.auto_migrate!
-end
-
 require 'spec/rake/spectask'
 Spec::Rake::SpecTask.new do |t|
   t.spec_files = FileList['spec/**/*_spec.rb']
