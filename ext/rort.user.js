@@ -75,12 +75,17 @@ function withJQuery() {
   }
 
   function formatActivity(activity) {
+    lastActivityDate = '';
     if (activity.type == 'blog') {
-      blog = ele('li',
+      if (lastActivityDate != activity.date) {
+        insertActivity(ele('h3', activity.date));
+      }
+      lastActivityDate = activity.date;
+      var blog = ele('li',
                  ele('em', activity.author) +
                  ' blogget om ' +
                  ele('a href=' + activity.url, activity.title) +
-                 ' den ' + activity.time);
+                 ' klokken ' + activity.time);
       insertActivity(blog);
     }
   }
