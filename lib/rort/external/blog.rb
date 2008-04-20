@@ -10,6 +10,10 @@ module Rort::External
       @id ||= Artist.as(@slug).id
     end
 
+    def author
+      @author ||= Artist.as(@slug).name
+    end
+
     def post_path(post_id)
       "user/news2entry.aspx?articleid=#{post_id}&id=#{id}"
     end
@@ -36,7 +40,8 @@ module Rort::External
         activity(:blog,
                  Time.local( *(item[0] + item[1]) ),
                  post_path(item[2]),
-                 item[3])
+                 item[3],
+                 {:author => author})
       end
     end
   end
