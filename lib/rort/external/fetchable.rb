@@ -45,9 +45,19 @@ module Rort::External
         "#{URL}#{path}"
       end
 
+      def activity_date(time)
+        time.strftime('%Y.%m.%d')
+      end
+
+      def activity_time(time)
+        time.strftime('%H:%M')
+      end
+
       def activity(type, time, url, title, opts={})
         activity = {:type => type,
-                    :time => time,
+                    :date => activity_date(time),
+                    :time => activity_time(time),
+                    :datetime => time,
                     :url  => url(url),
                     :title => title}
         activity.merge(opts)
