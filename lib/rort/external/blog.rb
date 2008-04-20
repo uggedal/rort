@@ -7,7 +7,7 @@ module Rort::External
     end
 
     def id
-      Artist.as(@slug).id
+      @id ||= Artist.as(@slug).id
     end
 
     def post_path(post_id)
