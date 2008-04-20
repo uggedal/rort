@@ -62,9 +62,7 @@ module Rort::Models
       activities.concat(concert.events)
       activities.concat(reviews)
 
-      activities.sort do |a,b|
-        b[:time] <=> a[:time]
-      end
+      activities.sort { |a,b| b[:time] <=> a[:time] }
     end
 
     def favorite_activities
