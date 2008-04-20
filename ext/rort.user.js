@@ -40,33 +40,49 @@ function parseJson(data) {
   return eval("(" + data + ")");
 }
 
+function ele(tag, content) {
+  var closeTag = tag.match(/^(\w+)/)[1];
+  return '<'+tag+'>'+content+'</'+closeTag+'>';
+}
+
 // jQuery enabled scope
 function withJQuery() {
 
   var userHref = $('ul#loggedinuser > li.item > a:first').attr('href');
   var user = userHref.match(/\/Person\/(\w+)/)[1];
 
-  function display(text) {
-    $('#frontpage .mainnewsspot').prepend(text);
+  function setup() {
+    $('#frontpage .mainnewsspot').prepend(ele("ul id='activities'", ''));
+  }
+
+  function insertActivity(activity) {
+    $('#activities').append(activity);
   }
 
   function displayActivities(data) {
+    setup();
+
     var parsed = parseJson(data);
 
-    if ( parsed.status == 200 ) {
-      data = parsed.body;
+    if (parsed.status == 200) {
+      var data = parsed.body;
       $.each(data, function() {
-        formatActivities(this);
+        formatActivity(this);
       });
     } else {
       display('Connection error');
     }
   }
 
-  function formatActivities(activities) {
-    $.each(activities, function() {
-      display('<p>'+this+'</p>');
-    });
+  function formatActivity(activity) {
+    if (activity.type == 'blog') {
+      blog = ele('li',
+                 ele('em', activity.author) +
+                 ' blogget om ' +
+                 ele('a href=' + activity.url, activity.title) +
+                 ' den ' + activity.time);
+      insertActivity(blog);
+    }
   }
 
   get('http://rort.redflavor.com/artists/' + user + '/favorites',
