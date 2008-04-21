@@ -12,6 +12,10 @@ describe Rort::External::Blog do
     External::Blog.as('uggedal').should_not be_nil
   end
 
+  it 'should have an author' do
+    External::Blog.as('uggedal').author.name.should == 'Eivind Uggedal'
+  end
+
   it 'could have several blog posts' do
     posts = External::Blog.as('TheFernets').posts
     posts.size.should > 4

@@ -12,6 +12,10 @@ describe Rort::External::Concert do
     External::Concert.as('uggedal').should_not be_nil
   end
 
+  it 'should have an artist' do
+    External::Concert.as('uggedal').artist.name.should == 'Eivind Uggedal'
+  end
+
   it 'could have several events' do
     events = External::Concert.as('TheFernets').events
     events.size.should > 15

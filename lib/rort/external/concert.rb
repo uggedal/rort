@@ -6,6 +6,10 @@ module Rort::External
       @doc = fetch "Konserter/#@slug"
     end
 
+    def artist
+      @artist ||= Artist.as(@slug)
+    end
+
     def events
       (@doc/"#bandprofile-subpage > ul > li").collect do |event|
 
@@ -21,7 +25,9 @@ module Rort::External
                  "Konserter/#@slug",
                  title,
                  { :location => location,
-                   :comment => comment })
+                   :comment => comment,
+                   :artist => artist.name,
+                   :artist_url => url(artist.path) })
       end
     end
   end
