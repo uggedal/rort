@@ -11,7 +11,7 @@ module Rort::External
     end
 
     def author
-      @author ||= Artist.as(@slug).name
+      @author ||= Artist.as(@slug)
     end
 
     def post_path(post_id)
@@ -41,7 +41,8 @@ module Rort::External
                  Time.local( *(item[0] + item[1]) ),
                  post_path(item[2]),
                  item[3],
-                 {:author => author})
+                 {:author => author.name,
+                  :author_url => url(author.path)})
       end
     end
   end

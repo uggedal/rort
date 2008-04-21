@@ -22,6 +22,8 @@ describe Rort::External::Blog do
       post[:time].should_not be_empty
       post[:url].should =~ /^http:\/\/\w+/
       post[:title].should_not be_empty
+      post[:author].should_not be_empty
+      post[:author_url].should =~ /^http:\/\/\w+/
     end
   end
 

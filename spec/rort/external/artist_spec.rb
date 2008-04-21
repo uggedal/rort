@@ -33,6 +33,10 @@ describe Rort::External::Artist do
       name.should == 'The Megaphonic Thrift'
   end
 
+  it 'should provide the path of the artist' do
+    External::Artist.as('uggedal').path.should == 'Artist/uggedal'
+  end
+
   it 'should provide favorites of the artist' do
     res = External::Artist.as('uggedal').favorites
     res.size.should > 1

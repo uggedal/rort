@@ -16,6 +16,11 @@ module Rort::External
         inner_text.strip.scan(/^NRK Ur\303\270rt - (.+)/).first.first
     end
 
+    def path
+      "Artist/#@slug"
+    end
+
+
     def favorites
       thumb_elements("Favoritter p\303\245 Ur\303\270rt", 'Artist') do |e|
         e.at("img.Thumb")[:alt]
