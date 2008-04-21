@@ -56,7 +56,7 @@ function withJQuery() {
   }
 
   function insertActivity(activity) {
-    $('#activities').append(activity);
+    $('#activities').append(ele('li', activity));
   }
 
   function displayActivities(data) {
@@ -76,17 +76,29 @@ function withJQuery() {
 
   function formatActivity(activity) {
     lastActivityDate = '';
-    if (activity.type == 'blog') {
-      if (lastActivityDate != activity.date) {
-        insertActivity(ele('h3', activity.date));
-      }
-      lastActivityDate = activity.date;
-      var blog = ele('li',
-                 ele('em', activity.author) +
-                 ' blogget om ' +
-                 ele('a href=' + activity.url, activity.title) +
-                 ' klokken ' + activity.time);
-      insertActivity(blog);
+
+    if (lastActivityDate != activity.date)
+      insertActivity(ele('h3', activity.date));
+
+    lastActivityDate = activity.date;
+
+    switch (activity.type) {
+      case 'blog':
+        var blog = ele('a href=' + activity.author_url,
+                       ele('em', activity.author)) +
+                       ' blogget om ' +
+                       ele('a href=' + activity.url, activity.title) +
+                       ' klokken ' + activity.time;
+        insertActivity(blog);
+      case 'concert':
+        var concert = ele('a href=' + activity.artist_url,
+                          ele('em', activity.artist)) +
+                          ' holdt konsert i ' + activity.location +
+                          ': ' + activity.title;
+        insertActivity(concert);
+                      
+      default:
+        insertActivity('Unknown activity type');
     }
   }
 
