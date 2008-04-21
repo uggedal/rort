@@ -17,7 +17,9 @@ describe Rort::External::Blog do
     posts.size.should > 4
     posts.each do |post|
       post[:type].should == :blog
-      post[:time].should < Time.now
+      post[:datetime].should < Time.now
+      post[:date].should_not be_empty
+      post[:time].should_not be_empty
       post[:url].should =~ /^http:\/\/\w+/
       post[:title].should_not be_empty
     end

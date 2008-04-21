@@ -92,13 +92,13 @@ describe Artist do
   it 'should provide a sorted list of activities' do
     activities = @artist.activities
     activities.size.should > 70
-    activities.first[:time].should > activities.last[:time]
+    activities.first[:datetime].should > activities.last[:datetime]
 
   end
 
   it 'should collect a sorted list of recent activity of all favorites' do
     activities = @person.favorite_activities
     activities.size.should > 100
-    activities.first[:time].should > activities.last[:time]
+    activities.first[:datetime].should > activities.last[:datetime]
   end
 end

@@ -64,7 +64,9 @@ describe Rort::External::Artist do
     songs.size.should > 5
     songs.each do |song|
       song[:type].should == :song
-      song[:time].should < Time.now
+      song[:datetime].should < Time.now
+      song[:date].should_not be_empty
+      song[:time].should_not be_empty
       song[:url].should =~ /^http:\/\/\w+/
       song[:title].should_not be_empty
     end
@@ -80,7 +82,9 @@ describe Rort::External::Artist do
     reviews.size.should > 5
     reviews.each do |review|
       review[:type].should == :review
-      review[:time].should < Time.now
+      review[:datetime].should < Time.now
+      review[:date].should_not be_empty
+      review[:time].should_not be_empty
       review[:url].should =~ /^http:\/\/\w+/
       review[:title].should_not be_empty
       review[:reviewer].should_not be_empty

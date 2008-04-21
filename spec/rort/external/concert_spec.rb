@@ -17,7 +17,9 @@ describe Rort::External::Concert do
     events.size.should > 15
     events.each do |event|
       event[:type].should == :concert
-      event[:time].should < Time.now
+      event[:datetime].should < Time.now
+      event[:date].should_not be_empty
+      event[:time].should_not be_empty
       event[:url].should =~ /^http:\/\/\w+/
       event[:title].should_not be_empty
       event[:location].should_not be_empty
