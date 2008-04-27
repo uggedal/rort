@@ -4,7 +4,9 @@ include Rort::Models
 class Application < Halcyon::Controller
 
   def index
-    ok({ :application => Rort.name, :version => Rort::VERSION })
+    ok({ :application => Rort.name,
+         :version => Rort::VERSION,
+         :ruby => RUBY_VERSION })
   end
 end
 
