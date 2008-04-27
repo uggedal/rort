@@ -56,23 +56,30 @@ module Rort::Models
       @reviews ||= external.reviews
     end
 
-    def activities
-      activities = blog.posts
-      activities.concat(songs)
-      activities.concat(concert.events)
-      activities.concat(reviews)
+    def reverse_sort_by_datetime(items)
+      items.sort { |a,b| b[:datetime] <=> a[:datetime] }
+    end
 
-      activities.sort { |a,b| b[:datetime] <=> a[:datetime] }
+    def activities
+      unless activities = Rort::Cache[slug + ':activities']
+        activities = blog.posts
+        activities.concat(songs)
+        activities.concat(concert.events)
+        activities.concat(reviews)
+
+        activities = reverse_sort_by_datetime(activities)
+        Rort::Cache[slug + ':activities'] = activities
+      end
+      activities
     end
 
     def favorite_activities
-      activities = favorites.collect do |fav|
-        fav.activities
+      activities = []
+      favorites.each do |fav|
+        activities.concat(fav.activities)
       end
 
-      activities.flatten.sort do |a,b|
-        b[:datetime] <=> a[:datetime]
-      end
+      reverse_sort_by_datetime(activities)
     end
 
     def to_json(*arg)
