@@ -1,5 +1,3 @@
-require 'rort/external'
-
 module Rort::Models
 
   class Artist
