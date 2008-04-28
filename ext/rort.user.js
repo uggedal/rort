@@ -51,12 +51,16 @@ function withJQuery() {
   var userHref = $('ul#loggedinuser > li.item > a:first').attr('href');
   var user = userHref.match(/\/Person\/(\w+)/)[1];
 
+  function setupContainer() {
+    $('#frontpage .mainnewsspot').prepend(ele("div id='activity-list'", ''));
+  }
+
   function insertError(msg) {
-    $('#frontpage .mainnewsspot').prepend(ele("div id='errors'", msg));
+    $('#activity-list').append(ele("div id='errors'", msg));
   }
 
   function setupActivities() {
-    $('#frontpage .mainnewsspot').prepend(ele("ul id='activities'", ''));
+    $('#activity-list').append(ele("ul id='activities'", ''));
   }
 
   function insertActivity(activity) {
@@ -112,6 +116,7 @@ function withJQuery() {
     }
   }
 
+  setupContainer();
+
   get('http://rort.redflavor.com/?favorites=' + user, display);
-  
 }
