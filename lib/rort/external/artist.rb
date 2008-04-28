@@ -81,9 +81,11 @@ module Rort::External
         pattern = /(\d{1,2})\. (\w+) (\d{4})$/
         time = Time.local(*parse_textual_date(date, pattern))
 
-        reviewer = review.
-                     at(".trackReviewHeader a[@href^='#{URL}Person']")[:href].
-                       scan(/Person\/(\w+)/).flatten.first
+        reviewer_slug = review.
+          at(".trackReviewHeader a[@href^='#{URL}Person']")[:href].
+            scan(/Person\/(\w+)/).flatten.first
+
+        reviewer = Artist.as(reviewer_slug)
 
         comment = review.at(".trackReviewFull").inner_text.strip
 
@@ -93,7 +95,10 @@ module Rort::External
                  song_name(id),
                  { :rating => rating,
                    :comment => comment,
-                   :reviewer => reviewer })
+                   :reviewer => reviewer.name,
+                   :reviewer_url => url(reviewer.path),
+                   :artist => name,
+                   :artist_url => url(path) })
       end
     end
 

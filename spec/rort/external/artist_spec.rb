@@ -93,7 +93,10 @@ describe Rort::External::Artist do
       review[:time].should_not be_empty
       review[:url].should =~ /^http:\/\/\w+/
       review[:title].should_not be_empty
+      review[:artist].should_not be_empty
+      review[:artist_url].should =~ /^http:\/\/\w+/
       review[:reviewer].should_not be_empty
+      review[:reviewer_url].should =~ /^http:\/\/\w+/
       review[:rating].should < 7
       review[:rating].should > 0
       review[:comment].should_not be_empty
