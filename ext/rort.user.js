@@ -105,23 +105,31 @@ function withJQuery() {
       case 'blog':
         var blog = ele('a href=' + activity.author_url,
                        ele('em', activity.author)) +
-                       ' blogget om ' +
-                       ele('a href=' + activity.url, activity.title) +
-                       ' klokken ' + activity.time;
+                   ' blogget om ' +
+                   ele('a href=' + activity.url, activity.title) +
+                   ' klokken ' + activity.time;
         insertActivity(blog);
         break;
       case 'concert':
         var concert = ele('a href=' + activity.artist_url,
                           ele('em', activity.artist)) +
-                          ' holdt konsert i ' + activity.location +
-                          ': ' + activity.title;
+                      ' holdt konsert i ' + activity.location +
+                      ': ' + activity.title;
         insertActivity(concert);
         break;
       case 'song':
         var song = ele('a href=' + activity.artist_url, activity.artist) +
-                       ' har lagt ut sangen: ' +
-                       ele('a href=' + activity.url, activity.title);
+                   ' har lagt ut sangen: ' +
+                   ele('a href=' + activity.url, activity.title);
         insertActivity(song);
+      case 'review':
+        var review = ele('a href=' + activity.reviewer_url,
+                         activity.reviewer) +
+                       ' har anmeldt sangen: ' +
+                       ele('a href=' + activity.url, activity.title) +
+                       ' fra ' +
+                       ele('a href=' + activity.artist_url, activity.artist);
+        insertActivity(review);
         break;
       default:
         insertActivity('Unknown activity type ' + activity.type);
