@@ -117,6 +117,12 @@ function withJQuery() {
                           ': ' + activity.title;
         insertActivity(concert);
         break;
+      case 'song':
+        var song = ele('a href=' + activity.artist_url, activity.artist) +
+                       ' har lagt ut sangen: ' +
+                       ele('a href=' + activity.url, activity.title);
+        insertActivity(song);
+        break;
       default:
         insertActivity('Unknown activity type ' + activity.type);
     }
