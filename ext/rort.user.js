@@ -109,14 +109,16 @@ function withJQuery() {
                        ele('a href=' + activity.url, activity.title) +
                        ' klokken ' + activity.time;
         insertActivity(blog);
+        break;
       case 'concert':
         var concert = ele('a href=' + activity.artist_url,
                           ele('em', activity.artist)) +
                           ' holdt konsert i ' + activity.location +
                           ': ' + activity.title;
         insertActivity(concert);
+        break;
       default:
-        insertActivity('Unknown activity type');
+        insertActivity('Unknown activity type ' + activity.type);
     }
   }
 
