@@ -5,6 +5,7 @@
 // @namespace      http://redflavor.com/
 // @description    Rører ved Urørt
 // @include        http://redflavor.com/urort.html
+// @include        http://www11.nrk.no/urort/default.aspx
 // ==/UserScript==
 
 
