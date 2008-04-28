@@ -1,5 +1,0 @@
-log_file: # blank for STDOUT
-logging:
-  type: Logger
-  level: debug
-allow_from: all
