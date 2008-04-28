@@ -1,8 +1,5 @@
-$: << File.expand_path("../../../halcyon/lib", __FILE__)
 $: << File.expand_path("../../lib", __FILE__)
 
-require 'halcyon'
-require 'logger'
 require 'rort'
 require 'rack/mock'
 
@@ -10,14 +7,6 @@ $HTTP_DEBUG = false
 $http_requests = 0
 
 Spec::Runner.configure do |config|
-  config.before(:all) do
-    @log = ''
-    @logger = Logger.new(StringIO.new(@log))
-    Halcyon.config = Halcyon::Runner.load_config
-    Halcyon.config[:logger] = @logger
-    Halcyon.config[:log_level] = 'debug'
-    @app = Halcyon::Runner.new
-  end
 
   config.after(:all) do
     if $HTTP_DEBUG
@@ -25,11 +14,6 @@ Spec::Runner.configure do |config|
       $http_requests = 0
     end
   end
-end
-
-def url(name, params={})
-  controller = Application.new(Rack::MockRequest.env_for("/"))
-  controller.url(name, params)
 end
 
 module OpenURI
