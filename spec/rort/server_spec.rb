@@ -25,6 +25,6 @@ describe Rort::Server do
 
   it 'should show recent activity for all favorites of an artist' do
     res = Rack::MockRequest.new(@app).get('?favorites=uggedal')
-    JSON.parse(res.body).size.should > 100
+    JSON.parse(res.body).size.should > 1
   end
 end

@@ -60,16 +60,27 @@ module Rort::Models
       items.sort { |a,b| b[:datetime] <=> a[:datetime] }
     end
 
-    def activities
-      unless activities = Rort::Cache[slug + ':activities']
-        activities = blog.posts
-        activities.concat(songs)
-        activities.concat(concert.events)
-        activities.concat(reviews)
-
-        activities = reverse_sort_by_datetime(activities)
-        Rort::Cache[slug + ':activities'] = activities
+    def find_median_size(ary)
+      sorted = ary.sort {|a, b| a.size <=> b.size}
+      half = sorted.size / 2
+      if half % 2 == 0
+        sorted[half-1].size + sorted[half].size / 2
+      else
+        sorted[half].size
       end
+    end
+
+    def activities
+      #unless activities = Rort::Cache[slug + ':activities']
+        collection = [blog.posts, concert.events, songs, reviews]
+        median = find_median_size(collection)
+        activities = collection.collect do |elements|
+          elements[0...median]
+        end
+
+        activities = reverse_sort_by_datetime(activities.flatten)
+        #Rort::Cache[slug + ':activities'] = activities
+      #end
       activities
     end
 
