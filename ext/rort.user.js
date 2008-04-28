@@ -96,7 +96,6 @@ function withJQuery() {
                           ' holdt konsert i ' + activity.location +
                           ': ' + activity.title;
         insertActivity(concert);
-                      
       default:
         insertActivity('Unknown activity type');
     }
