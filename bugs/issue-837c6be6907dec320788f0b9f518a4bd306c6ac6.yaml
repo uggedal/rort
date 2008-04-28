@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Style the activity list as per Urort's look
+desc: ""
+type: :feature
+component: client
+release: 
+reporter: Eivind Uggedal <eu@redflavor.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-04-28 13:55:46.568941 Z
+references: []
+
+id: 837c6be6907dec320788f0b9f518a4bd306c6ac6
+log_events: 
+- - 2008-04-28 13:55:48.368778 Z
+  - Eivind Uggedal <eu@redflavor.com>
+  - created
+  - ""
