@@ -71,13 +71,18 @@ function withJQuery() {
   }
 
   function displayActivities(data) {
-    setupActivities();
-
     var parsed = parseJson(data);
 
-    $.each(parsed, function() {
-      formatActivity(this);
-    });
+    if (parsed.size > 0) {
+      setupActivities();
+
+      $.each(parsed, function() {
+        formatActivity(this);
+      });
+    } else {
+      insertError("Either you don't have any favorites " +
+                  'or your favorites are not doing anything interesting');
+    }
   }
 
   function formatActivity(activity) {
