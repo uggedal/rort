@@ -9,8 +9,8 @@ type: :bugfix
 component: server
 release: 
 reporter: Eivind Uggedal <eu@redflavor.com>
-status: :unstarted
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2008-04-16 11:12:27.967035 Z
 references: []
 
@@ -20,3 +20,7 @@ log_events:
   - Eivind Uggedal <eu@redflavor.com>
   - created
   - ""
+- - 2008-04-28 13:52:42.012577 Z
+  - Eivind Uggedal <eu@redflavor.com>
+  - closed issue with disposition fixed
+  - Activity lists of an artist is now stored directly in memcached.
