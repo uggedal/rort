@@ -73,7 +73,7 @@ function withJQuery() {
   function displayActivities(data) {
     setupActivities();
 
-    var parsed = parseJson(res.responseText);
+    var parsed = parseJson(data);
 
     $.each(parsed, function() {
       formatActivity(this);
