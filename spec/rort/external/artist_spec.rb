@@ -73,6 +73,8 @@ describe Rort::External::Artist do
       song[:time].should_not be_empty
       song[:url].should =~ /^http:\/\/\w+/
       song[:title].should_not be_empty
+      song[:artist].should_not be_empty
+      song[:artist_url].should =~ /^http:\/\/\w+/
     end
   end
 

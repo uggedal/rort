@@ -63,7 +63,8 @@ module Rort::External
 
         time = parse_numeric_date(datetime[0]) + parse_time(datetime[1])
 
-        activity(:song, Time.local(*time), song_review_path(id), title)
+        activity(:song, Time.local(*time), song_review_path(id), title,
+                 { :artist => name, :artist_url => url(path) })
       end
     end
 
