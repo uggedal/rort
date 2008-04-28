@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Don't display future activities
+desc: ""
+type: :bugfix
+component: server
+release: 
+reporter: Eivind Uggedal <eu@redflavor.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-04-28 15:29:57.976911 Z
+references: []
+
+id: 31d37cee4ff3f699e163c0d68c410434978e4f3d
+log_events: 
+- - 2008-04-28 15:29:58.848826 Z
+  - Eivind Uggedal <eu@redflavor.com>
+  - created
+  - ""
