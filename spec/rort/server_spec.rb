@@ -6,8 +6,14 @@ describe Rort::Server do
     @app = Rort::Server.new
   end
 
-  it 'should return a result' do
-    res = Rack::MockRequest.new(@app).get('/')
+  it 'should return success on valid request' do
+    res = Rack::MockRequest.new(@app).get('?favorites=uggedal')
+    res.body.should_not be_empty
+    res.status.should == 200
+  end
+
+  it 'should return not found on invalid request' do
+    res = Rack::MockRequest.new(@app).get('?favorites=nonexistentusername')
     res.body.should be_empty
     res.status.should == 404
   end
