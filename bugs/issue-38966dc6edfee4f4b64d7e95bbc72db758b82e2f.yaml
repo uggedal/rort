@@ -1,0 +1,21 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Move from Halcyon to custom Rack app
+desc: |-
+  Move from Halcyon since it has to many deps and could be a bit slow.
+  This also enables us to cache a collection of favorite activities at
+  the JSON level.
+type: :feature
+component: server
+release: 
+reporter: Eivind Uggedal <eu@redflavor.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-04-28 08:26:26.457779 Z
+references: []
+
+id: 38966dc6edfee4f4b64d7e95bbc72db758b82e2f
+log_events: 
+- - 2008-04-28 08:26:27.809581 Z
+  - Eivind Uggedal <eu@redflavor.com>
+  - created
+  - ""
