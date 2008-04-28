@@ -6,7 +6,7 @@ desc: |-
   at http://www.scalora.org/projects/uriencoder/
 type: :feature
 component: client
-release: 
+release: 0.4.0
 reporter: Eivind Uggedal <eu@redflavor.com>
 status: :unstarted
 disposition: 
@@ -18,4 +18,8 @@ log_events:
 - - 2008-04-18 12:33:56.622464 Z
   - Eivind Uggedal <eu@redflavor.com>
   - created
+  - ""
+- - 2008-04-28 14:05:59.405102 Z
+  - Eivind Uggedal <eu@redflavor.com>
+  - assigned to release 0.4.0 from unassigned
   - ""

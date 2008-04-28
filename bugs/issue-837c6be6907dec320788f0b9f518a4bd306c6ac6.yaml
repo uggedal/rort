@@ -3,7 +3,7 @@ title: Style the activity list as per Urort's look
 desc: ""
 type: :feature
 component: client
-release: 
+release: 0.4.0
 reporter: Eivind Uggedal <eu@redflavor.com>
 status: :unstarted
 disposition: 
@@ -15,4 +15,8 @@ log_events:
 - - 2008-04-28 13:55:48.368778 Z
   - Eivind Uggedal <eu@redflavor.com>
   - created
+  - ""
+- - 2008-04-28 14:06:03.021173 Z
+  - Eivind Uggedal <eu@redflavor.com>
+  - assigned to release 0.4.0 from unassigned
   - ""

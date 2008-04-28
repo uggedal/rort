@@ -48,3 +48,12 @@ releases:
     - Eivind Uggedal <eu@redflavor.com>
     - released
     - ""
+- !ditz.rubyforge.org,2008-03-06/release 
+  name: 0.4.0
+  status: :unreleased
+  release_time: 
+  log_events: 
+  - - 2008-04-28 14:05:38.205597 Z
+    - Eivind Uggedal <eu@redflavor.com>
+    - created
+    - Integrate Rort seamlessly into Urort
