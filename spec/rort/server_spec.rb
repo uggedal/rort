@@ -7,7 +7,7 @@ describe Rort::Server do
   end
 
   it 'should return success on valid request' do
-    res = Rack::MockRequest.new(@app).get('?favorites=uggedal')
+    res = Rack::MockRequest.new(@app).get('?favorites=NoFavorites')
     res.body.should_not be_empty
     res.status.should == 200
   end
