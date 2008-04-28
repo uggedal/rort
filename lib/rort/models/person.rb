@@ -1,6 +1,7 @@
 module Rort::Models
 
   class Person < User
+
     def favorites
       @favorites ||= external_favorites
     end
