@@ -64,14 +64,9 @@ function withJQuery() {
 
     var parsed = parseJson(data);
 
-    if (parsed.status == 200) {
-      var data = parsed.body;
-      $.each(data, function() {
-        formatActivity(this);
-      });
-    } else {
-      display('Connection error');
-    }
+    $.each(parsed, function() {
+      formatActivity(this);
+    });
   }
 
   function formatActivity(activity) {
@@ -101,7 +96,6 @@ function withJQuery() {
     }
   }
 
-  get('http://rort.redflavor.com/artists/' + user + '/favorites',
-      displayActivities);
+  get('http://rort.redflavor.com/?favorites=' + user, displayActivities);
   
 }
