@@ -127,7 +127,7 @@ function withJQuery() {
                          activity.reviewer) +
                        ' har anmeldt sangen: ' +
                        ele('a href=' + activity.url, activity.title) +
-                       ' fra ' +
+                       ' av ' +
                        ele('a href=' + activity.artist_url, activity.artist);
         insertActivity(review);
         break;
