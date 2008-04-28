@@ -19,7 +19,7 @@ module Rort
     end
 
     def activities_for_favorites_of(slug)
-      artist = Rort::Models::Artist.find_or_fetch(slug)
+      artist = Rort::Models::Person.fetch(slug)
       artist ? artist.favorite_activities.to_json : nil
     end
   end
