@@ -69,7 +69,7 @@ module Rort::Models
     end
 
     def activities
-      #unless activities = Rort::Cache[slug + ':activities']
+      unless activities = Rort::Cache[slug + ':activities']
         collection = [blog.posts, concert.events, songs, reviews]
         median = find_median_size(collection)
         activities = collection.collect do |elements|
@@ -77,8 +77,8 @@ module Rort::Models
         end
 
         activities = reverse_sort_by_datetime(activities.flatten)
-        #Rort::Cache[slug + ':activities'] = activities
-      #end
+        Rort::Cache[slug + ':activities'] = activities
+      end
       activities
     end
 
