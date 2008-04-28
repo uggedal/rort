@@ -6,7 +6,7 @@ desc: |-
   the JSON level.
 type: :feature
 component: server
-release: 
+release: 0.3.0
 reporter: Eivind Uggedal <eu@redflavor.com>
 status: :closed
 disposition: :fixed
@@ -22,4 +22,8 @@ log_events:
 - - 2008-04-28 09:26:14.974453 Z
   - Eivind Uggedal <eu@redflavor.com>
   - closed issue with disposition fixed
+  - ""
+- - 2008-04-28 14:03:33.616089 Z
+  - Eivind Uggedal <eu@redflavor.com>
+  - assigned to release 0.3.0 from unassigned
   - ""

@@ -3,7 +3,7 @@ title: Partition code into folders for each module
 desc: ""
 type: :feature
 component: server
-release: 
+release: 0.3.0
 reporter: Eivind Uggedal <eu@redflavor.com>
 status: :closed
 disposition: :fixed
@@ -20,3 +20,7 @@ log_events:
   - Eivind Uggedal <eu@redflavor.com>
   - closed issue with disposition fixed
   - Fixed some time ago
+- - 2008-04-28 14:03:01.352886 Z
+  - Eivind Uggedal <eu@redflavor.com>
+  - assigned to release 0.3.0 from unassigned
+  - ""

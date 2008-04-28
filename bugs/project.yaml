@@ -37,10 +37,14 @@ releases:
     - ""
 - !ditz.rubyforge.org,2008-03-06/release 
   name: 0.3.0
-  status: :unreleased
-  release_time: 
+  status: :released
+  release_time: 2008-04-28 14:04:01.927617 Z
   log_events: 
   - - 2008-04-14 10:57:53.567108 Z
     - Eivind Uggedal <eu@redflavor.com>
     - created
     - Should be able to display recent favorite activity on the client.
+  - - 2008-04-28 14:04:01.927652 Z
+    - Eivind Uggedal <eu@redflavor.com>
+    - released
+    - ""
