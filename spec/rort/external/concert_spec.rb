@@ -17,7 +17,7 @@ describe Rort::External::Concert do
   end
 
   it 'could have several events' do
-    events = External::Concert.as('TheFernets').events
+    events = External::Concert.as('Katzenjammer').events
     events.size.should > 15
     events.each do |event|
       event[:type].should == :concert

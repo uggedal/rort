@@ -11,24 +11,27 @@ module Rort::External
     end
 
     def events
-      (@doc/"#bandprofile-subpage > ul > li").collect do |event|
+      events = []
+      (@doc/"#bandprofile-subpage > ul > li").each do |event|
 
         location = event.at("span[@id$='_Label1']").inner_text.strip
         datetime = event.at("span[@id$='_Label2']").inner_text.strip.split
         title = event.at("span[@id$='_Label3']").inner_text.strip
         comment = event.at("span[@id$='_Label4'] > p").inner_text.strip
 
-        time = parse_numeric_date(datetime[0]) + parse_time(datetime[1])
+        time = Time.local(*(parse_numeric_date(datetime[0]) +
+                            parse_time(datetime[1])))
 
-        activity(:concert,
-                 Time.local(*time),
+        events << activity(:concert,
+                 time,
                  "Konserter/#@slug",
                  title,
                  { :location => location,
                    :comment => comment,
                    :artist => artist.name,
-                   :artist_url => url(artist.path) })
+                   :artist_url => url(artist.path) }) if time < Time.now
       end
+      events
     end
   end
 end
