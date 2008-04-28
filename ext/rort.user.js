@@ -73,7 +73,7 @@ function withJQuery() {
   function displayActivities(data) {
     var parsed = parseJson(data);
 
-    if (parsed.size > 0) {
+    if (parsed.length > 0) {
       setupActivities();
 
       $.each(parsed, function() {
