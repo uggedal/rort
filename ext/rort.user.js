@@ -31,7 +31,7 @@ function get(url, callback) {
     method: "GET",
     url: url,
     onload: function(xhr) {
-      callback(xhr.responseText);
+      callback(xhr);
     }
   });
 }
@@ -51,7 +51,11 @@ function withJQuery() {
   var userHref = $('ul#loggedinuser > li.item > a:first').attr('href');
   var user = userHref.match(/\/Person\/(\w+)/)[1];
 
-  function setup() {
+  function insertError(msg) {
+    $('#frontpage .mainnewsspot').prepend(ele("div id='errors'", msg));
+  }
+
+  function setupActivities() {
     $('#frontpage .mainnewsspot').prepend(ele("ul id='activities'", ''));
   }
 
@@ -59,10 +63,17 @@ function withJQuery() {
     $('#activities').append(ele('li', activity));
   }
 
-  function displayActivities(data) {
-    setup();
+  function display(res) {
+    if (res.status != 200)
+      insertError('Unknown person: ' + ele('em', user));
+    else
+      displayActivities(res.responseText);
+  }
 
-    var parsed = parseJson(data);
+  function displayActivities(data) {
+    setupActivities();
+
+    var parsed = parseJson(res.responseText);
 
     $.each(parsed, function() {
       formatActivity(this);
@@ -96,6 +107,6 @@ function withJQuery() {
     }
   }
 
-  get('http://rort.redflavor.com/?favorites=' + user, displayActivities);
+  get('http://rort.redflavor.com/?favorites=' + user, display);
   
 }
