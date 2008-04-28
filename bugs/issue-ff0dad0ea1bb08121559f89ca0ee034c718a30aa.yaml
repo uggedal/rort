@@ -1,0 +1,20 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Create person model
+desc: |-
+  Create a person model. Persons should not be cached. Artists can be cached
+  more heavily. Persons could update their favorites at any time.
+type: :bugfix
+component: server
+release: 0.4.0
+reporter: Eivind Uggedal <eu@redflavor.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-04-28 18:25:49.296149 Z
+references: []
+
+id: ff0dad0ea1bb08121559f89ca0ee034c718a30aa
+log_events: 
+- - 2008-04-28 18:25:53.279976 Z
+  - Eivind Uggedal <eu@redflavor.com>
+  - created
+  - ""
