@@ -60,7 +60,12 @@ function withJQuery() {
   var user = userHref.match(/\/Person\/(\w+)/)[1];
 
   function setupContainer() {
+    var activityListCss = {
+      margin: '0 0 0 20px'
+    }
+
     $('#frontpage .mainnewsspot').prepend(ele("div id='activity-list'", ''));
+    $('#activity-list').css(activityListCss);
   }
 
   function insertError(msg) {
@@ -68,7 +73,12 @@ function withJQuery() {
   }
 
   function setupActivities() {
+    var activitiesCss = {
+      listStyleType: 'none'
+    }
+
     $('#activity-list').append(ele("ul id='activities'", ''));
+    $('#activities').css(activitiesCss);
   }
 
   function insertActivity(activity) {
