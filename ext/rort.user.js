@@ -26,8 +26,6 @@ function GM_wait() {
 
 GM_wait();
 
-
-
 // Cross-domain ajax get request with callback
 function get(url, callback) {
   GM_xmlhttpRequest({
@@ -43,30 +41,31 @@ function parseJson(data) {
   return eval("(" + data + ")");
 }
 
+// Create a HTML element (can include attributes) with closing tag
 function ele(tag, content) {
   var closeTag = tag.match(/^(\w+)/)[1];
   return '<'+tag+'>'+content+'</'+closeTag+'>';
 }
 
+// Return a data: URI based icon
 function icon(type) {
   data = eval(type + 'Icon()');
-  return ele('img style="padding-right:5px;" alt="' +
-             type + '" src="' + data + '"', '');
+  return ele('img class="icon" alt="' + type + '" src="' + data + '"', '');
 }
 
-// jQuery enabled scope
+// Scope where jQuery is enabled
 function withJQuery() {
 
-  var userHref = $('ul#loggedinuser > li.item > a:first').attr('href');
-  var user = userHref.match(/\/Person\/(\w+)/)[1];
+  var user = $('ul#loggedinuser > li.item > a:first').attr('href')
+               .match(/\/Person\/(\w+)/)[1];
+
+  // Sets a global css style
+  function setStyle(css) {
+    $('head').append(ele('style type="text/css"', css));
+  }
 
   function setupContainer() {
-    var activityListCss = {
-      margin: '0 0 0 20px'
-    }
-
     $('#frontpage .mainnewsspot').prepend(ele("div id='activity-list'", ''));
-    $('#activity-list').css(activityListCss);
   }
 
   function insertError(msg) {
@@ -116,7 +115,7 @@ function withJQuery() {
   function formatActivity(activity, lastDate) {
 
     if (lastDate != activity.date)
-      insertActivity(ele('h3 style="margin:15px 0 5px 0;"', activity.date));
+      insertActivity(ele('h3', activity.date));
 
     switch (activity.type) {
       case 'blog':
@@ -157,20 +156,30 @@ function withJQuery() {
 
   function insertLoadingStatus() {
     $('#activity-list').append(ele('div id="load-status"',
-                                   ele('img id="load-status" alt="Loading"' +
-                                   'src="' + loadingImage() + '"', '') +
-                                   ele('p', 'Laster inn aktivitetsdata...')));
+                                   ele('img alt="Loading"' +
+                                       'src="' + loadingImage() + '"', '') +
+                                   ele('p',
+                                       'Laster inn aktivitetsdata...')));
   }
 
   function removeLoadingStatus() {
     $('#activity-list > #load-status').hide();
   }
 
+  setStyle(rortStyle());
+
   setupContainer();
 
   insertLoadingStatus();
 
   get('http://rort.redflavor.com/?favorites=' + user, display);
+}
+
+function rortStyle() {
+  return '#load-status, #load-status > p { text-align: center; }' +
+         'img.icon { margin: 0 5px 0 0; }' +
+         '#activity-list { margin: 0 0 0 20px; }' +
+         '#activity-list h3 { margin:15px 0 5px 0; }'
 }
 
 function errorIcon() {
