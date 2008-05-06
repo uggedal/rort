@@ -55,4 +55,41 @@ module Rort::Parsers
   def parse_time(str)
     str.split(':').collect {|part| part.to_i }
   end
+
+  DAY = 60*60*24
+  WEEK = DAY*7
+  MONTH = DAY*30
+  YEAR = MONTH*12
+
+  def time_ago(time)
+    diff = Time.now - time
+
+    return 'I fremtiden' if diff < 0
+
+    case diff
+    when 0..DAY
+      'I dag'
+    when DAY..(2*DAY)
+      'I gaar'
+    when (2*DAY)..WEEK
+      "#{(diff / DAY).to_i} dager siden"
+    when WEEK..MONTH
+      weeks = (diff / WEEK).to_i
+      text = (weeks == 1 ? 'uke' : 'uker')
+      "#{weeks} #{text} siden"
+    when MONTH..YEAR
+      months = (diff / MONTH).to_i
+      text = (months == 1 ? 'maaned' : 'maaneder')
+      "#{months} #{text} siden"
+    else
+      "#{(diff / YEAR).to_i} aar siden"
+    end
+  end
+
+end
+
+class Time
+  def verbose
+    Rort::Parsers.time_ago(self)
+  end
 end

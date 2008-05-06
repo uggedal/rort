@@ -60,4 +60,42 @@ describe Rort::Parsers do
     parsed.should == [20, 23]
     parsed_with_sec.should == [20, 23, 45]
   end
+
+  it 'should be able to generate a verbose date' do
+    today = Time.now
+    today.verbose.should == 'I dag'
+    yesterday = today - 60*60*24
+    yesterday.verbose.should == 'I gaar'
+
+    [2,3,4,5,6].each do |i|
+      (today - 60*60*24*i).verbose.should == "#{i} dager siden"
+    end
+    [7,8,9,10,11,12,13].each do |i|
+      (today - 60*60*24*i).verbose.should == "1 uke siden"
+    end
+    [14,15,16,17,18,19,20].each do |i|
+      (today - 60*60*24*i).verbose.should == "2 uker siden"
+    end
+    [21,22,23,24,25,26,27].each do |i|
+      (today - 60*60*24*i).verbose.should == "3 uker siden"
+    end
+    [28,29].each do |i|
+      (today - 60*60*24*i).verbose.should == "4 uker siden"
+    end
+
+    (today - 60*60*24*30*1).verbose.should == "1 maaned siden"
+    [2,3,4,5,6,7,8,9,10,11].each do |i|
+      (today - 60*60*24*30*i).verbose.should == "#{i} maaneder siden"
+    end
+
+    [12,13,14,15,16,17,18,19,20,21,22,23].each do |i|
+      (today - 60*60*24*30*i).verbose.should == "1 aar siden"
+    end
+    [1,2,3,4,5,6,7,8,9].each do |i|
+      (today - 60*60*24*30*12*i).verbose.should == "#{i} aar siden"
+    end
+
+    (today + 60*60*24).verbose.should == 'I fremtiden'
+  end
+
 end
