@@ -46,7 +46,7 @@ module Rort::External
       end
 
       def activity_date(time)
-        time.strftime('%Y.%m.%d')
+        time.verbose
       end
 
       def activity_time(time)

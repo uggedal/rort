@@ -85,11 +85,4 @@ module Rort::Parsers
       "#{(diff / YEAR).to_i} aar siden"
     end
   end
-
-end
-
-class Time
-  def verbose
-    Rort::Parsers.time_ago(self)
-  end
 end

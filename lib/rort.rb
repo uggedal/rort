@@ -3,6 +3,7 @@ module Rort
 
   require 'rubygems'
   require 'rort/parsers'
+  require 'rort/core_ext'
   require 'rort/external'
   require 'rort/cache'
   require 'rort/models'
