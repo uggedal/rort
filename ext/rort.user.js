@@ -50,7 +50,8 @@ function ele(tag, content) {
 
 function icon(type) {
   data = eval(type + 'Icon()');
-  return ele('img alt="' + type + '" src="' + data + '"', '');
+  return ele('img style="padding-right:5px;" alt="' +
+             type + '" src="' + data + '"', '');
 }
 
 // jQuery enabled scope
@@ -100,8 +101,10 @@ function withJQuery() {
     if (parsed.length > 0) {
       setupActivities();
 
+      var lastActivityDate = '';
+
       $.each(parsed, function() {
-        formatActivity(this);
+        lastActivityDate = formatActivity(this, lastActivityDate);
       });
     } else {
       insertError("Either you don't have any favorites " +
@@ -109,28 +112,25 @@ function withJQuery() {
     }
   }
 
-  function formatActivity(activity) {
-    lastActivityDate = '';
 
-    if (lastActivityDate != activity.date)
-      insertActivity(ele('h3', activity.date));
+  function formatActivity(activity, lastDate) {
 
-    lastActivityDate = activity.date;
+    if (lastDate != activity.date)
+      insertActivity(ele('h3 style="margin:15px 0 5px 0;"', activity.date));
 
     switch (activity.type) {
       case 'blog':
         var blog = icon('blog') +
-                   ele('a href=' + activity.author_url, activity.author)
+                   ele('a href=' + activity.author_url, activity.author) +
                    ' blogget om ' +
-                   ele('a href=' + activity.url, activity.title) +
-                   ' klokken ' + activity.time;
+                   ele('a href=' + activity.url, activity.title)
         insertActivity(blog);
         break;
       case 'concert':
         var concert = icon('concert') +
                       ele('a href=' + activity.artist_url, activity.artist) +
-                      ' holdt konsert i ' + activity.location +
-                      ': ' + activity.title;
+                      ' holdt konsert: ' + activity.location +
+                      ' &mdash; ' + activity.title;
         insertActivity(concert);
         break;
       case 'song':
@@ -152,11 +152,14 @@ function withJQuery() {
       default:
         insertActivity('Unknown activity type ' + activity.type);
     }
+    return activity.date;
   }
 
   function insertLoadingStatus() {
-    $('#activity-list').append(ele('img id="load-status" alt="Loading..." ' +
-                                   'src="' + loadingImage() + '"', ''));
+    $('#activity-list').append(ele('div id="load-status"',
+                                   ele('img id="load-status" alt="Loading"' +
+                                   'src="' + loadingImage() + '"', '') +
+                                   ele('p', 'Laster inn aktivitetsdata...')));
   }
 
   function removeLoadingStatus() {
