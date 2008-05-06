@@ -70,7 +70,7 @@ module Rort::Parsers
     when 0..DAY
       'I dag'
     when DAY..(2*DAY)
-      'I gaar'
+      'I går'
     when (2*DAY)..WEEK
       "#{(diff / DAY).to_i} dager siden"
     when WEEK..MONTH
@@ -79,10 +79,10 @@ module Rort::Parsers
       "#{weeks} #{text} siden"
     when MONTH..YEAR
       months = (diff / MONTH).to_i
-      text = (months == 1 ? 'maaned' : 'maaneder')
+      text = (months == 1 ? 'måned' : 'måneder')
       "#{months} #{text} siden"
     else
-      "#{(diff / YEAR).to_i} aar siden"
+      "#{(diff / YEAR).to_i} år siden"
     end
   end
 end
