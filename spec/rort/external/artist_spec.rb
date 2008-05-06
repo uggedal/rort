@@ -97,8 +97,8 @@ describe Rort::External::Artist do
       review[:artist_url].should =~ /^http:\/\/\w+/
       review[:reviewer].should_not be_empty
       review[:reviewer_url].should =~ /^http:\/\/\w+/
-      review[:rating].should < 7
-      review[:rating].should > 0
+      review[:rating].should < 2
+      review[:rating].should > -1
       review[:comment].should_not be_empty
     end
   end

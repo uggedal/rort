@@ -69,25 +69,28 @@ module Rort::External
     end
 
     def reviews
-      (@doc/"#WebPart_gwpReviewList .singlereview").collect do |review|
+      (@doc/"#WebPart_gwpReviewList tbody tr").collect do |review|
 
-        id = review.at("a[@onclick^='playBandTrack']")[:onclick].
+        id = review.at("td.said p small a[@onclick^='playBandTrack']")[:onclick].
                scan(/^playBandTrack\((\d+)\)/).flatten.first.to_i
 
-        rating = review.at("img.trackreviewStars")[:src].
-                   scan(/_(\d)\.png$/).flatten.first.to_i
+        rating = review.at("td.rating img")[:src].
+                   scan(/-tommel(\w{3})-voted.png$/).flatten.first
+        rating = (rating == 'opp' ? 1 : 0)
 
-        date = review.at(".Writtenat").inner_text.strip
+        date = review.at("td.said p small").inner_text.strip.
+                 scan(/(^(.+)\n)/).flatten.first.strip
         pattern = /(\d{1,2})\. (\w+) (\d{4})$/
         time = Time.local(*parse_textual_date(date, pattern))
 
         reviewer_slug = review.
-          at(".trackReviewHeader a[@href^='#{URL}Person']")[:href].
+          at("td.said h4 a[@href^='#{URL}Person']")[:href].
             scan(/Person\/(\w+)/).flatten.first
 
         reviewer = Artist.as(reviewer_slug)
 
-        comment = review.at(".trackReviewFull").inner_text.strip
+        comment = review.at("td.said p").inner_text.strip.
+                    scan(/(^(.+)\n)/).flatten.first.strip
 
         activity(:review,
                  time,
