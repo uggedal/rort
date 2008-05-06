@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Prefetch favorite activity on userscript download
+desc: ""
+type: :feature
+component: server
+release: 
+reporter: Eivind Uggedal <eu@redflavor.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-05-06 10:01:16.050869 Z
+references: []
+
+id: affc0590a20ea0d18dbe213b97bcb16e67131a99
+log_events: 
+- - 2008-05-06 10:01:16.957210 Z
+  - Eivind Uggedal <eu@redflavor.com>
+  - created
+  - ""
