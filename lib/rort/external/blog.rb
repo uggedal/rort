@@ -30,11 +30,12 @@ module Rort::External
         parse_time(s.inner_text.scan(/klokka (\d\d:\d\d)/).flatten.first)
       end
 
-      ids = div.search("a[text()$='Kommentarer']").collect do |a|
+      ids = div.search("a[text()*='Kommentar']").collect do |a|
         a[:href].scan(/articleid=(\d+)/).flatten.first.to_i
       end
 
       titles = div.search("h4").collect {|h4| h4.inner_text.strip }
+
 
       [dates, times, ids, titles].transpose.collect do |item|
         activity(:blog,
