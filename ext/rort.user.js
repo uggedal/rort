@@ -157,13 +157,18 @@ function withJQuery() {
         insertActivity(song);
         break;
       case 'review':
+        if (activity.rating == 1)
+          var lovehate = 'elsker' 
+        else
+          var lovehate = 'hater' 
+
         var review = icon('review' + activity.rating) +
                      ele('a href=' + activity.reviewer_url,
                          activity.reviewer) +
-                       ' har anmeldt sangen: ' +
-                       ele('a href=' + activity.url, activity.title) +
-                       ' av ' +
-                       ele('a href=' + activity.artist_url, activity.artist);
+                     ' ' + lovehate + ' sangen: ' +
+                     ele('a href=' + activity.url, activity.title) +
+                     ' av ' +
+                     ele('a href=' + activity.artist_url, activity.artist);
         insertActivity(review);
         break;
       default:
