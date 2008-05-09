@@ -138,6 +138,7 @@ function withJQuery() {
                    ' har lagt ut sangen: ' +
                    ele('a href=' + activity.url, activity.title);
         insertActivity(song);
+        break;
       case 'review':
         var review = icon('review') +
                      ele('a href=' + activity.reviewer_url,
