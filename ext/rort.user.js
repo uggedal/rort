@@ -44,7 +44,7 @@ function parseJson(data) {
 // Create a HTML element (can include attributes) with closing tag
 function ele(tag, content) {
   var closeTag = tag.match(/^(\w+)/)[1];
-  return '<'+tag+'>'+content+'</'+closeTag+'>';
+  return '<'+tag+'>'+content+'</'+closeTag+'>\n';
 }
 
 // Return a data: URI based icon
@@ -73,12 +73,7 @@ function withJQuery() {
   }
 
   function setupActivities() {
-    var activitiesCss = {
-      listStyleType: 'none'
-    }
-
     $('#activity-list').append(ele("ul id='activities'", ''));
-    $('#activities').css(activitiesCss);
   }
 
   function insertActivity(activity) {
@@ -86,11 +81,12 @@ function withJQuery() {
   }
 
   function display(res) {
-    if (res.status != 200)
-      insertError('Unknown person: ' + ele('em', user));
-    else
-      displayActivities(res.responseText);
 
+    if (res.status != 200) {
+      insertError('Unknown person: ' + ele('em', user));
+    } else {
+      displayActivities(res.responseText);
+    }
     removeLoadingStatus();
   }
 
@@ -100,10 +96,14 @@ function withJQuery() {
     if (parsed.length > 0) {
       setupActivities();
 
-      var lastActivityDate = '';
+      var offset = insertActivitiesList(0, parsed);
 
-      $.each(parsed, function() {
-        lastActivityDate = formatActivity(this, lastActivityDate);
+      $('#activity-list').append(ele('a href="" id="more-events"',
+                                     'Se flere hendelser'));
+      $('#more-events').bind('click', function (e) {
+        e.preventDefault();
+        offset += 10;
+        offset = insertActivitiesList(offset, parsed);
       });
     } else {
       insertError("Either you don't have any favorites " +
@@ -111,6 +111,23 @@ function withJQuery() {
     }
   }
 
+  // Global pointer for the latest date
+  lastActivityDate = '';
+
+  function insertActivitiesList(offset, data) {
+
+      var elements = 10;
+
+      if (data.length > offset + elements)
+        var end = offset + elements;
+      else
+        var end = data.length;
+
+      for (var i = offset; i < end; i++) {
+        lastActivityDate = formatActivity(data[i], lastActivityDate);
+      }
+      return offset;
+  }
 
   function formatActivity(activity, lastDate) {
 
@@ -180,6 +197,7 @@ function rortStyle() {
   return '#load-status, #load-status > p { text-align: center; }' +
          'img.icon { margin: 0 8px 0 -24px; }' +
          '#activity-list { margin: 0 0 0 34px; }' +
+         'ul#activities { list-style-type: none; }' +
          '#activity-list h3 { margin:15px 0 5px 0; }'
 }
 
