@@ -10,6 +10,7 @@ module Rort
   require 'rort/server'
 
   Cache.enable!
+  Cache.expiry = 60*60*12 # 12 hr cache ttl
 
   def self.start
     @app = Rort::Server.new
