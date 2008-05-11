@@ -12,9 +12,9 @@ module Rort
 
       if req.params.any? && req.params.key?('favorites') &&
            body = activities_for_favorites_of(req['favorites'])
-        [200, DEFAULT_HEADERS, [body]]
+        [200, DEFAULT_HEADERS, body]
       else
-        [404, DEFAULT_HEADERS, ['']]
+        [404, DEFAULT_HEADERS, '']
       end
     end
 
