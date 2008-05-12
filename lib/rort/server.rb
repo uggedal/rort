@@ -10,15 +10,19 @@ module Rort
     def call(env)
       req = Rack::Request.new(env)
 
-      if req.params.any? && req.params.key?('favorites') &&
-           body = activities_for_favorites_of(req['favorites'])
+      def match?(req, key)
+        & req.params.key?(key)
+      end
+
+      if req.params.empty?
+      if match?(req, 'favorites') && body = favorites_of(req['favorites'])
         [200, DEFAULT_HEADERS, body]
       else
         [404, DEFAULT_HEADERS, '']
       end
     end
 
-    def activities_for_favorites_of(slug)
+    def favorites_of(slug)
       artist = Rort::Models::Person.fetch(slug)
       artist ? artist.favorite_activities.to_json : nil
     end
