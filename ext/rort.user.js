@@ -6,6 +6,7 @@
 // @description    Rører ved Urørt
 // @include        http://redflavor.com/urort.html
 // @include        http://www11.nrk.no/urort/default.aspx
+// @include        file://*
 // ==/UserScript==
 
 
@@ -138,10 +139,12 @@ function withJQuery() {
 
       var elements = 10;
 
-      if (data.length > offset + elements)
+      if (data.length > offset + elements) {
         var end = offset + elements;
-      else
+      } else {
         var end = data.length;
+        $('#more-events').remove();
+      }
 
       for (var i = offset; i < end; i++) {
         lastActivityDate = formatActivity(data[i], lastActivityDate);
