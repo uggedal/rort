@@ -15,7 +15,12 @@ module Rort
         @enabled
       end
 
+      def disabled?
+        !enabled?
+      end
+
       def [](key)
+        return if disabled?
         case key
         when String
           @cache.get(key)
@@ -25,10 +30,12 @@ module Rort
       end
       
       def []=(key, value)
+        return if disabled?
         @cache.set(key, value, expiry)
       end
 
       def del(key)
+        return if disabled?
         @cache.delete(key)
       end
             
