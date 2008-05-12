@@ -69,9 +69,8 @@ function ele(tag, text) {
 }
 
 // Return a data: URI based icon
-function icon(type) {
-  data = eval('{0}Icon()'.i(type));
-  return ele('img class="icon" alt="{0}" src="{1}"'.i(type, data));
+function icon(data) {
+  return ele('img class="icon" alt="" src="{0}"'.i(data));
 }
 
 // Scope where jQuery is enabled
@@ -160,33 +159,35 @@ function withJQuery() {
 
     switch (act.type) {
       case 'blog':
-        act.icon        = icon(act.type);
+        act.icon        = icon(blogIcon());
         act.author_link = ele('a href="{author_url}"'.i(act), act.author);
         act.link        = ele('a href={url}'.i(act), act.title);
         act.formatted   = '{icon}{author_link} blogget om {link}'.i(act);
         insertActivity(act.formatted);
         break;
       case 'concert':
-        act.icon      = icon(act.type);
+        act.icon      = icon(concertIcon());
         act.art_link  = ele('a href="{artist_url}"'.i(act), act.artist);
         act.formatted = ('{icon}{art_link} holdt konsert: {location} ' +
                          '&mdash; {title}').i(act);
         insertActivity(act.formatted);
         break;
       case 'song':
-        act.icon      = icon(act.type);
+        act.icon      = icon(songIcon());
         act.art_link  = ele('a href="{artist_url}"'.i(act), act.artist);
         act.link      = ele('a href={url}'.i(act), act.title);
         act.formatted = '{icon}{art_link} har lagt ut sangen {link}'.i(act);
         insertActivity(act.formatted);
         break;
       case 'review':
-        if (act.rating == 1)
+        if (act.rating == 1) {
           act.vote = 'elsker'; 
-        else
+          act.icon      = icon(positiveReviewIcon());
+        } else {
           act.vote = 'hater';
+          act.icon      = icon(negativeReviewIcon());
+        }
 
-        act.icon      = icon(act.type + act.rating);
         act.rev_link  = ele('a href="{reviewer_url}"'.i(act), act.reviewer);
         act.link      = ele('a href={url}'.i(act), act.title);
         act.art_link  = ele('a href="{artist_url}"'.i(act), act.artist);
@@ -245,11 +246,11 @@ function songIcon() {
   return "data:image/png,%89PNG%0D%0A%1A%0A%00%00%00%0DIHDR%00%00%00%10%00%00%00%10%08%06%00%00%00%1F%F3%FFa%00%00%00%06bKGD%00%FF%00%FF%00%FF%A0%BD%A7%93%00%00%00%09pHYs%00%00%0D%D7%00%00%0D%D7%01B(%9Bx%00%00%00%07tIME%07%D5%04%1C%0B69%BB%24%9FG%00%00%010IDAT8%CBc%60%A0%100b%13%2C%AD5%EDg%60%FAZ%40H3%13%13%C7%5E%16%EC2_%0B%82%83%02%09%DA%BEv%DDzg%26l%12%FF%FF3~%23%D6%0B%2C%04l%C0*%FE%FF%1F%C3%BF%90%90%40%26%82%060000t7%5E%C3%08%A7%92%3A%ED%EF%0C%0C%0C%1C%0C%0C%0C%0CLd%06%FE%3Fxpa%8D%1A%C6%FF%5Cx%A3%0EI%9E%89%D2t%40V%2C%20%CB%B30000d%15ZH2%B3%FC%89%FD%F1%FD%BB%93%80%F0%7Fw%06%86%FF%0C%BF%FE%7C%86k%C0'%CF%C2%C0%C0%C0%F0%F9%D3%A7%3A5-%B6%0C%133U%06~%5Eu%06~ne%86%7BO%D72%88%89s2%10%92ga%60%60%60%90%90a%C8%B0%B7%B7f%F8%F7%EF%0F%0333%3B%C3%DD'k%18.%9D%7F%FD%FF%CD%EB%FF%5B%F1%C9%BFz%C1%D4%00O%07%F7%1E%9Eg%E0%E0%60a%E0%E7%7B%CBp%F3%FA%5B%86wo%FF%5E%3C%7D%ECC%17%3E%F9%B3'%DF%EE%87'%92%C4L%B5%DB%22b%2C*%0C%0C%0C%0C%B7%AF%FF%5C%B4a%D5%DDx%E4%80C%97%97W%94%A8%98%D8y%F49%A5%B1%C8%00%00%BDu%89%F9o)J%9E%00%00%00%00IEND%AEB%60%82"
 }
 
-function review1Icon() {
+function positiveReviewIcon() {
   return "data:image/png,%89PNG%0D%0A%1A%0A%00%00%00%0DIHDR%00%00%00%10%00%00%00%15%08%06%00%00%00O%3En%D2%00%00%00%01sRGB%00%AE%CE%1C%E9%00%00%00%06bKGD%00%FF%00%FF%00%FF%A0%BD%A7%93%00%00%00%09pHYs%00%00%0B%13%00%00%0B%13%01%00%9A%9C%18%00%00%00%07tIME%07%D8%05%09%10%0D%0B%B9%0B%F0%AD%00%00%02%B8IDAT8%CB%A5%92%CBkSA%14%C6%BF337i%1E%D4%D6%DA%165j*%AD%A8%B5%0F%C1%07%D4%A6%AE%04AP%10_%A8%E0%7F%20%15ta%05WnD%14%84%BAs'b%11E%5C%BAR%7C%20*%98Z%D0%96%FA%D6VC51%7D%A4I%EE%9D%99%E3%22%B166%8A%E2%81%BB%99s%EEo%BE%F3%CDG%F8M%C5c%ADU%ECy%BB%18%B6AH%D5GB%3Eo%BF7%60%7F%9DSe%7F%EEj%F5%B3%B5%7B%7C%91%25%C7UUuu%EE%ED%EB(%E7%B2G%01%7C%FEuV%94%BD%3E%9F%AFT%81%E0%F6%DA%BD%87%A2%91%EE%9Ey%15K%1B%B6%B21%AB%CB%8D%96%05%B05%12%8E%F2%FB%EA%EA%E1%D4%2C%80%0C%04%02%04T%FE5%A0%40%01%60-%C0%5C%F8%0A'%FF%00%F8%CB%FAo%80*u%BF%0D%C4%96l.%0B%22b%22*4%88%18%60%D3%DF%B9%86P%3Cc%22%5E%7Bw%E0'%20%1Ekq%D8sW%B1%F6%1A%C1%A81%99%CC%C2%89G%F7%91%1F%FD%08o%2C!%60m%97%CD%E7%82D%A4%98%A1%E18%2F%E2%5DmC%04%00%FD%B1%16%87%3D%BD_%CC%AF9%1Ch%5C%B1L%06C%3E%18%13%E0%A2Bb%CB%201%0D%22%0D%22%B2%F9%9C%9D%1E%1E%EC%B7%E3%E9%13%14%8F%B5H%F6%BC%9DNd%E9%B9%C8%91%9EH%B8%B9%0D%24%0A%D603%D8s%0B%FE%D3%0F%AD%04%3D%91%C6%A7%0Bg%BD%C9%07wN)X%DBL%3E%DF%C1%DA%DD%07%16Uul.1%C8d%A7%91%B8~%05vj%12(BA%04%93J%22%3B%3C%98%60)%9E)h%DD%AAj%EB%A3%E1%F6u%E5Ce4%8C%E7%82%84%9C%01X%A3%C1%DAs%89%91V%60%EB%93%8E%23%A4r%E6%BE%B1%BF%02%F5%3B%F6%80%8D)Y%C1K~%C1h%E2S%7D%E6%E9%E3%E5jVgN%E9%CC%14%DE%F7%9E%81%9EH%83%E4%2C%05%DFR%F0%DE%BC%7C%25%1C'%AE%FE%14%12%E9%AF%40%CD%96m0%85%5C%14%01%02%3A9%86%E4%B5%CBu%EE%87w%8B%15%A8%E86%CDUBB%C0_%5B%07%EB%BA%25%2BHGA%84%C2~f%0E%2B%08%F9YOMN%B9c%09%04%1A%1A%E7%BC%C2%C8%C5%5Ex%C9%AF%20)f%14pf%12z%E4%C3%A8t%9CaEJ%3D4%E9%D4%ED%AF7%AF%B6%07%9BVV%A8y%D5%F8%11W%19%0C!z%EC%24X%EBb%10%18%20%013%9E%C2%E8%F9%D3M%D3%FDO6%11%00%C4%3B%D74%B0%14g*7%C6%B6%87%D7w8%22%14.Y%03%B3%D7%93%026%93A%EAF_2%3B%F4%A2%7B%A6%13%EFl%8E%82%B1%0F%81%E0%06%922T%DEV%22%10%24%AC%F18%EF%DE%82%D1%97%BE%03%EBb'-%B3X%C3%AB%00%00%00%00IEND%AEB%60%82"
 }
 
-function review0Icon() {
+function negativeReviewIcon() {
   return "data:image/png,%89PNG%0D%0A%1A%0A%00%00%00%0DIHDR%00%00%00%10%00%00%00%15%08%06%00%00%00O%3En%D2%00%00%00%01sRGB%00%AE%CE%1C%E9%00%00%00%06bKGD%00%FF%00%FF%00%FF%A0%BD%A7%93%00%00%00%09pHYs%00%00%0B%13%00%00%0B%13%01%00%9A%9C%18%00%00%00%07tIME%07%D8%05%09%10%0E'%A0%FE%CF%8D%00%00%02%BEIDAT8%CB%B5%94OHTQ%18%C5%CFw%EF%7D%EA8%93%8D%16Y44%05%22%88%9AMdR4A%9B%16%05%B6%E8%0F%D1%BAv%E2%AAVA%8B%96%B9%2Ch%19Q%81%D5%22%8A%82%A2MhnB%9CIk%92%824%A9h%1Cg%1CG%C7%99%F7%DE%7D%F7k1%E9%243F%10%1D%B8%CB%EFw%CF%C79%F7%12~)v%A8%7D'%18g%E1%AB%DFOR%FAQUD%20H%18%CFe%DBy%01O%DFQ%A5%E1%8E%5D%2C%C5%40CO%B47%D0%7D%D0%12%FE%40yD%08%80%A8%CC%90%02%26%9FG%E6%D1%E0%BE%C2d%22%A5%E2%D1%CE%A0q%9D%0B%0D%D1%A3%C7w%5C%BCb%A9%8D%8D%E5%01f8%E9%14Xk%00%04%80%01%12%F0%162%C8%D6%F9%EA%09%26%A8X%EB%032%D8td%F3%893uV%D3%E65%86%F5b%0E%D3%03W%E1%A6%E7%40R%ACX%02%E7%17%A1%BF%CE%7C%22e%8D(%18o%9B%0Al%08%D4l%D9Z%B1%B1%F4%D5%23t%BE%0F%C6qJ%06J%04%E8%F94~%DC%BA%B9%BD%90%98hU%60%80%88%40%CC%15%006%06vj%16%5E%B1%00ZY%8B%04tz%16%26%BFd%13%D1%92%C2%1F%E4%D9E%A4_%3E%83%CEeAR%AE%06a%E63%D0%A9%E4%2CI%F9M%01%BC.%40%F9%03%08%F7%5D%02%7B%DE%9A%15%DCt%0A%DF%AE_k%C9%8F%BD%89(%90p%3C%D75%9Ev%2B%00%C6.%22%F9%F8%01tn%01%24%CA%0E%BCl%06%CE%97%CFI%A1%D4g%01%A5%C6ufnz)%3Ej%AAVG*H%AB%06%C2%B2%CAG*%90%B2j%98%10T%10%E2%3D%3B%CE%DD%D4%C3%7B%7BkC%E1P%A0%BD%ABT%1E%00%CC%8C%E6%DE%93%A5-%7FO!%97%C5%F7lf%AB%1EIv%11%00%C4%A3%9D%16%BB%FA%9Ch%DA%D4%EFki%0D%CBz%7F%0D%3C%CF%C7%80%02%00b%C3%20%B1%0C%22%0D%222v%D1%2C%7F%FC%107%0B%D9%CB%AB%DCX%B4%D3b%AD%DB%A0%DD%1606%09%7F%A0%BF%E9%D8%89%8E%DAP%18%E9G%83E%7Bf%EA%063%8F%12%91b%86%86e%25HY%93%AB1F%86'%DC%D8%E1%AEqRj%C2%14%0B%CD%D2%EF%3F%DD%D0s%A8%C3%D7%DA%86%DC%C8%2Bc%7F%FD2%24%94%F5%B4%F4%9E%00%26%E2%C8%D0%5B%AC%E9Ad%E8-%00%F0Xw%0B%98%99x%A5%5C%CC%04%90%DC%F3%FA%5DE%E6%02%FF%A8%FF%08%20%00%2B%7FA%E9%1D%D0_%03HH%0F%AE%B6%9D%D9%24%DC%F4%1C%BCB%A1%C0%40%AEj%DD%AB%DE%5E%5B%9B%D3%85%E5'%A9%FB%B7%DB%E7%83%8D%8D%C5%99%A9%E7%24eb%3D%A3U%15%8B%EE%0E%B2%EB%9Eb%98%5DB%AAA%12%F2%FD%9E%E1%F1%8A%BA%FF%04%E0%E01%AB%C4%01%83Y%00%00%00%00IEND%AEB%60%82"
 }
 
