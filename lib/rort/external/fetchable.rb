@@ -7,10 +7,6 @@ module Rort::External
     OpenURI::Cache.enable!
     OpenURI::Cache.expiry = 60 * 60
 
-    # Increase the buffer because of unpredictable ASP.NET viewstates.
-    # Should possibly patch Hpricot to handle arbitrarily sized elements.
-    Hpricot.buffer_size = 262144
-
     def doc?
       !(@doc.at("head > title").inner_text.strip =~
           /^NRK Ur\303\270rt - Ur\303\270rt fant ikke frem$/)
