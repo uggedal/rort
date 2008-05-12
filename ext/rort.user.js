@@ -37,20 +37,40 @@ function get(url, callback) {
   });
 }
 
+// String interpolation with {}. Partly taken from Remedial
+// by Douglas Crockford (http://javascript.crockford.com/remedial.html)
+String.prototype.i = function (obj) {
+  // Interpolate with all arguments as an array or a object
+  if (typeof arguments[0]  == 'string')
+    var arg = arguments;
+  else
+    var arg = obj;
+
+  return this.replace(/{([^{}]*)}/g,
+    function (a, b) {
+      var r = arg[b]; 
+      return typeof r === 'string' || typeof r === 'number' ? r : a;
+    }
+  );
+};
+
 function parseJson(data) {
-  return eval("(" + data + ")");
+  return eval('({0})'.i(data));
 }
 
 // Create a HTML element (can include attributes) with closing tag
-function ele(tag, content) {
+function ele(tag, text) {
   var closeTag = tag.match(/^(\w+)/)[1];
-  return '<'+tag+'>'+content+'</'+closeTag+'>\n';
+  if (text == undefined)
+    return '<{0}>'.i(tag);
+  else
+    return '<{0}>{1}</{2}>'.i(tag, text, closeTag);
 }
 
 // Return a data: URI based icon
 function icon(type) {
-  data = eval(type + 'Icon()');
-  return ele('img class="icon" alt="' + type + '" src="' + data + '"', '');
+  data = eval('{0}Icon()'.i(type));
+  return ele('img class="icon" alt="{0}" src="{1}"'.i(type, data));
 }
 
 // Scope where jQuery is enabled
@@ -83,7 +103,8 @@ function withJQuery() {
   function display(res) {
 
     if (res.status != 200) {
-      insertError('Unknown person: ' + ele('em', user));
+      var usrEle = ele('em', user);
+      insertError('Tilkoblingsproblemer eller ukjent bruker {0}.'.i(usrEle));
     } else {
       displayActivities(res.responseText);
     }
@@ -106,12 +127,11 @@ function withJQuery() {
         offset = insertActivitiesList(offset, parsed);
       });
     } else {
-      insertError("Either you don't have any favorites " +
-                  'or your favorites are not doing anything interesting');
+      insertError('Du har ingen favoritter som har foretatt seg noe.');
     }
   }
 
-  // Global pointer for the latest date
+  // Global variable for the latest date
   lastActivityDate = '';
 
   function insertActivitiesList(offset, data) {
@@ -129,60 +149,60 @@ function withJQuery() {
       return offset;
   }
 
-  function formatActivity(activity, lastDate) {
+  function formatActivity(act, lastDate) {
 
-    if (lastDate != activity.date)
-      insertActivity(ele('h3', activity.date));
+    if (lastDate != act.date)
+      insertActivity(ele('h3', act.date));
 
-    switch (activity.type) {
+
+    switch (act.type) {
       case 'blog':
-        var blog = icon('blog') +
-                   ele('a href=' + activity.author_url, activity.author) +
-                   ' blogget om ' +
-                   ele('a href=' + activity.url, activity.title)
-        insertActivity(blog);
+        act.icon        = icon(act.type);
+        act.author_link = ele('a href="{author_url}"'.i(act), act.author);
+        act.link        = ele('a href={url}'.i(act), act.title);
+        act.formatted   = '{icon}{author_link} blogget om {link}'.i(act);
+        insertActivity(act.formatted);
         break;
       case 'concert':
-        var concert = icon('concert') +
-                      ele('a href=' + activity.artist_url, activity.artist) +
-                      ' holdt konsert: ' + activity.location +
-                      ' &mdash; ' + activity.title;
-        insertActivity(concert);
+        act.icon      = icon(act.type);
+        act.art_link  = ele('a href="{artist_url}"'.i(act), act.artist);
+        act.formatted = ('{icon}{art_link} holdt konsert: {location} ' +
+                         '&mdash; {title}').i(act);
+        insertActivity(act.formatted);
         break;
       case 'song':
-        var song = icon('song') +
-                   ele('a href=' + activity.artist_url, activity.artist) +
-                   ' har lagt ut sangen: ' +
-                   ele('a href=' + activity.url, activity.title);
-        insertActivity(song);
+        act.icon      = icon(act.type);
+        act.art_link  = ele('a href="{artist_url}"'.i(act), act.artist);
+        act.link      = ele('a href={url}'.i(act), act.title);
+        act.formatted = '{icon}{art_link} har lagt ut sangen {link}'.i(act);
+        insertActivity(act.formatted);
         break;
       case 'review':
-        if (activity.rating == 1)
-          var lovehate = 'elsker' 
+        if (act.rating == 1)
+          act.vote = 'elsker'; 
         else
-          var lovehate = 'hater' 
+          act.vote = 'hater';
 
-        var review = icon('review' + activity.rating) +
-                     ele('a href=' + activity.reviewer_url,
-                         activity.reviewer) +
-                     ' ' + lovehate + ' sangen: ' +
-                     ele('a href=' + activity.url, activity.title) +
-                     ' av ' +
-                     ele('a href=' + activity.artist_url, activity.artist);
-        insertActivity(review);
+        act.icon      = icon(act.type + act.rating);
+        act.rev_link  = ele('a href="{reviewer_url}"'.i(act), act.reviewer);
+        act.link      = ele('a href={url}'.i(act), act.title);
+        act.art_link  = ele('a href="{artist_url}"'.i(act), act.artist);
+        act.formatted = '{icon}{rev_link} {vote} sangen {link} av {art_link}'
+                          .i(act);
+        insertActivity(act.formatted);
+
         break;
       default:
-        insertActivity('Unknown activity type ' + activity.type);
+        var actEle = ele('em', act.type);
+        insertActivity('Ukjent aktivitet {0}'.i(actEle));
     }
-    return activity.date;
+    return act.date;
   }
 
   function insertLoadingStatus() {
     $('#activity-list').append(ele('div id="load-status"',
-                                   ele('img alt="Loading"' +
-                                       'src="' + loadingImage() + '"', '') +
-                                   ele('p',
-                                       'Laster inn aktivitetsdata...')));
+      ele('img alt="Loading" src="{0}"'.i(loadingImage())) +
+      ele('p', 'Laster inn aktivitetsdata...')));
   }
 
   function removeLoadingStatus() {
@@ -195,7 +215,7 @@ function withJQuery() {
 
   insertLoadingStatus();
 
-  get('http://rort.redflavor.com/?favorites=' + user, display);
+  get('http://rort.redflavor.com/?favorites={0}'.i(user), display);
 }
 
 function rortStyle() {
