@@ -18,15 +18,18 @@ describe Rort::Parsers do
   end
 
   it 'should be able to parse a verbose textual date' do
+    hours_ago = '3 timer og 13 minutter siden'
     today = 'i dag'
     yesterday = "i g\303\245r"
     pattern = /(\d{2})\. (\w+), (\d{4})/
 
+    parsed_hours_ago = parse_textual_date(hours_ago, pattern)
     parsed_today = parse_textual_date(today, pattern)
     parsed_yesterday = parse_textual_date(yesterday, pattern)
 
     today = Time.now
     yesterday = today - 60*60*24
+    parsed_hours_ago.should == [today.year, today.month, today.day]
     parsed_today.should == [today.year, today.month, today.day]
     parsed_yesterday.should == [yesterday.year,
                                 yesterday.month,
