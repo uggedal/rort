@@ -38,46 +38,51 @@ function get(url, callback) {
   });
 }
 
-// String interpolation with {}. Partly taken from Remedial
-// by Douglas Crockford (http://javascript.crockford.com/remedial.html)
-String.prototype.i = function (obj) {
-  // Interpolate with all arguments as an array or a object
-  if (typeof arguments[0]  == 'string')
-    var arg = arguments;
-  else
-    var arg = obj;
-
-  return this.replace(/{([^{}]*)}/g,
-    function (a, b) {
-      var r = arg[b]; 
-      return typeof r === 'string' || typeof r === 'number' ? r : a;
-    }
-  );
-};
-
-function parseJson(data) {
-  return eval('({0})'.i(data));
-}
-
-// Create a HTML element (can include attributes) with closing tag
-function ele(tag, text) {
-  var closeTag = tag.match(/^(\w+)/)[1];
-  if (text == undefined)
-    return '<{0}>'.i(tag);
-  else
-    return '<{0}>{1}</{2}>'.i(tag, text, closeTag);
-}
-
-// Return a data: URI based icon
-function icon(data) {
-  return ele('img class="icon" alt="" src="{0}"'.i(data));
-}
-
 // Scope where jQuery is enabled
 function withJQuery() {
 
-  var user = $('ul#loggedinuser > li.item > a:first').attr('href')
-               .match(/\/Person\/(\w+)/)[1];
+  var userHref = $('ul#loggedinuser > li.item > a:first').attr('href');
+
+  // Return silently if the user is not logged in
+  if (userHref == undefined)
+    return;
+
+  var user = userHref.match(/\/Person\/(\w+)/)[1];
+
+  // String interpolation with {}. Partly taken from Remedial
+  // by Douglas Crockford (http://javascript.crockford.com/remedial.html)
+  String.prototype.i = function (obj) {
+    // Interpolate with all arguments as an array or a object
+    if (typeof arguments[0]  == 'string')
+      var arg = arguments;
+    else
+      var arg = obj;
+
+    return this.replace(/{([^{}]*)}/g,
+      function (a, b) {
+        var r = arg[b]; 
+        return typeof r === 'string' || typeof r === 'number' ? r : a;
+      }
+    );
+  };
+
+  function parseJson(data) {
+    return eval('({0})'.i(data));
+  }
+
+  // Create a HTML element (can include attributes) with closing tag
+  function ele(tag, text) {
+    var closeTag = tag.match(/^(\w+)/)[1];
+    if (text == undefined)
+      return '<{0}>'.i(tag);
+    else
+      return '<{0}>{1}</{2}>'.i(tag, text, closeTag);
+  }
+
+  // Return a data: URI based icon
+  function icon(data) {
+    return ele('img class="icon" alt="" src="{0}"'.i(data));
+  }
 
   // Sets a global css style
   function setStyle(css) {
@@ -101,7 +106,6 @@ function withJQuery() {
   }
 
   function display(res) {
-
     if (res.status != 200) {
       var usrEle = ele('em', user);
       insertError('Tilkoblingsproblemer eller ukjent bruker {0}.'.i(usrEle));
@@ -226,6 +230,7 @@ function rortStyle() {
   return '#load-status, #load-status > p { text-align: center; }' +
          'img.icon { margin: 0 8px 0 -24px; }' +
          '#activity-list { margin: 0 0 0 34px; }' +
+         '#more-events { color: blue; }' +
          'ul#activities { list-style-type: none; }' +
          '#activity-list h3 { margin:15px 0 5px 0; }'
 }
