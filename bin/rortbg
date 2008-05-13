@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+
+require 'rubygems'
+require 'daemons'
+
+bg = File.expand_path("../../lib/rort/background.rb", __FILE__)
+opts = { :app_name => 'rortbg',
+         :dir_mode => :normal,
+         :monitor => true,
+         :multiple => true,
+         :log_output => true,
+         :dir => File.expand_path('../../', __FILE__)
+}
+
+Daemons.run(bg, opts)
