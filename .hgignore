@@ -2,3 +2,6 @@
 
 ^log/
 ^[a-z]+\.db$
+^[a-z0-9_.]+\.pid$
+^[a-z]+\.output$
+^[a-z]+\.log$
