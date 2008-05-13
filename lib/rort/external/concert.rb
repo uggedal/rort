@@ -19,7 +19,6 @@ module Rort::External
         title = event.at("span[@id$='_Label3']").inner_text.strip
         comment_html = event.at("span[@id$='_Label4'] > p")
         comment = comment_html.inner_text.strip if comment_html
-        puts @slug if comment_html
 
         time = Time.local(*(parse_numeric_date(datetime[0]) +
                             parse_time(datetime[1])))
