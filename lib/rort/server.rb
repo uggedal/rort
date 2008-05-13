@@ -11,10 +11,9 @@ module Rort
       req = Rack::Request.new(env)
 
       def match?(req, key)
-        & req.params.key?(key)
+        req.params.any? && req.params.key?(key)
       end
 
-      if req.params.empty?
       if match?(req, 'favorites') && body = favorites_of(req['favorites'])
         [200, DEFAULT_HEADERS, body]
       else
