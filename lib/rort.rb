@@ -8,6 +8,7 @@ module Rort
   require 'rort/cache'
   require 'rort/models'
   require 'rort/server'
+  require 'rort/queue'
 
   Cache.enable!
   Cache.expiry = 60*60*12 # 12 hr cache ttl
