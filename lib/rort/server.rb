@@ -17,8 +17,16 @@ module Rort
 
       if req.get? && req.GET.empty?
         [200, HTML, username_form]
-      elsif get?(req, 'username')
-        [200, HTML, req.GET['username']]
+
+      elsif get?(req, 'download')
+        username = req.GET['download']
+
+        if validate_user(username)
+          [200, HTML, userscript]
+        else
+          [200, HTML, username_form("Ugyldig bruker: #{username}")]
+        end
+
       elsif get?(req, 'favorites') && body = favorites_of(req.GET['favorites'])
         [200, JSON, body]
       else
@@ -26,26 +34,35 @@ module Rort
       end
     end
 
-    def username_form
+    def username_form(msg='')
       <<-EOS
         <html>
           <head>
-            <title>Last ned Urort bruker-script</title>
+            <title>Last ned Ur&oslash;rt bruker-script</title>
           </head>
           <body>
-            <h1>Last ned Urort bruker-script</h1>
+            <h1>Last ned Ur&oslash;rt bruker-script</h1>
+            <p style="color:red;">#{msg}</p>
             <p>
-              Oppgi ditt brukernavn hos Urort slik at vi kan gjoere
-              klar data for deg.
+              Oppgi ditt brukernavn hos Ur&oslash;rt slik at vi kan
+              gj&oslash;re klar data for deg.
             </p>
             <form action="/" method="get">
-              <label for="username">Brukernavn:</label>
-              <input type="text" name="username" id="username">
+              <label for="download">Brukernavn:</label>
+              <input type="text" name="download" id="download">
               <input type="submit" value="Last ned!">
             </form>
           </body>
         </html>
       EOS
+    end
+
+    def validate_user(username)
+      Rort::Models::Person.fetch(username)
+    end
+
+    def userscript
+      "==UserScript=="
     end
 
     def favorites_of(slug)
