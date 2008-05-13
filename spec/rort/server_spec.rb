@@ -39,7 +39,9 @@ describe Rort::Server do
 
   it 'should provide userscript when a valid username is provided' do
     res = Rack::MockRequest.new(@app).get('?download=NoFavorites')
-    res.status.should == 200
+    res.status.should == 303
+
+    res = Rack::MockRequest.new(@app).get(res.headers['Location'])
     res.body.should =~ /==UserScript==/
   end
 

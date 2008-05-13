@@ -5,8 +5,12 @@ require 'json'
 module Rort
   class Server
 
-    JSON = { 'Content-Type' => 'application/json' }
-    HTML = { 'Content-Type' => 'text/html' }
+    USR_SCRIPT = '/rort.user.js'
+
+    JSON  = { 'Content-Type' => 'application/json' }
+    JS    = { 'Content-Type' => 'application/javascript' }
+    HTML  = { 'Content-Type' => 'text/html' }
+    REDIR = { 'Location' => USR_SCRIPT }
 
     def call(env)
       req = Rack::Request.new(env)
@@ -15,14 +19,17 @@ module Rort
         req.get? && req.GET.any? && req.GET.key?(key)
       end
 
-      if req.get? && req.GET.empty?
+      if req.path_info == USR_SCRIPT
+        [200, JS, userscript]
+
+      elsif req.get? && req.GET.empty?
         [200, HTML, username_form]
 
       elsif get?(req, 'download')
         username = req.GET['download']
 
         if validate_user(username)
-          [200, HTML, userscript]
+          [303, REDIR, '']
         else
           [200, HTML, username_form("Ugyldig bruker: #{username}")]
         end
@@ -62,7 +69,7 @@ module Rort
     end
 
     def userscript
-      "==UserScript=="
+      File.read(File.join(Rort.root, 'ext', 'rort.user.js'))
     end
 
     def favorites_of(slug)
