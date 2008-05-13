@@ -5,20 +5,47 @@ require 'json'
 module Rort
   class Server
 
-    DEFAULT_HEADERS = { 'Content-Type' => 'application/json' }
+    JSON = { 'Content-Type' => 'application/json' }
+    HTML = { 'Content-Type' => 'text/html' }
 
     def call(env)
       req = Rack::Request.new(env)
 
-      def match?(req, key)
-        req.params.any? && req.params.key?(key)
+      def get?(req, key)
+        req.get? && req.GET.any? && req.GET.key?(key)
       end
 
-      if match?(req, 'favorites') && body = favorites_of(req['favorites'])
-        [200, DEFAULT_HEADERS, body]
+      if req.get? && req.GET.empty?
+        [200, HTML, username_form]
+      elsif get?(req, 'username')
+        [200, HTML, req.GET['username']]
+      elsif get?(req, 'favorites') && body = favorites_of(req.GET['favorites'])
+        [200, JSON, body]
       else
-        [404, DEFAULT_HEADERS, '']
+        [404, JSON, '']
       end
+    end
+
+    def username_form
+      <<-EOS
+        <html>
+          <head>
+            <title>Last ned Urort bruker-script</title>
+          </head>
+          <body>
+            <h1>Last ned Urort bruker-script</h1>
+            <p>
+              Oppgi ditt brukernavn hos Urort slik at vi kan gjoere
+              klar data for deg.
+            </p>
+            <form action="/" method="get">
+              <label for="username">Brukernavn:</label>
+              <input type="text" name="username" id="username">
+              <input type="submit" value="Last ned!">
+            </form>
+          </body>
+        </html>
+      EOS
     end
 
     def favorites_of(slug)

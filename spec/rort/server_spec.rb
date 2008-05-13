@@ -19,12 +19,21 @@ describe Rort::Server do
   end
 
   it 'should return the correct content type' do
-    res = Rack::MockRequest.new(@app).get('/')
+    res = Rack::MockRequest.new(@app).get('?favorites=NoFavorites')
     res.headers["Content-Type"].should =='application/json'
+
+    res = Rack::MockRequest.new(@app).get('/')
+    res.headers["Content-Type"].should =='text/html'
   end
 
   it 'should show recent activity for all favorites of an artist' do
     res = Rack::MockRequest.new(@app).get('?favorites=uggedal')
     JSON.parse(res.body).size.should > 1
+  end
+
+  it 'should show a download form on unparamterized request' do
+    res = Rack::MockRequest.new(@app).get('/')
+    res.status.should == 200
+    res.body.should =~ /form/
   end
 end
