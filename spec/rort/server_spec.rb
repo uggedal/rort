@@ -36,4 +36,16 @@ describe Rort::Server do
     res.status.should == 200
     res.body.should =~ /form/
   end
+
+  it 'should provide userscript when a valid username is provided' do
+    res = Rack::MockRequest.new(@app).get('?download=NoFavorites')
+    res.status.should == 200
+    res.body.should =~ /==UserScript==/
+  end
+
+  it 'should show error when an invalid username is provided' do
+    res = Rack::MockRequest.new(@app).get('?download=nonexistentusername')
+    res.status.should == 200
+    res.body.should =~ /Ugyldig/
+  end
 end
