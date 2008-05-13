@@ -23,15 +23,16 @@ module Rort
         [200, JS, userscript]
 
       elsif req.get? && req.GET.empty?
-        [200, HTML, username_form]
+        [200, HTML, download_form]
 
       elsif get?(req, 'download')
         username = req.GET['download']
 
         if validate_user(username)
+          collect_activities_in_background(username)
           [303, REDIR, '']
         else
-          [200, HTML, username_form("Ugyldig bruker: #{username}")]
+          [200, HTML, download_form("Ugyldig bruker: #{username}")]
         end
 
       elsif get?(req, 'favorites') && body = favorites_of(req.GET['favorites'])
@@ -41,7 +42,7 @@ module Rort
       end
     end
 
-    def username_form(msg='')
+    def download_form(msg='')
       <<-EOS
         <html>
           <head>
@@ -52,7 +53,9 @@ module Rort
             <p style="color:red;">#{msg}</p>
             <p>
               Oppgi ditt brukernavn hos Ur&oslash;rt slik at vi kan
-              gj&oslash;re klar data for deg.
+              gj&oslash;re klar informasjon om dine favoritter.
+              Brukernvavnet brukes kun for &aring; finne ut hvilke
+              artister du favoriserer.
             </p>
             <form action="/" method="get">
               <label for="download">Brukernavn:</label>
@@ -66,6 +69,10 @@ module Rort
 
     def validate_user(username)
       Rort::Models::Person.fetch(username)
+    end
+
+    def collect_activities_in_background(username)
+      Rort::Queue.push(username)
     end
 
     def userscript
