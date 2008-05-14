@@ -107,11 +107,17 @@ function withJQuery() {
   }
 
   function display(res) {
-    if (res.status != 200) {
-      var usrEle = ele('em', user);
-      insertError('Tilkoblingsproblemer eller ukjent bruker {0}.'.i(usrEle));
-    } else {
-      displayActivities(res.responseText);
+    switch (res.status) {
+      case 200:
+        displayActivities(res.responseText);
+        break;
+      case 403:
+        var usrEle = ele('em', user);
+        insertError('Ukjent bruker {0}.'.i(usrEle));
+        break;
+      default:
+        insertError('Tilkoblingsproblemer.');
+        break;
     }
     removeLoadingStatus();
   }
