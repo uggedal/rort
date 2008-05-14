@@ -94,7 +94,8 @@ function withJQuery() {
   }
 
   function insertError(msg) {
-    $('#activity-list').append(ele("div id='errors'", icon('error') + msg));
+    $('#activity-list').append(ele("div id='errors'",
+                               icon(errorIcon()) + msg));
   }
 
   function setupActivities() {
