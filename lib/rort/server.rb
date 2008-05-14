@@ -20,26 +20,37 @@ module Rort
       end
 
       if req.path_info == USR_SCRIPT
-        [200, JS, userscript]
+        return [200, JS, userscript]
+      end
 
-      elsif req.get? && req.GET.empty?
-        [200, HTML, download_form]
+      unless req.path_info == '/'
+        return [404, HTML, '']
+      end
 
-      elsif get?(req, 'download')
+      if req.get? && req.GET.empty?
+        return [200, HTML, download_form]
+      end
+
+      if get?(req, 'download')
         username = req.GET['download']
 
         if validate_user(username)
           collect_activities_in_background(username)
-          [303, REDIR, '']
+          return [303, REDIR, '']
         else
-          [200, HTML, download_form("Ugyldig bruker: #{username}")]
+          return [200, HTML, download_form("Ugyldig bruker: #{username}")]
         end
-
-      elsif get?(req, 'favorites') && body = favorites_of(req.GET['favorites'])
-        [200, JSON, body]
-      else
-        [404, JSON, '']
       end
+
+      if get?(req, 'favorites')
+        if body = favorites_of(req.GET['favorites'])
+          return [200, JSON, body]
+        else
+          return [403, JSON, '']
+        end
+      end
+
+      [404, HTML, '']
     end
 
     def download_form(msg='')

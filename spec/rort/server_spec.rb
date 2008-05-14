@@ -13,9 +13,19 @@ describe Rort::Server do
   end
 
   it 'should return not found on invalid request' do
-    res = Rack::MockRequest.new(@app).get('?favorites=nonexistentusername')
+    res = Rack::MockRequest.new(@app).get('?somepar=ohaha')
     res.body.should be_empty
     res.status.should == 404
+
+    res = Rack::MockRequest.new(@app).get('/path/here')
+    res.body.should be_empty
+    res.status.should == 404
+  end
+
+  it 'should return forbidden on nonexistant username' do
+    res = Rack::MockRequest.new(@app).get('?favorites=nonexistentusername')
+    res.body.should be_empty
+    res.status.should == 403
   end
 
   it 'should return the correct content type' do
