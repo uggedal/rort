@@ -230,6 +230,7 @@ function rortStyle() {
   return '#load-status, #load-status > p { text-align: center; }' +
          'img.icon { margin: 0 8px 0 -24px; }' +
          '#activity-list { margin: 0 0 0 34px; }' +
+         '#activity-list a { color: #b33633; }' +
          '#more-events { color: blue; }' +
          'ul#activities { list-style-type: none; }' +
          '#activity-list h3 { margin:15px 0 5px 0; }'
