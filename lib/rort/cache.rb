@@ -1,3 +1,5 @@
+require 'memcache'
+
 module Rort
 
   class Cache

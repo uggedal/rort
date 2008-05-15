@@ -1,11 +1,8 @@
 module Rort::External
   class Fetchable
-    %w(hpricot openuri_memcached).each { |lib| require lib }
+    %w(hpricot open-uri).each { |lib| require lib }
 
     include Rort::Parsers
-
-    OpenURI::Cache.enable!
-    OpenURI::Cache.expiry = 60 * 60
 
     def doc?
       !(@doc.at("head > title").inner_text.strip =~
