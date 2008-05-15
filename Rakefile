@@ -19,10 +19,10 @@ end
 desc "Restart #{NAME}"
 task :restart => [:stop, :start]
 
-require 'spec/rake/spectask'
-Spec::Rake::SpecTask.new do |t|
-  t.spec_files = FileList['spec/**/*_spec.rb']
-  t.spec_opts = ['-c']
+desc "Install dependencies"
+task :install do
+  `gem install rack mongrel memcache-client json daemons rspec`
+  `gem install ext/hpricot-0.6_bufoverflowfix.gem`
 end
 
 desc 'Show code/spec status'
