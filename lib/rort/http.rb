@@ -116,6 +116,14 @@ module Rort
           Bruker-scriptet kan n&aring;
           <a href="/rort.user.js">installeres</a>.
         </p>
+        <p>
+          Vi har startet &aring; samle informasjon om hva dine favoritter
+          har foretatt seg den siste tiden. Dette kan ta litt tid avhengig
+          av hvor mange favoritter du har og hvor popul&aelig;re disse er.
+          Ta turen over til
+          <a href="http://nrk.no/urort">Ur&oslash;rt</a> og logg deg inn for
+          &aring; se hva som er nytt fra dine favoritter.
+        </p>
       EOS
       html_template(body)
     end
