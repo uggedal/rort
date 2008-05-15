@@ -98,7 +98,7 @@ function withJQuery() {
   }
 
   function setupActivities() {
-    $('#activity-list').append(ele("h3", 'Siste Hendelser'));
+    $('#activity-list').append(ele("h2", 'Siste Hendelser'));
     $('#activity-list').append(ele("ul id='activities'", ''));
   }
 
