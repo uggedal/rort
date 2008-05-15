@@ -38,7 +38,7 @@ module Rort
           collect_activities_in_background(username)
           return [200, HTML, download_link]
         else
-          return [200, HTML, download_form("Ugyldig bruker: #{username}")]
+          return [200, HTML, download_form("Ugyldig adresse: #{username}")]
         end
       end
 
@@ -58,6 +58,9 @@ module Rort
         <html>
           <head>
             <title>Last ned Ur&oslash;rt bruker-script</title>
+            <style type="text/css">
+              body { width: 40em; }
+            </style>
           </head>
           <body>
             <h1>Last ned Ur&oslash;rt bruker-script</h1>
@@ -71,16 +74,33 @@ module Rort
       body = <<-EOS
         <p style="color:red;">#{msg}</p>
         <p>
-          Oppgi ditt brukernavn hos Ur&oslash;rt slik at vi kan
-          gj&oslash;re klar informasjon om dine favoritter.
-          Brukernvavnet brukes kun for &aring; finne ut hvilke
-          artister du favoriserer.
+          For &aring; installere dette bruker-scriptet m&aring; du benytte
+          nettleseren <a href="http://firefox.no">Firefox</a> og
+          installere
+          <a href="https://addons.mozilla.org/en-US/firefox/addon/748">
+            Greasemonkey</a>,
+          et tillegg som gj&oslash;r det mulig &aring; endre
+          eksisterende nettsider.
         </p>
+        <p>
+          Oppgi din Ur&oslash;rt adresse<sup>*</sup> slik at vi kan
+          gj&oslash;re klar informasjon om dine favoritter.
+          Din Ur&oslash;rt adresse finner du p&aring;
+          <a href="http://www11.nrk.no/urort/myuser2/editProfile.aspx">
+            redigering av Ur&oslash;rt  profil
+          </a>
+          i feltet <em>Lenke til Ur&oslash;rt</em>.
+          Du trenger bare &aring; oppgi siste delen av adressen.
+        <p>
         <form action="/" method="get">
-          <label for="download">Brukernavn:</label>
+          <label for="download">Adresse:</label>
           <input type="text" name="download" id="download">
           <input type="submit" value="Last ned!">
         </form>
+        <p>
+          <sup>*</sup> Adressen brukes kun for &aring; identifisere hvilke
+          artister du favoriserer.
+        </p>
       EOS
       html_template(body)
     end
