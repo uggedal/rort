@@ -1,0 +1,16 @@
+#!/usr/bin/env ruby
+# -*- ruby -*-
+
+require 'rubygems'
+require 'daemons'
+
+http = File.expand_path("../../lib/rort/rack.rb", __FILE__)
+opts = { :app_name => 'rorthttp',
+         :dir_mode => :normal,
+         :monitor => true,
+         :multiple => false,
+         :log_output => true,
+         :dir => File.expand_path('../../', __FILE__)
+}
+
+Daemons.run(http, opts)
