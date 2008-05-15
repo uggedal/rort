@@ -25,6 +25,12 @@ task :install do
   `gem install ext/hpricot-0.6_bufoverflowfix.gem`
 end
 
+require 'spec/rake/spectask'
+Spec::Rake::SpecTask.new do |t|
+  t.spec_files = FileList['spec/**/*_spec.rb']
+  t.spec_opts = ['-c']
+end 
+
 desc 'Show code/spec status'
 task :status do
   code = FileList['lib/**/*.rb']
