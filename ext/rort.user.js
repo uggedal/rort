@@ -202,8 +202,10 @@ function withJQuery() {
         act.rev_link  = ele('a href="{reviewer_url}"'.i(act), act.reviewer);
         act.link      = ele('a href={url}'.i(act), act.title);
         act.art_link  = ele('a href="{artist_url}"'.i(act), act.artist);
-        act.formatted = '{icon}{rev_link} {vote} sangen {link} av {art_link}'
-                          .i(act);
+        act.com_html  = ele('blockquote', '&#8220;{0}&#8221;'.i(act.comment));
+        act.formatted =
+          '{icon}{rev_link} {vote} sangen {link} av {art_link} {com_html}'
+            .i(act);
         insertActivity(act.formatted);
 
         break;
@@ -235,11 +237,14 @@ function withJQuery() {
 
 function rortStyle() {
   return '#load-status, #load-status > p { text-align: center; }' +
-         'img.icon { margin: 0 8px 0 -24px; }' +
+         'img.icon { margin: 0 8px -4px -24px; }' +
          '#activity-list { margin: 0 0 0 34px; }' +
-         '#activity-list a { color: #b33633; }' +
-         '#more-events { color: blue; }' +
+         '#activity-list a { color: blue; text-decoration: none; }' +
+         'a#more-events { color: #b33633; text-decoration: underline; }' +
          'ul#activities { list-style-type: none; }' +
+         'ul#activities li { margin: 0 0 10px 0; }' +
+         'ul#activities blockquote { margin: 10px 0 0 20px; ' +
+                                    'font-style: italic; }' +
          '#activity-list h3 { margin:15px 0 5px 0; }'
 }
 
