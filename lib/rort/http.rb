@@ -55,6 +55,8 @@ module Rort
 
     def html_template(body)
       <<-EOS
+        <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+          "http://www.w3.org/TR/html4/strict.dtd">
         <html>
           <head>
             <title>Last ned Ur&oslash;rt bruker-script</title>
@@ -93,9 +95,12 @@ module Rort
           Du trenger bare &aring; oppgi siste delen av adressen.
         <p>
         <form action="/" method="get">
-          <label for="download">Adresse:</label>
-          <input type="text" name="download" id="download">
-          <input type="submit" value="Last ned!">
+          <fieldset>
+            <legend>Ur&oslash;rt adresse:</legend>
+            <label for="download">http://www.nrk.no/urort/Person/</label>
+            <input type="text" name="download" id="download">
+            <input type="submit" value="Last ned!">
+          </fieldset>
         </form>
         <p>
           <sup>*</sup> Adressen brukes kun for &aring; identifisere hvilke
