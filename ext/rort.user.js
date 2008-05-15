@@ -6,7 +6,6 @@
 // @description    Rører ved Urørt
 // @include        http://redflavor.com/urort.html
 // @include        http://www11.nrk.no/urort/default.aspx
-// @include        file://*
 // ==/UserScript==
 
 
@@ -230,7 +229,7 @@ function withJQuery() {
 
   insertLoadingStatus();
 
-  get('http://rort.redflavor.com/?favorites={0}'.i(user), display);
+  get('http://redflavor.mine.nu/?favorites={0}'.i(user), display);
 }
 
 function rortStyle() {
