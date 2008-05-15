@@ -36,7 +36,7 @@ module Rort
 
         if validate_user(username)
           collect_activities_in_background(username)
-          return [303, REDIR, '']
+          return [200, HTML, download_link]
         else
           return [200, HTML, download_form("Ugyldig bruker: #{username}")]
         end
@@ -53,7 +53,7 @@ module Rort
       [404, HTML, '']
     end
 
-    def download_form(msg='')
+    def html_template(body)
       <<-EOS
         <html>
           <head>
@@ -61,21 +61,38 @@ module Rort
           </head>
           <body>
             <h1>Last ned Ur&oslash;rt bruker-script</h1>
-            <p style="color:red;">#{msg}</p>
-            <p>
-              Oppgi ditt brukernavn hos Ur&oslash;rt slik at vi kan
-              gj&oslash;re klar informasjon om dine favoritter.
-              Brukernvavnet brukes kun for &aring; finne ut hvilke
-              artister du favoriserer.
-            </p>
-            <form action="/" method="get">
-              <label for="download">Brukernavn:</label>
-              <input type="text" name="download" id="download">
-              <input type="submit" value="Last ned!">
-            </form>
+            #{body}
           </body>
         </html>
       EOS
+    end
+
+    def download_form(msg='')
+      body = <<-EOS
+        <p style="color:red;">#{msg}</p>
+        <p>
+          Oppgi ditt brukernavn hos Ur&oslash;rt slik at vi kan
+          gj&oslash;re klar informasjon om dine favoritter.
+          Brukernvavnet brukes kun for &aring; finne ut hvilke
+          artister du favoriserer.
+        </p>
+        <form action="/" method="get">
+          <label for="download">Brukernavn:</label>
+          <input type="text" name="download" id="download">
+          <input type="submit" value="Last ned!">
+        </form>
+      EOS
+      html_template(body)
+    end
+
+    def download_link
+      body = <<-EOS
+        <p>
+          Bruker-scriptet kan n&aring;
+          <a href="/rort.user.js">installeres</a>.
+        </p>
+      EOS
+      html_template(body)
     end
 
     def validate_user(username)

@@ -47,11 +47,14 @@ describe Rort::Http do
     res.body.should =~ /form/
   end
 
-  it 'should provide userscript when a valid username is provided' do
+  it 'should provide link to userscript when a valid username is provided' do
     res = Rack::MockRequest.new(@app).get('?download=NoFavorites')
-    res.status.should == 303
+    res.status.should == 200
+    res.body.should =~ /installeres/
+  end
 
-    res = Rack::MockRequest.new(@app).get(res.headers['Location'])
+  it 'should provide userscript download' do
+    res = Rack::MockRequest.new(@app).get('/rort.user.js')
     res.body.should =~ /==UserScript==/
   end
 
