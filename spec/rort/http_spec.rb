@@ -1,9 +1,9 @@
 require File.join(File.dirname(__FILE__), '..', 'spec_helper')
 
-describe Rort::Server do
+describe Rort::Http do
 
   before(:each) do
-    @app = Rort::Server.new
+    @app = Rort::Http.new
   end
 
   it 'should return success on valid request' do

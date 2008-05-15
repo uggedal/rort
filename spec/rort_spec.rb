@@ -7,7 +7,7 @@ describe Rort do
   end
 
   it 'should return a server application instance on start' do
-    Rort.start.should be_instance_of(Rort::Server)
+    Rort.start.should be_instance_of(Rort::Http)
     Rort.start.should_not be_nil
   end
 end

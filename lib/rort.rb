@@ -7,14 +7,14 @@ module Rort
   require 'rort/external'
   require 'rort/cache'
   require 'rort/models'
-  require 'rort/server'
+  require 'rort/http'
   require 'rort/queue'
 
   Cache.enable!
   Cache.expiry = 60*60*12 # 12 hr cache ttl
 
   def self.start
-    @app = Rort::Server.new
+    @app = Rort::Http.new
   end
 
   def self.root

@@ -3,7 +3,7 @@ require 'rort/models'
 require 'json'
 
 module Rort
-  class Server
+  class Http
 
     USR_SCRIPT = '/rort.user.js'
 
