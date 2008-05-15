@@ -29,4 +29,17 @@ describe Person do
     activities.size.should > 1
     activities.first[:datetime].should > activities.last[:datetime]
   end
+
+
+  it 'should only collect activities of favorites for a given time' do
+    person = Person.fetch('Nikeyy')
+    person.favorites.each do |fav|
+      Rort::Cache.del(fav.slug + ':activities')
+    end
+
+    activities = person.favorite_activities
+    start = Time.now
+    activities.size.should < 30
+    (Time.now-start).should < (Rort::TIMEOUT + 5)
+  end
 end

@@ -7,8 +7,11 @@ module Rort::Models
     end
 
     def favorite_activities
+      start = Time.now
       activities = []
-      favorites.each do |fav|
+
+      for fav in favorites
+        break if (Time.now-start) > Rort::TIMEOUT
         activities.concat(fav.activities)
       end
 

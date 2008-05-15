@@ -9,6 +9,8 @@ module Rort
   require 'rort/models'
   require 'rort/http'
   require 'rort/queue'
+  
+  TIMEOUT = 10
 
   Cache.enable!
   Cache.expiry = 60*60*12 # 12 hr cache ttl
