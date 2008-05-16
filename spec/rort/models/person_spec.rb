@@ -45,6 +45,6 @@ describe Person do
     activities.size.should < 30
     (Time.now-start).should < (Rort::TIMEOUT + 5)
 
-    Rort::Queue.shift.should be_instance_of(String)
+    Rort::Queue.shift.should == 'Nikeyy'
   end
 end
