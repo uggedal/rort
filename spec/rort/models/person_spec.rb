@@ -31,15 +31,20 @@ describe Person do
   end
 
 
-  it 'should only collect activities of favorites for a given time' do
+  it 'should only collect activities until timeout and store rest in queue' do
     person = Person.fetch('Nikeyy')
     person.favorites.each do |fav|
       Rort::Cache.del(fav.slug + ':activities')
     end
 
+    Rort::Queue.clean
+    Rort::Queue.shift.should be_nil
+
     activities = person.favorite_activities
     start = Time.now
     activities.size.should < 30
     (Time.now-start).should < (Rort::TIMEOUT + 5)
+
+    Rort::Queue.shift.should be_instance_of(String)
   end
 end

@@ -11,8 +11,11 @@ module Rort::Models
       activities = []
 
       for fav in favorites
-        break if (Time.now-start) > Rort::TIMEOUT
-        activities.concat(fav.activities)
+        if (Time.now-start) < Rort::TIMEOUT
+          activities.concat(fav.activities)
+        else
+          Rort::Queue.push(fav.slug)
+        end
       end
 
       reverse_sort_by_datetime(activities)
