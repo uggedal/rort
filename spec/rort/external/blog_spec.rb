@@ -27,7 +27,7 @@ describe Rort::External::Blog do
       post[:url].should =~ /^http:\/\/\w+/
       post[:title].should_not be_empty
       post[:summary].length.should > 1
-      post[:summary].length.should < 101
+      post[:summary].length.should < 105
       post[:summary].should =~ /...$/
       post[:author].should_not be_empty
       post[:author_url].should =~ /^http:\/\/\w+/
