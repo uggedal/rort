@@ -1,6 +1,14 @@
 module Rort::External
   class Fetchable
-    %w(hpricot open-uri).each { |lib| require lib }
+    require 'hpricot'
+
+    if $TESTING
+      require 'openuri_memcached'
+      OpenURI::Cache.enable!
+      OpenURI::Cache.expiry = 60*60
+    else 
+      require 'open-uri'
+    end
 
     include Rort::Parsers
 
