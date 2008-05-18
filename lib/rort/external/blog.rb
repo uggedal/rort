@@ -34,15 +34,21 @@ module Rort::External
         a[:href].scan(/articleid=(\d+)/).flatten.first.to_i
       end
 
-      titles = div.search("h4").collect {|h4| h4.inner_text.strip }
+      titles = []
+      summaries = []
 
+      div.search("h4").each do |h4|
+        titles << h4.inner_text.strip
+        summaries << h4.next_sibling.inner_text.strip[0..100] + '...'
+      end
 
-      [dates, times, ids, titles].transpose.collect do |item|
+      [dates, times, ids, titles, summaries].transpose.collect do |item|
         activity(:blog,
                  Time.local( *(item[0] + item[1]) ),
                  post_path(item[2]),
                  item[3],
-                 {:author => author.name,
+                 {:summary => item[3],
+                  :author => author.name,
                   :author_url => url(author.path)})
       end
     end
