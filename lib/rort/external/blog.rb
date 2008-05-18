@@ -47,7 +47,7 @@ module Rort::External
                  Time.local( *(item[0] + item[1]) ),
                  post_path(item[2]),
                  item[3],
-                 {:summary => item[3],
+                 {:summary => item[4],
                   :author => author.name,
                   :author_url => url(author.path)})
       end
