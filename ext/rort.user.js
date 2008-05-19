@@ -40,6 +40,8 @@ function get(url, callback) {
 // Scope where jQuery is enabled
 function withJQuery() {
 
+  var uri = 'http://redflavor.mine.nu/';
+
   var userHref = $('ul#loggedinuser > li.item > a:first').attr('href');
 
   // Return silently if the user is not logged in
@@ -90,6 +92,7 @@ function withJQuery() {
 
   function setupContainer() {
     $('#frontpage .mainnewsspot').prepend(ele("div id='activity-list'", ''));
+    $('#activity-list').append(ele("h2", 'Siste fra dine Favoritter'));
   }
 
   function insertError(msg) {
@@ -98,7 +101,10 @@ function withJQuery() {
   }
 
   function setupActivities() {
-    $('#activity-list').append(ele("h2", 'Siste Hendelser'));
+    $('#activity-list').append(ele('p', ele('a href="{0}favorites"'.i(uri),
+                                            'Hva er favoritter?')));
+    $('#activity-list').append(ele('p', ele('a href="{0}uninstall"'.i(uri),
+      'Hvordan fjerner jeg denne funksjonaliteten?')));
     $('#activity-list').append(ele("ul id='activities'", ''));
   }
 
@@ -222,7 +228,7 @@ function withJQuery() {
   function insertLoadingStatus() {
     $('#activity-list').append(ele('div id="load-status"',
       ele('img alt="Loading" src="{0}"'.i(loadingImage())) +
-      ele('p', 'Laster inn aktivitetsdata...')));
+      ele('p', 'Henter siste hendelser...')));
   }
 
   function removeLoadingStatus() {
@@ -235,7 +241,7 @@ function withJQuery() {
 
   insertLoadingStatus();
 
-  get('http://redflavor.mine.nu/?favorites={0}'.i(user), display);
+  get('{0}?favorites={1}'.i([uri, user]), display);
 }
 
 function rortStyle() {
