@@ -4,7 +4,7 @@
 require 'rubygems'
 require 'god'
 
-God.pid_file_directory = File.expand_path('../', __FILE__)
+God.pid_file_directory = File.expand_path("../run", __FILE__)
 
 bg = File.expand_path("../lib/rort/background.rb", __FILE__)
 http = File.expand_path("../lib/rort/rack.rb", __FILE__)
