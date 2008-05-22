@@ -4,16 +4,12 @@ task :default => :start
 
 desc "Start #{NAME}"
 task :start do
-  `./bin/rortbg start`
-  `./bin/rortbg start`
-  `./bin/rortbg start`
-  `./bin/rorthttp start`
+  `god -c rort.god`
 end
 
 desc "Stop #{NAME}"
 task :stop do
-  `./bin/rorthttp stop`
-  `./bin/rortbg stop`
+  `god terminate`
 end
 
 desc "Restart #{NAME}"
@@ -21,7 +17,7 @@ task :restart => [:stop, :start]
 
 desc "Install dependencies"
 task :install do
-  `gem install rack mongrel memcache-client json daemons rspec`
+  `gem install rack mongrel memcache-client json daemons rspec god`
   `gem install ext/hpricot-0.6_bufoverflowfix.gem`
 end
 
