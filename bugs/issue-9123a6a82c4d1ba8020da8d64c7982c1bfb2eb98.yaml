@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Restart processes based on memory and cpu
+desc: ""
+type: :feature
+component: server
+release: 
+reporter: Eivind Uggedal <eu@redflavor.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-05-22 21:56:08.000287 Z
+references: []
+
+id: 9123a6a82c4d1ba8020da8d64c7982c1bfb2eb98
+log_events: 
+- - 2008-05-22 21:56:09.048072 Z
+  - Eivind Uggedal <eu@redflavor.com>
+  - created
+  - ""
