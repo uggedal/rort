@@ -48,8 +48,8 @@ module Rort::External
                  post_path(item[2]),
                  item[3],
                  {:summary => item[4],
-                  :author => author.name,
-                  :author_url => url(author.path)})
+                  :artist => author.name,
+                  :artist_url => url(author.path)})
       end
     end
   end
