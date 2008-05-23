@@ -6,6 +6,12 @@ module Rort::Models
       @favorites ||= external_favorites
     end
 
+    def activity_list
+      act = favorite_activities
+      fav = excluded_favorites(act)
+      {:activities => act, :excludes => fav}
+    end
+
     def favorite_activities
       activities = []
       cached = 0
@@ -24,6 +30,24 @@ module Rort::Models
       end
 
       reverse_sort_by_datetime(activities)[0...Rort::MAX_ACTIVITIES]
+    end
+
+    def excluded_favorites(activities)
+      excludes = []
+
+      favorites.each do |fav|
+        excluded = true
+
+        activities.each do |act|
+          excluded = false if fav.name == act[:artist]
+        end
+
+        if excluded
+          excludes << {:artist => fav.name,
+                       :artist_url => fav.external.full_url}
+        end
+      end
+      excludes
     end
 
     def self.fetch(slug)

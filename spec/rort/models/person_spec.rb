@@ -31,7 +31,6 @@ describe Person do
     activities.first[:datetime].should > activities.last[:datetime]
   end
 
-
   it 'should only collect cached activities or one uncached' do
     person = Person.fetch('Nikeyy')
     person.favorites.each do |fav|
@@ -48,5 +47,19 @@ describe Person do
     person.favorites.each do |fav|
       Rort::Cache.del(fav.slug + ':activities')
     end
+  end
+
+  it 'should provide an activity list with excludes' do
+    list = @person.activity_list
+
+    @person.favorites.each do |fav|
+      Rort::Cache.del(fav.slug + ':activities')
+    end
+
+    list.size.should == 2
+    list[:excludes].size.should > 1
+
+    list[:excludes].first[:artist].should_not be_empty
+    list[:excludes].first[:artist_url].should =~ /^http:\/\//
   end
 end

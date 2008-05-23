@@ -20,6 +20,9 @@ module Rort::External
       "Artist/#@slug"
     end
 
+    def full_url
+      url(path)
+    end
 
     def favorites
       thumb_elements("Favoritter p\303\245 Ur\303\270rt", 'Artist') do |e|
