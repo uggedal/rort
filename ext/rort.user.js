@@ -110,11 +110,12 @@ function withJQuery() {
   }
 
   function setupExcludes() {
-    $('#activity-list').append(ele('p', 'Favoritter uten nylig aktivitet'));
+    $('#activity-list').append(ele('h3', 'Favoritter uten nylig aktivitet'));
     $('#activity-list').append(ele("ul id='excludes'", ''));
   }
 
   function setupDocumentation() {
+    $('#activity-list').append(ele('h3', 'Hjelp'));
     $('#activity-list').append(ele('p', ele('a href="{0}favorites"'.i(uri),
                                             'Hva er favoritter?')));
     $('#activity-list').append(ele('p', ele('a href="{0}uninstall"'.i(uri),
@@ -262,7 +263,8 @@ function rortStyle() {
          '#activity-list { margin: 0 0 0 34px; }' +
          '#activity-list a { color: blue; text-decoration: none; }' +
          'a#more-events { color: #b33633; text-decoration: underline; }' +
-         'ul#activities { list-style-type: none; }' +
+         'ul#activities, ul#excludes { list-style-type: none;' +
+                                      'margin: 0 0 20px 0;}' +
          'ul#activities li { margin: 0 0 10px 0; }' +
          'ul#activities blockquote { margin: 10px 0 0 20px; ' +
                                     'font-style: italic; }' +
