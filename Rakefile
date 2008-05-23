@@ -4,7 +4,7 @@ task :default => :start
 
 desc "Start #{NAME}"
 task :start do
-  `god -c rort.god`
+  `god -c config.god`
 end
 
 desc "Stop #{NAME}"
