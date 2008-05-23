@@ -80,6 +80,11 @@ function withJQuery() {
       return '<{0}>{1}</{2}>'.i(tag, text, closeTag);
   }
 
+  // Quotes a text with proper quotes: ``text''
+  function quote(text) {
+    return '&#8220;{0}&#8221;'.i(text)
+  }
+
   // Return a data: URI based icon
   function icon(data) {
     return ele('img class="icon" alt="" src="{0}"'.i(data));
@@ -104,8 +109,7 @@ function withJQuery() {
     $('#activity-list').append(ele('p', ele('a href="{0}favorites"'.i(uri),
                                             'Hva er favoritter?')));
     $('#activity-list').append(ele('p', ele('a href="{0}uninstall"'.i(uri),
-      'Hvordan fjerner jeg denne funksjonaliteten?')));
-    $('#activity-list').append(ele("ul id='activities'", ''));
+      'Hvordan fjerner jeg {0}?'.i(quote('Siste fra dine Favoritter')))));
   }
 
   function insertActivity(activity) {
@@ -159,11 +163,11 @@ function withJQuery() {
       case 'blog':
         act.icon        = icon(blogIcon());
         act.art_link  = ele('a href="{artist_url}"'.i(act), act.artist);
-        act.link        = ele('a href={url}'.i(act), act.title);
-        act.sum_html    = ele('blockquote',
-                              '&#8220;{0}&#8221;'.i(act.summary));
-        act.formatted   = '{icon}{art_link} blogget om {link} {sum_html}'
-                            .i(act);
+        act.link      = ele('a href={url}'.i(act), act.title);
+        act.sum_html  = ele('blockquote',
+                              quote(act.summary));
+        act.formatted = '{icon}{art_link} blogget om {link} {sum_html}'
+                          .i(act);
         insertActivity(act.formatted);
         break;
       case 'concert':
@@ -192,7 +196,7 @@ function withJQuery() {
         act.rev_link  = ele('a href="{reviewer_url}"'.i(act), act.reviewer);
         act.link      = ele('a href={url}'.i(act), act.title);
         act.art_link  = ele('a href="{artist_url}"'.i(act), act.artist);
-        act.com_html  = ele('blockquote', '&#8220;{0}&#8221;'.i(act.comment));
+        act.com_html  = ele('blockquote', quote(act.comment));
         act.formatted =
           '{icon}{rev_link} {vote} sangen {link} av {art_link} {com_html}'
             .i(act);
