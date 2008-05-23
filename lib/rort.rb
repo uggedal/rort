@@ -11,6 +11,7 @@ module Rort
   require 'rort/queue'
   
   TIMEOUT = 10
+  MAX_ACTIVITIES = 15
 
   Cache.enable!
   Cache.expiry = 60*60*12 # 12 hr cache ttl

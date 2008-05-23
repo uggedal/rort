@@ -27,6 +27,7 @@ describe Person do
   it 'should collect a sorted list of recent activity of all favorites' do
     activities = @person.favorite_activities
     activities.size.should > 1
+    activities.size.should <= Rort::MAX_ACTIVITIES
     activities.first[:datetime].should > activities.last[:datetime]
   end
 

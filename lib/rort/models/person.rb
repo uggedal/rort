@@ -18,7 +18,7 @@ module Rort::Models
         end
       end
 
-      reverse_sort_by_datetime(activities)
+      reverse_sort_by_datetime(activities)[0...Rort::MAX_ACTIVITIES]
     end
 
     def self.fetch(slug)
