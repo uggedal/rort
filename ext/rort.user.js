@@ -106,6 +106,15 @@ function withJQuery() {
   }
 
   function setupActivities() {
+    $('#activity-list').append(ele("ul id='activities'", ''));
+  }
+
+  function setupExcludes() {
+    $('#activity-list').append(ele('p', 'Favoritter uten nylig aktivitet'));
+    $('#activity-list').append(ele("ul id='excludes'", ''));
+  }
+
+  function setupDocumentation() {
     $('#activity-list').append(ele('p', ele('a href="{0}favorites"'.i(uri),
                                             'Hva er favoritter?')));
     $('#activity-list').append(ele('p', ele('a href="{0}uninstall"'.i(uri),
@@ -116,6 +125,9 @@ function withJQuery() {
     $('#activities').append(ele('li', activity));
   }
 
+  function insertExclude(exclude) {
+    $('#excludes').append(ele('li', exclude));
+  }
   function display(res) {
     switch (res.status) {
       case 200:
@@ -135,11 +147,26 @@ function withJQuery() {
   function displayActivities(data) {
     var parsed = parseJson(data);
 
-    if (parsed.length > 0) {
+    if (parsed.activities.length > 0) {
       setupActivities();
-      insertActivitiesList(parsed);
+      insertActivitiesList(parsed.activities);
+
     } else {
       insertError('Du har ingen favoritter som har foretatt seg noe.');
+    }
+
+    if (parsed.excludes.length > 0) {
+      setupExcludes();
+      insertExcludesList(parsed.excludes);
+    }
+    setupDocumentation();
+  }
+
+  function insertExcludesList(excludes) {
+    for (var i = 0; i < excludes.length; i++) {
+      var exclude = excludes[i];
+
+      insertExclude(ele('a href="{artist_url}"'.i(exclude), exclude.artist));
     }
   }
 
@@ -148,9 +175,9 @@ function withJQuery() {
 
   function insertActivitiesList(data) {
 
-      for (var i = 0; i < data.length; i++) {
-        lastActivityDate = formatActivity(data[i], lastActivityDate);
-      }
+    for (var i = 0; i < data.length; i++) {
+      lastActivityDate = formatActivity(data[i], lastActivityDate);
+    }
   }
 
   function formatActivity(act, lastDate) {
@@ -161,7 +188,7 @@ function withJQuery() {
 
     switch (act.type) {
       case 'blog':
-        act.icon        = icon(blogIcon());
+        act.icon      = icon(blogIcon());
         act.art_link  = ele('a href="{artist_url}"'.i(act), act.artist);
         act.link      = ele('a href={url}'.i(act), act.title);
         act.sum_html  = ele('blockquote',
