@@ -144,7 +144,7 @@ module Rort
 
     def favorites_of(slug)
       artist = Rort::Models::Person.fetch(slug)
-      artist ? artist.favorite_activities.to_json : nil
+      artist ? artist.activity_list.to_json : nil
     end
   end
 end
