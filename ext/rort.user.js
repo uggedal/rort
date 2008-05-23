@@ -133,16 +133,7 @@ function withJQuery() {
 
     if (parsed.length > 0) {
       setupActivities();
-
-      var offset = insertActivitiesList(0, parsed);
-
-      $('#activity-list').append(ele('a href="" id="more-events"',
-                                     'Se flere hendelser'));
-      $('#more-events').bind('click', function (e) {
-        e.preventDefault();
-        offset += 10;
-        offset = insertActivitiesList(offset, parsed);
-      });
+      insertActivitiesList(parsed);
     } else {
       insertError('Du har ingen favoritter som har foretatt seg noe.');
     }
@@ -151,21 +142,11 @@ function withJQuery() {
   // Global variable for the latest date
   lastActivityDate = '';
 
-  function insertActivitiesList(offset, data) {
+  function insertActivitiesList(data) {
 
-      var elements = 10;
-
-      if (data.length > offset + elements) {
-        var end = offset + elements;
-      } else {
-        var end = data.length;
-        $('#more-events').remove();
-      }
-
-      for (var i = offset; i < end; i++) {
+      for (var i = 0; i < data.length; i++) {
         lastActivityDate = formatActivity(data[i], lastActivityDate);
       }
-      return offset;
   }
 
   function formatActivity(act, lastDate) {
