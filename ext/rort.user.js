@@ -177,11 +177,11 @@ function withJQuery() {
     switch (act.type) {
       case 'blog':
         act.icon        = icon(blogIcon());
-        act.author_link = ele('a href="{author_url}"'.i(act), act.author);
+        act.art_link  = ele('a href="{artist_url}"'.i(act), act.artist);
         act.link        = ele('a href={url}'.i(act), act.title);
         act.sum_html    = ele('blockquote',
                               '&#8220;{0}&#8221;'.i(act.summary));
-        act.formatted   = '{icon}{author_link} blogget om {link} {sum_html}'
+        act.formatted   = '{icon}{art_link} blogget om {link} {sum_html}'
                             .i(act);
         insertActivity(act.formatted);
         break;
