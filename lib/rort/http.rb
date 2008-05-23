@@ -34,8 +34,8 @@ module Rort
       if get?(req, 'download')
         username = req.GET['download']
 
-        if validate_user(username)
-          collect_activities_in_background(username)
+        if person = validate_user(username)
+          collect_activities_in_background(person)
           return [200, HTML, download_link]
         else
           return [200, HTML, download_form("Ugyldig adresse: #{username}")]
@@ -132,8 +132,10 @@ module Rort
       Rort::Models::Person.fetch(username)
     end
 
-    def collect_activities_in_background(username)
-      Rort::Queue.push(username)
+    def collect_activities_in_background(person)
+      person.favorites.each do |fav|
+        Rort::Queue.push(fav.slug)
+      end
     end
 
     def userscript

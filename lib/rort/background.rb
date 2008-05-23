@@ -12,7 +12,7 @@ end
 loop do
   if slug = Rort::Queue.shift
     log(slug) do
-      Rort::Models::Person.fetch(slug).favorite_activities
+      Rort::Models::Artist.find_or_fetch(slug).activities
     end
   end
   sleep 1

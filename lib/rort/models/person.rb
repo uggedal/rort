@@ -14,7 +14,7 @@ module Rort::Models
         if (Time.now-start) < Rort::TIMEOUT
           activities.concat(fav.activities)
         else
-          Rort::Queue.push(slug)
+          Rort::Queue.push(fav.slug)
         end
       end
 
