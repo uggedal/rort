@@ -20,12 +20,25 @@ module Rort::Http
         end
       end
 
+      if get?(req, 'favorites')
+        if body = favorites_for(req.GET['favorites'])
+          return [200, JSON, body]
+        else
+          return [403, JSON, '']
+        end
+      end
+
       [404, JSON, '']
     end
 
     def activities_for(slug)
       artist = Rort::Models::Person.fetch(slug)
       artist ? artist.activity_list.to_json : nil
+    end
+
+    def favorites_for(slug)
+      artist = Rort::Models::Person.fetch(slug)
+      artist ? artist.favorite_list.to_json : nil
     end
   end
 end
