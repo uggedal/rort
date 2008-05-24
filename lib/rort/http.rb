@@ -84,26 +84,17 @@ module Rort
           eksisterende nettsider.
         </p>
         <p>
-          Oppgi din Ur&oslash;rt adresse<sup>*</sup> slik at vi kan
-          gj&oslash;re klar informasjon om dine favoritter.
-          Din Ur&oslash;rt adresse finner du p&aring;
-          <a href="http://www11.nrk.no/urort/myuser2/editProfile.aspx">
-            redigering av Ur&oslash;rt  profil
-          </a>
-          i feltet <em>Lenke til Ur&oslash;rt</em>.
-          Du trenger bare &aring; oppgi siste delen av adressen.
+          Oppgi din epost adresse<sup>*</sup> for &aring; laste
+          ned v&aring;r utvidelse av Ur&oslash;rt.
         <p>
         <form action="/" method="get">
-          <fieldset>
-            <legend>Ur&oslash;rt adresse:</legend>
-            <label for="download">http://www.nrk.no/urort/Person/</label>
-            <input type="text" name="download" id="download">
-            <input type="submit" value="Last ned!">
-          </fieldset>
+          <label for="download">Epost:</label>
+          <input type="text" name="download" id="download">
+          <input type="submit" value="Last ned!">
         </form>
         <p>
-          <sup>*</sup> Adressen brukes kun for &aring; identifisere hvilke
-          artister du favoriserer.
+          <sup>*</sup> Adressen brukes kun for &aring; identifisere
+          hvem som har tatt i bruk v&aring;r utvidelse av Ur&oslash;rt.
         </p>
       EOS
       html_template(body)
@@ -115,10 +106,6 @@ module Rort
           Bruker-scriptet kan n&aring;
           <a href="/rort.user.js">installeres</a>.
         </p>
-        <p>
-          Vi har startet &aring; samle informasjon om hva dine favoritter
-          har foretatt seg den siste tiden. Dette kan ta litt tid avhengig
-          av hvor mange favoritter du har og hvor popul&aelig;re disse er.
           Ta turen over til
           <a href="http://nrk.no/urort">Ur&oslash;rt</a> og logg deg inn for
           &aring; se hva som er nytt fra dine favoritter.
