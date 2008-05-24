@@ -1,0 +1,22 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Interface for providing either control or test client
+desc: |-
+  Should provide one of two client solutions. Need to provide state to record
+  the emails of the individuals that got either client. Could potentially
+  provide two urls and filter the users when sending out mail. But would not
+  get a 50/50 distribution.
+type: :feature
+component: server
+release: 
+reporter: Eivind Uggedal <eu@redflavor.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-05-24 11:39:15.914401 Z
+references: []
+
+id: bef3223d3c7442803a42225696b79b50f9d62ff7
+log_events: 
+- - 2008-05-24 11:39:16.826233 Z
+  - Eivind Uggedal <eu@redflavor.com>
+  - created
+  - ""

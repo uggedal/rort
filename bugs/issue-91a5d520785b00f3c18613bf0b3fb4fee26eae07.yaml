@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Create control group user script
+desc: ""
+type: :feature
+component: client
+release: 
+reporter: Eivind Uggedal <eu@redflavor.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-05-24 11:36:20.821383 Z
+references: []
+
+id: 91a5d520785b00f3c18613bf0b3fb4fee26eae07
+log_events: 
+- - 2008-05-24 11:36:21.781410 Z
+  - Eivind Uggedal <eu@redflavor.com>
+  - created
+  - ""
