@@ -1,9 +1,10 @@
 $: << File.expand_path("../../lib", __FILE__)
 
+$TESTING = true
+
 require 'rort'
 require 'rack/mock'
 
-$TESTING = true
 $HTTP_DEBUG = false
 $http_requests = 0
 

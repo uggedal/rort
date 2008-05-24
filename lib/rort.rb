@@ -2,6 +2,7 @@ module Rort
   VERSION = %w(0 2 0).join('.').freeze
 
   require 'rubygems'
+
   require 'rort/parsers'
   require 'rort/core_ext'
   require 'rort/external'

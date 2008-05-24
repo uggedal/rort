@@ -2,6 +2,14 @@ module Rort::External
   class Fetchable
     require 'hpricot'
 
+    if $TESTING
+      require 'openuri_memcached'
+      OpenURI::Cache.enable!
+      OpenURI::Cache.expiry = 60*60*12
+    else 
+      require 'open-uri'
+    end
+
     include Rort::Parsers
 
     def doc?
@@ -60,17 +68,6 @@ module Rort::External
       @@openuri_loaded = false
 
       def request(uri)
-        unless @@openuri_loaded
-          if $TESTING
-            require 'openuri_memcached'
-            OpenURI::Cache.enable!
-            OpenURI::Cache.expiry = 60*60*12
-          else 
-            require 'open-uri'
-          end
-          @@openuri_loaded = true
-        end
-
         begin
           if $HTTP_DEBUG
             $http_requests += 1

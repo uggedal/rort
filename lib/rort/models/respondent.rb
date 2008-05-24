@@ -1,7 +1,11 @@
 module Rort::Models
   require 'sequel'
 
-  DB = Sequel.sqlite File.expand_path('../../../../rort.db', __FILE__)
+  if $TESTING
+    DB = Sequel.sqlite
+  else
+    DB = Sequel.sqlite File.expand_path('../../../../rort.db', __FILE__)
+  end
 
   class Respondent < Sequel::Model
     set_schema do
