@@ -6,6 +6,13 @@ module Rort::Models
       @favorites ||= external_favorites
     end
 
+    def favorite_list
+      favorites.map do |fav|
+        {:artist => fav.name,
+         :artist_url => fav.external.full_url}
+      end
+    end
+
     def activity_list
       act = favorite_activities
       fav = excluded_favorites(act)

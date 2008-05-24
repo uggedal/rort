@@ -62,4 +62,11 @@ describe Person do
     list[:excludes].first[:artist].should_not be_empty
     list[:excludes].first[:artist_url].should =~ /^http:\/\//
   end
+
+  it 'should provide an favorite list' do
+    list = @person.favorite_list
+    list.size.should > 1
+    list.first.should be_include(:artist)
+    list.first.should be_include(:artist_url)
+  end
 end
