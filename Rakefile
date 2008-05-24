@@ -17,7 +17,16 @@ task :restart => [:stop, :start]
 
 desc "Install dependencies"
 task :install do
-  `gem install rack mongrel memcache-client json daemons rspec god`
+  gems = %w(rack
+            mongrel
+            memcache-client
+            json
+            daemons
+            rspec
+            god
+            sqlite3-ruby
+            sequel)
+  `gem install #{gems.join(' ')}`
   `gem install ext/hpricot-0.6_bufoverflowfix.gem`
 end
 
