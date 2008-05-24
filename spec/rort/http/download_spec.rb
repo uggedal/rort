@@ -1,13 +1,13 @@
-require File.join(File.dirname(__FILE__), '..', 'spec_helper')
+require File.join(File.dirname(__FILE__), '..', '..', 'spec_helper')
 
-describe Rort::Http do
+describe Rort::Http::Download do
 
   before(:each) do
-    @app = Rort::Http.new
+    @app = Rort::Http::Download.new
   end
 
   it 'should return success on valid request' do
-    res = Rack::MockRequest.new(@app).get('?favorites=NoFavorites')
+    res = Rack::MockRequest.new(@app).get('/')
     res.body.should_not be_empty
     res.status.should == 200
   end
@@ -22,23 +22,12 @@ describe Rort::Http do
     res.status.should == 404
   end
 
-  it 'should return forbidden on nonexistant username' do
-    res = Rack::MockRequest.new(@app).get('?favorites=nonexistentusername')
-    res.body.should be_empty
-    res.status.should == 403
-  end
-
   it 'should return the correct content type' do
-    res = Rack::MockRequest.new(@app).get('?favorites=NoFavorites')
-    res.headers["Content-Type"].should =='application/json'
-
     res = Rack::MockRequest.new(@app).get('/')
     res.headers["Content-Type"].should =='text/html'
-  end
 
-  it 'should show recent activity for all favorites of an artist' do
-    res = Rack::MockRequest.new(@app).get('?favorites=uggedal')
-    JSON.parse(res.body).size.should > 1
+    res = Rack::MockRequest.new(@app).get('/rort.user.js')
+    res.headers["Content-Type"].should =='application/javascript'
   end
 
   it 'should show a download form on unparamterized request' do

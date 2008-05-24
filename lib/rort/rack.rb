@@ -9,7 +9,12 @@ options = { :Port => 8001,
 
 app = Rack::Builder.new {
   use Rack::CommonLogger, Rort.logger(:http)
-  run Rort.start
+  map '/' do
+    run Rort::Http::Download.new
+  end
+  map '/api' do
+    run Rort::Http::Api.new
+  end
 }.to_app
 
 Rack::Handler::Mongrel.run app, options

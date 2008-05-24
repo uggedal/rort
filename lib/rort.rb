@@ -11,15 +11,10 @@ module Rort
   require 'rort/http'
   require 'rort/queue'
   
-  TIMEOUT = 10
   MAX_ACTIVITIES = 15
 
   Cache.enable!
   Cache.expiry = 60*60*12 # 12 hr cache ttl
-
-  def self.start
-    @app = Rort::Http.new
-  end
 
   def self.root
     File.expand_path('../../', __FILE__)
