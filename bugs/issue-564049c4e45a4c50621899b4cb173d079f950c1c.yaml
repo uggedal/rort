@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Implement a logger
+desc: We need a way to log background jobs and requests with rack
+type: :feature
+component: server
+release: 
+reporter: Eivind Uggedal <eu@redflavor.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-05-24 10:17:43.430253 Z
+references: []
+
+id: 564049c4e45a4c50621899b4cb173d079f950c1c
+log_events: 
+- - 2008-05-24 10:17:44.230135 Z
+  - Eivind Uggedal <eu@redflavor.com>
+  - created
+  - ""
