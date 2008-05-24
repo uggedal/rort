@@ -14,7 +14,7 @@ describe Respondent do
   end
 
   it 'should be able to be retrieved' do
-    Respondent['eu@redflavor.com'].should == @respondent
+    Respondent.find(:email => 'eu@redflavor.com').should == @respondent
   end
 
   it 'should be retrieved if existing or created if non-existing' do

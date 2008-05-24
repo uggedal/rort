@@ -9,7 +9,7 @@ module Rort::Models
 
   class Respondent < Sequel::Model
     set_schema do
-      primary_key :email
+      primary_key :id
       text        :email, :unique => true
       text        :group
       timestamp   :created_at
@@ -25,7 +25,7 @@ module Rort::Models
     end
 
     def self.previous_group
-      Respondent.any? ? Respondent.order(:created_at).last.group : 'control'
+      Respondent.any? ? Respondent.order(:id).last.group : 'control'
     end
 
     def self.next_group(group = previous_group)
