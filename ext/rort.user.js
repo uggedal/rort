@@ -40,7 +40,7 @@ function get(url, callback) {
 // Scope where jQuery is enabled
 function withJQuery() {
 
-  var uri = 'http://rort.redflavor.com/';
+  var uri = 'http://rort.redflavor.com/api/';
 
   var userHref = $('ul#loggedinuser > li.item > a:first').attr('href');
 
