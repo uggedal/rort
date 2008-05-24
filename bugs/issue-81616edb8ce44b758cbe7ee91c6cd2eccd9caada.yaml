@@ -5,8 +5,8 @@ type: :feature
 component: server
 release: 
 reporter: Eivind Uggedal <eu@redflavor.com>
-status: :unstarted
-disposition: 
+status: :closed
+disposition: :wontfix
 creation_time: 2008-04-14 11:00:20.789772 Z
 references: []
 
@@ -33,3 +33,7 @@ log_events:
   - Eivind Uggedal <eu@redflavor.com>
   - unassigned from release 0.2.0
   - We have to put this issue on hold. Should be fixed in a later release.
+- - 2008-05-24 10:15:10.129513 Z
+  - Eivind Uggedal <eu@redflavor.com>
+  - closed issue with disposition wontfix
+  - Not needed in my prototype.
