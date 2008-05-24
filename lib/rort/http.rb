@@ -10,7 +10,6 @@ module Rort
     JSON  = { 'Content-Type' => 'application/json' }
     JS    = { 'Content-Type' => 'application/javascript' }
     HTML  = { 'Content-Type' => 'text/html' }
-    REDIR = { 'Location' => USR_SCRIPT }
 
     def call(env)
       req = Rack::Request.new(env)
@@ -32,13 +31,13 @@ module Rort
       end
 
       if get?(req, 'download')
-        username = req.GET['download']
+        email = req.GET['download']
+        respondent = Rort::Models::Respondent.find_or_create(:email => email)
 
-        if person = validate_user(username)
-          collect_activities_in_background(person)
+        if respondent.errors.empty?
           return [200, HTML, download_link]
         else
-          return [200, HTML, download_form("Ugyldig adresse: #{username}")]
+          return [200, HTML, download_form("Ugyldig epost: #{email}")]
         end
       end
 
@@ -126,16 +125,6 @@ module Rort
         </p>
       EOS
       html_template(body)
-    end
-
-    def validate_user(username)
-      Rort::Models::Person.fetch(username)
-    end
-
-    def collect_activities_in_background(person)
-      person.favorites.each do |fav|
-        Rort::Queue.push(fav.slug)
-      end
     end
 
     def userscript

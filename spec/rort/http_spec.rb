@@ -47,8 +47,8 @@ describe Rort::Http do
     res.body.should =~ /form/
   end
 
-  it 'should provide link to userscript when a valid username is provided' do
-    res = Rack::MockRequest.new(@app).get('?download=NoFavorites')
+  it 'should provide link to userscript when a valid email is provided' do
+    res = Rack::MockRequest.new(@app).get('?download=eu@redflavor.com')
     res.status.should == 200
     res.body.should =~ /installeres/
   end
@@ -58,8 +58,8 @@ describe Rort::Http do
     res.body.should =~ /==UserScript==/
   end
 
-  it 'should show error when an invalid username is provided' do
-    res = Rack::MockRequest.new(@app).get('?download=nonexistentusername')
+  it 'should show error when an invalid email is provided' do
+    res = Rack::MockRequest.new(@app).get('?download=invalid@email')
     res.status.should == 200
     res.body.should =~ /Ugyldig/
   end

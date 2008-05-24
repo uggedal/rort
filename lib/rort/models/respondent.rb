@@ -16,6 +16,10 @@ module Rort::Models
       self.group = Respondent.next_group
     end
 
+    validates do
+      format_of :email, :with => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
+    end
+
     def self.previous_group
       Respondent.any? ? Respondent.order(:created_at).last.group : 'control'
     end
