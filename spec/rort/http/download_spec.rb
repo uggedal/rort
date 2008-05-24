@@ -42,9 +42,16 @@ describe Rort::Http::Download do
     res.body.should =~ /installeres/
   end
 
-  it 'should provide userscript download' do
+  it 'should provide control group userscript download' do
+    res = Rack::MockRequest.new(@app).get('/urort.user.js')
+    res.body.should =~ /==UserScript==/
+    res.body.should =~ /Dine favoritter/
+  end
+
+  it 'should provide experiment group userscript download' do
     res = Rack::MockRequest.new(@app).get('/rort.user.js')
     res.body.should =~ /==UserScript==/
+    res.body.should =~ /Siste fra dine Favoritter/
   end
 
   it 'should show error when an invalid email is provided' do

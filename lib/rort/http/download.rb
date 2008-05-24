@@ -4,13 +4,18 @@ module Rort::Http
   class Download
     include Rort::Http
 
-    USR_SCRIPT = '/rort.user.js'
+    SCRIPT = {:experiment => '/rort.user.js',
+              :control => '/urort.user.js'}
 
     def call(env)
       req = Rack::Request.new(env)
 
-      if req.path_info == USR_SCRIPT
-        return [200, JS, userscript]
+      if req.path_info == SCRIPT[:experiment]
+        return [200, JS, userscript(SCRIPT[:experiment])]
+      end
+
+      if req.path_info == SCRIPT[:control]
+        return [200, JS, userscript(SCRIPT[:control])]
       end
 
       unless req.path_info == '/'
@@ -35,8 +40,8 @@ module Rort::Http
       [404, HTML, '']
     end
 
-    def userscript
-      File.read(File.join(Rort.root, 'ext', 'rort.user.js'))
+    def userscript(file)
+      File.read(File.join(Rort.root, 'ext', file))
     end
 
     def html_template(body)
