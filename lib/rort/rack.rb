@@ -8,7 +8,7 @@ options = { :Port => 8001,
 }
 
 app = Rack::Builder.new {
-  use Rack::CommonLogger, STDERR
+  use Rack::CommonLogger, Rort.logger(:http)
   run Rort.start
 }.to_app
 

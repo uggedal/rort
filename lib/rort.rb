@@ -23,4 +23,17 @@ module Rort
   def self.root
     File.expand_path('../../', __FILE__)
   end
+
+  require 'logger'
+
+  def self.logger(type)
+    @log ||= {}
+
+    unless @log[type]
+      path = File.expand_path("../../logs/#{type}.log", __FILE__)
+      file = File.open(path, File::WRONLY | File::APPEND | File::CREAT)
+      @log[type] = Logger.new(file) 
+    end
+    @log[type]
+  end
 end

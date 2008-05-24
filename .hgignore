@@ -1,5 +1,5 @@
 \.swp$
 
-^log/
+^logs/[a-z]+\.log$
 ^[a-z]+\.db$
 ^run/[a-z0-9_.]+\.pid$

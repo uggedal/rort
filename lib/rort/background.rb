@@ -1,18 +1,20 @@
 $: << File.expand_path("../..", __FILE__)
 require 'rort'
 
-def log(msg)
+def log(slug)
+  Rort.logger(:bg).info "Fetching | #{slug} | Starting..."
   start = Time.now
-  puts "#{start} | #{msg} | Starting..."
   yield
   stop = Time.now
-  puts "#{stop} | #{msg} | Finished in #{stop-start} sec"
+  Rort.logger(:bg).info "Fetching | #{slug} | Finished in #{stop-start} sec"
 end
 
 loop do
   if slug = Rort::Queue.shift
-    log(slug) do
-      Rort::Models::Artist.find_or_fetch(slug).activities
+    unless Rort::Cache[slug + ':activities']
+      log(slug) do
+        Rort::Models::Artist.find_or_fetch(slug).activities
+      end
     end
   end
   sleep 1
