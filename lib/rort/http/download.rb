@@ -10,12 +10,8 @@ module Rort::Http
     def call(env)
       req = Rack::Request.new(env)
 
-      if req.path_info == SCRIPT[:experiment]
-        return [200, JS, userscript(SCRIPT[:experiment])]
-      end
-
-      if req.path_info == SCRIPT[:control]
-        return [200, JS, userscript(SCRIPT[:control])]
+      if SCRIPT.value?(req.path_info)
+        return [200, JS, userscript(req.path_info)]
       end
 
       unless req.path_info == '/'
@@ -31,7 +27,7 @@ module Rort::Http
         respondent = Rort::Models::Respondent.find_or_create(:email => email)
 
         if respondent.errors.empty?
-          return [200, HTML, download_link]
+          return [200, HTML, download_link(respondent.group)]
         else
           return [200, HTML, download_form("Ugyldig epost: #{email}")]
         end
@@ -92,11 +88,11 @@ module Rort::Http
       html_template(body)
     end
 
-    def download_link
+    def download_link(type)
       body = <<-EOS
         <p>
           Bruker-scriptet kan n&aring;
-          <a href="/rort.user.js">installeres</a>.
+          <a href="#{SCRIPT[type.to_sym]}">installeres</a>.
         </p>
           Ta turen over til
           <a href="http://nrk.no/urort">Ur&oslash;rt</a> og logg deg inn for

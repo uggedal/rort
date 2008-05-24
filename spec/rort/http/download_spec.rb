@@ -42,6 +42,32 @@ describe Rort::Http::Download do
     res.body.should =~ /installeres/
   end
 
+  it 'should provide link to userscript depending on group' do
+    res = Rack::MockRequest.new(@app).get('?download=eu@redflavor.com')
+    res.status.should == 200
+    res.body.should =~ /\/rort\.user\.js/
+    Rort::Models::Respondent.find(:email => 'eu@redflavor.com').group.
+      should == 'experiment'
+
+    res = Rack::MockRequest.new(@app).get('?download=valid@user.com')
+    res.status.should == 200
+    res.body.should =~ /\/urort\.user\.js/
+    Rort::Models::Respondent.find(:email => 'valid@user.com').group.
+      should == 'control'
+
+    res = Rack::MockRequest.new(@app).get('?download=another@user.com')
+    res.status.should == 200
+    res.body.should =~ /\/rort\.user\.js/
+    Rort::Models::Respondent.find(:email => 'another@user.com').group.
+      should == 'experiment'
+
+    res = Rack::MockRequest.new(@app).get('?download=last@user.com')
+    res.status.should == 200
+    res.body.should =~ /\/urort\.user\.js/
+    Rort::Models::Respondent.find(:email => 'last@user.com').group.
+      should == 'control'
+  end
+
   it 'should provide control group userscript download' do
     res = Rack::MockRequest.new(@app).get('/urort.user.js')
     res.body.should =~ /==UserScript==/
