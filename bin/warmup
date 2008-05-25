@@ -1,0 +1,20 @@
+#!/usr/bin/env ruby
+# -*- ruby -*-
+
+$: << File.expand_path("../../lib", __FILE__)
+require 'rort'
+
+count = Rort::Models::Requestor.count
+Rort.logger(:warmup).info "Started warmup for #{count} requestors"
+
+Rort::Models::Requestor.each do |req|
+  puts req.slug
+  Rort::Models::Person.fetch(req.slug).favorites.each do |fav|
+    puts fav.slug
+    if Rort::Cache[fav.slug + ':activities']
+      puts 'cached'
+      Rort::Cache.del(fav.slug + ':activities')
+    end
+    Rort::Queue.push(fav.slug)
+  end
+end
