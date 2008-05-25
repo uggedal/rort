@@ -7,14 +7,22 @@ options = { :Port => 8001,
             :AccessLog => []
 }
 
-app = Rack::Builder.new {
+
+Dir.chdir Rort.root
+
+app = Rack::Builder.new do
+
   use Rack::CommonLogger, Rort.logger(:http)
+  use Rack::Static, :urls => ["/doc"]
+
   map '/' do
     run Rort::Http::Download.new
   end
+
   map '/api' do
     run Rort::Http::Api.new
   end
-}.to_app
+
+end.to_app
 
 Rack::Handler::Mongrel.run app, options
