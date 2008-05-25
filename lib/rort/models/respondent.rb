@@ -4,8 +4,10 @@ module Rort::Models
 
     set_schema do
       primary_key :id
-      text        :email, :unique => true
-      text        :group
+      text        :email,    :null => false, :unique => true
+      text        :group,    :null => false
+      text        :slug
+      integer     :requests, :default => 0
       timestamp   :created_at
     end
 
@@ -29,6 +31,16 @@ module Rort::Models
       when 'control'
         'experiment'
       end
+    end
+
+    def self.increment(email, slug)
+      respondent = Respondent.find(:email => email)
+      return nil unless respondent
+
+      respondent.requests = respondent.requests + 1
+      respondent.slug = slug unless respondent.slug
+      respondent.save
+      respondent
     end
   end
 

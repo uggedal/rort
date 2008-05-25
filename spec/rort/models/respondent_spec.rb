@@ -41,4 +41,14 @@ describe Respondent do
 
     @respondent.group.should_not == second.group
   end
+
+  it 'should have a default requests cound of zero' do
+    @respondent.requests.should == 0
+  end
+
+  it 'should incremented request count on requests' do
+    Respondent.increment('eu@redflavor.com', 'uggedal').requests.should == 1
+    Respondent.increment('eu@redflavor.com', 'uggedal').requests.should == 2
+    Respondent.increment('eu@redflavor.com', 'uggedal').requests.should == 3
+  end
 end
