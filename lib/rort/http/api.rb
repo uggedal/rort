@@ -32,13 +32,13 @@ module Rort::Http
     end
 
     def activities_for(slug)
-      artist = Rort::Models::Person.fetch(slug)
-      artist ? artist.activity_list.to_json : nil
+      person = Rort::Models::Person.fetch(slug)
+      person ? person.activity_list.to_json : nil
     end
 
     def favorites_for(slug)
-      artist = Rort::Models::Person.fetch(slug)
-      artist ? artist.favorite_list.to_json : nil
+      person = Rort::Models::Person.fetch(slug)
+      person ? person.favorite_list.to_json : nil
     end
   end
 end
