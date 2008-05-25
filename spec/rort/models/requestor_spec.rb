@@ -6,11 +6,11 @@ describe Requestor do
 
   before(:each) do
     Requestor.create_table!
-    @requestor = Requestor.create(:slug => 'uggedal')
+    @requestor = Requestor.create(:slug => 'uggedal', :group => 'control')
   end
 
   it 'should be able to be created' do
-    Requestor.create(:slug => 'SomeSlug').should_not be_nil
+    Requestor.create(:slug => 'SSlug', :group => 'control').should_not be_nil
   end
 
   it 'should be able to be retrieved' do
@@ -22,13 +22,13 @@ describe Requestor do
   end
 
   it 'should be incremented if existing or created if non-existing' do
-    Requestor.increment_or_create('uggedal').requests.should == 1
-    Requestor.increment_or_create('uggedal').requests.should == 2
-    Requestor.increment_or_create('uggedal').requests.should == 3
+    Requestor.increment_or_create('control', 'uggedal').requests.should == 1
+    Requestor.increment_or_create('control', 'uggedal').requests.should == 2
+    Requestor.increment_or_create('control', 'uggedal').requests.should == 3
 
-    Requestor.increment_or_create('SomeSlug').requests.should == 1
-    Requestor.increment_or_create('SomeSlug').requests.should == 2
-    Requestor.increment_or_create('SomeSlug').requests.should == 3
+    Requestor.increment_or_create('experiment', 'SSlug').requests.should == 1
+    Requestor.increment_or_create('experiment', 'SSlug').requests.should == 2
+    Requestor.increment_or_create('experiment', 'SSlug').requests.should == 3
   end
 
   it 'should store time of creation' do

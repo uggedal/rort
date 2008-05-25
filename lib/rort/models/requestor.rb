@@ -7,6 +7,7 @@ module Rort::Models
     set_schema do
       primary_key :id
       text        :slug, :unique => true, :null => false
+      text        :group, :null => false
       integer     :requests, :default => 0
       timestamp   :created_at
     end
@@ -15,8 +16,8 @@ module Rort::Models
       self.created_at = Time.now
     end
 
-    def self.increment_or_create(slug)
-      requestor = Requestor.find_or_create :slug => slug
+    def self.increment_or_create(type, slug)
+      requestor = Requestor.find_or_create(:slug => slug, :group => type)
       requestor.requests = requestor.requests + 1
       requestor.save
       requestor
