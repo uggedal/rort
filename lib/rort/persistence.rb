@@ -9,7 +9,7 @@ module Rort
       if $TESTING
         @@db ||= Sequel.sqlite
       else
-        @@db ||= Sequel.sqlite File.expand_path('../../../../rort.db', __FILE__)
+        @@db ||= Sequel.sqlite File.expand_path('../../../rort.db', __FILE__)
       end
       @@db
     end
