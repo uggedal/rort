@@ -7,6 +7,7 @@ module Rort
   require 'rort/core_ext'
   require 'rort/external'
   require 'rort/cache'
+  require 'rort/persistence'
   require 'rort/models'
   require 'rort/http'
   require 'rort/queue'

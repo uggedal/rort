@@ -1,13 +1,8 @@
 module Rort::Models
-  require 'sequel'
-
-  if $TESTING
-    DB = Sequel.sqlite
-  else
-    DB = Sequel.sqlite File.expand_path('../../../../rort.db', __FILE__)
-  end
 
   class Respondent < Sequel::Model
+    include Rort::Persistence
+
     set_schema do
       primary_key :id
       text        :email, :unique => true
