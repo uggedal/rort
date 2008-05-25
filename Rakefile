@@ -25,7 +25,8 @@ task :install do
             rspec
             god
             sqlite3-ruby
-            sequel)
+            sequel
+            ParseTree)
   `gem install #{gems.join(' ')}`
   `gem install ext/hpricot-0.6_bufoverflowfix.gem`
 end
