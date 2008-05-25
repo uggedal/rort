@@ -7,8 +7,8 @@ type: :feature
 component: rort
 release: 
 reporter: Eivind Uggedal <eu@redflavor.com>
-status: :unstarted
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2008-05-25 12:40:49.108202 Z
 references: []
 
@@ -17,4 +17,8 @@ log_events:
 - - 2008-05-25 12:40:50.419525 Z
   - Eivind Uggedal <eu@redflavor.com>
   - created
+  - ""
+- - 2008-05-25 18:03:10.641558 Z
+  - Eivind Uggedal <eu@redflavor.com>
+  - closed issue with disposition fixed
   - ""
