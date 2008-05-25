@@ -3,6 +3,7 @@ require File.join(File.dirname(__FILE__), '..', '..', 'spec_helper')
 describe Rort::Http::Api do
 
   before(:each) do
+    Rort::Models::Requestor.create_table!
     @app = Rort::Http::Api.new
   end
 
@@ -41,8 +42,24 @@ describe Rort::Http::Api do
     JSON.parse(res.body).size.should > 1
   end
 
+  it 'should store experiment requestor when activities are showed' do
+    Rort::Models::Requestor.find(:slug => 'uggedal').should be_nil
+    res = Rack::MockRequest.new(@app).get('?activities=uggedal')
+    Rort::Models::Requestor.find(:slug => 'uggedal').requests.should == 1
+    Rort::Models::Requestor.find(:slug => 'uggedal').
+      group.should == 'experiment'
+  end
+
   it 'should show all favorites of an artist' do
     res = Rack::MockRequest.new(@app).get('?favorites=uggedal')
     JSON.parse(res.body).size.should > 1
+  end
+
+  it 'should store control requestor when favorites are showed' do
+    Rort::Models::Requestor.find(:slug => 'uggedal').should be_nil
+    res = Rack::MockRequest.new(@app).get('?favorites=uggedal')
+    Rort::Models::Requestor.find(:slug => 'uggedal').requests.should == 1
+    Rort::Models::Requestor.find(:slug => 'uggedal').
+      group.should == 'control'
   end
 end

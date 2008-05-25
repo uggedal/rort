@@ -32,11 +32,13 @@ module Rort::Http
     end
 
     def activities_for(slug)
+      Rort::Models::Requestor.increment_or_create('experiment', slug)
       person = Rort::Models::Person.fetch(slug)
       person ? person.activity_list.to_json : nil
     end
 
     def favorites_for(slug)
+      Rort::Models::Requestor.increment_or_create('control', slug)
       person = Rort::Models::Person.fetch(slug)
       person ? person.favorite_list.to_json : nil
     end
