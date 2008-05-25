@@ -40,6 +40,7 @@ function get(url, callback) {
 // Scope where jQuery is enabled
 function withJQuery() {
 
+  var email = '#/#/#/#/#/'
   var uri = 'http://rort.redflavor.com/';
 
   var userHref = $('ul#loggedinuser > li.item > a:first').attr('href');
@@ -254,7 +255,7 @@ function withJQuery() {
 
   insertLoadingStatus();
 
-  get('{0}api/?activities={1}'.i([uri, user]), display);
+  get('{0}api/activities?slug={1}&email={2}'.i([uri, user, email]), display);
 }
 
 function rortStyle() {
