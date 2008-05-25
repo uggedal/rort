@@ -1,0 +1,20 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Merge respondent and requestor
+desc: |-
+  Merge the models. Need to encode the email of the respondent in his
+  userscript. Also need to add the email as a call to the api.
+type: :feature
+component: rort
+release: 
+reporter: Eivind Uggedal <eu@redflavor.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-05-25 12:40:49.108202 Z
+references: []
+
+id: 5347973d43d2ef6a5deee27c845c72d9c5ba0090
+log_events: 
+- - 2008-05-25 12:40:50.419525 Z
+  - Eivind Uggedal <eu@redflavor.com>
+  - created
+  - ""
