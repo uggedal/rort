@@ -3,6 +3,7 @@ require File.join(File.dirname(__FILE__), '..', '..', 'spec_helper')
 describe Rort::Http::Download do
 
   before(:each) do
+    Rort::Models::Respondent.create_table!
     @app = Rort::Http::Download.new
   end
 
