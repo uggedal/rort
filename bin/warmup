@@ -4,18 +4,16 @@
 $: << File.expand_path("../../lib", __FILE__)
 require 'rort'
 
-count = 0
+active = Rort::Models::Respondent.filter {!:slug.nil?}
 
-Rort::Models::Respondent.each do |res|
-  if res.slug
-    Rort::Models::Person.fetch(res.slug).favorites.each do |fav|
-      if Rort::Cache[fav.slug + ':activities']
-        Rort::Cache.del(fav.slug + ':activities')
-      end
-      Rort::Queue.push(fav.slug)
+Rort.logger(:warmup).info "Started warmup for #{active.count} requestors"
+
+active.each do |res|
+  Rort::Models::Person.fetch(res.slug).favorites.each do |fav|
+    if Rort::Cache[fav.slug + ':activities']
+      Rort::Cache.del(fav.slug + ':activities')
     end
-    count += 1
+    Rort::Queue.push(fav.slug)
   end
 end
 
-Rort.logger(:warmup).info "Started warmup for #{count} requestors"
