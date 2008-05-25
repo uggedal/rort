@@ -1,7 +1,8 @@
 module Rort::Models
 
+  DB = Rort::Persistence.db
+
   class Respondent < Sequel::Model
-    include Rort::Persistence
 
     set_schema do
       primary_key :id
