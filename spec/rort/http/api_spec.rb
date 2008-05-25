@@ -44,10 +44,13 @@ describe Rort::Http::Api do
 
   it 'should store experiment requestor when activities are showed' do
     Rort::Models::Requestor.find(:slug => 'uggedal').should be_nil
-    res = Rack::MockRequest.new(@app).get('?activities=uggedal')
+    Rack::MockRequest.new(@app).get('?activities=uggedal')
     Rort::Models::Requestor.find(:slug => 'uggedal').requests.should == 1
     Rort::Models::Requestor.find(:slug => 'uggedal').
       group.should == 'experiment'
+
+    Rack::MockRequest.new(@app).get('?activities=uggedal')
+    Rort::Models::Requestor.find(:slug => 'uggedal').requests.should == 2
   end
 
   it 'should show all favorites of an artist' do
@@ -57,9 +60,12 @@ describe Rort::Http::Api do
 
   it 'should store control requestor when favorites are showed' do
     Rort::Models::Requestor.find(:slug => 'uggedal').should be_nil
-    res = Rack::MockRequest.new(@app).get('?favorites=uggedal')
+    Rack::MockRequest.new(@app).get('?favorites=uggedal')
     Rort::Models::Requestor.find(:slug => 'uggedal').requests.should == 1
     Rort::Models::Requestor.find(:slug => 'uggedal').
       group.should == 'control'
+
+    Rack::MockRequest.new(@app).get('?favorites=uggedal')
+    Rort::Models::Requestor.find(:slug => 'uggedal').requests.should == 2
   end
 end
