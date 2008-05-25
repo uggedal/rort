@@ -10,34 +10,38 @@ module Rort::Http
     def call(env)
       req = Rack::Request.new(env)
 
-      if SCRIPT.value?(req.path_info)
-        return [200, JS, userscript(req.path_info)]
+
+      if req.path_info =~ /^\/install\//
+        email, file = req.path_info.
+          scan(/\/install\/([\w._%+-@]+)\/([a-z.]+)/).flatten
+        return [200, JS, userscript(file, email)]
       end
 
       unless req.path_info == '/'
         return [404, HTML, '']
       end
 
-      if req.get? && req.GET.empty?
-        return [200, HTML, download_form]
-      end
-
-      if get?(req, 'download')
-        email = req.GET['download']
+      if req.post?
+        email = req.POST['email']
         respondent = Rort::Models::Respondent.find_or_create(:email => email)
 
         if respondent.errors.empty?
-          return [200, HTML, download_link(respondent.group)]
+          return [200, HTML, install_link(respondent.email, respondent.group)]
         else
           return [200, HTML, download_form("Ugyldig epost: #{email}")]
         end
       end
 
+      if req.get?
+        return [200, HTML, download_form]
+      end
+
       [404, HTML, '']
     end
 
-    def userscript(file)
-      File.read(File.join(Rort.root, 'ext', file))
+    def userscript(file, email)
+      File.read(File.join(Rort.root, 'ext', file)).gsub(/#\/#\/#\/#\/#\//,
+                                                        email)
     end
 
     def html_template(body)
@@ -75,10 +79,10 @@ module Rort::Http
           Oppgi din epost adresse<sup>*</sup> for &aring; laste
           ned v&aring;r utvidelse av Ur&oslash;rt.
         <p>
-        <form action="/" method="get">
-          <label for="download">Epost:</label>
-          <input type="text" name="download" id="download">
-          <input type="submit" value="Last ned!">
+        <form action="/" method="post">
+          <label for="email">Epost:</label>
+          <input type="text" name="email" id="email">
+          <input type="submit" value="Registrer">
         </form>
         <p>
           <sup>*</sup> Adressen brukes kun for &aring; identifisere
@@ -88,11 +92,11 @@ module Rort::Http
       html_template(body)
     end
 
-    def download_link(type)
+    def install_link(email, type)
       body = <<-EOS
         <p>
           Bruker-scriptet kan n&aring;
-          <a href="#{SCRIPT[type.to_sym]}">installeres</a>.
+          <a href="/install/#{email}#{SCRIPT[type.to_sym]}">installeres</a>.
         </p>
           Ta turen over til
           <a href="http://nrk.no/urort">Ur&oslash;rt</a> og logg deg inn for
