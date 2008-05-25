@@ -14,4 +14,6 @@ module Rort
       @@db
     end
   end
+
+  DB = Rort::Persistence.db
 end

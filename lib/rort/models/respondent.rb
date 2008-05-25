@@ -1,7 +1,5 @@
 module Rort::Models
 
-  DB = Rort::Persistence.db
-
   class Respondent < Sequel::Model
 
     set_schema do
