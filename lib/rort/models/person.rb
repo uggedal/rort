@@ -22,8 +22,6 @@ module Rort::Models
     def favorite_activities
       activities = []
       cached = 0
-      # TODO: Should retrieve activities from cache here
-      # so that artist objects don't have to be cached.
 
       # If no favorites with cached activities, return one favorite and put
       # rest in queue.
@@ -68,20 +66,9 @@ module Rort::Models
     end
 
     private
-      def self.find_or_create(artist)
-        if cached = Rort::Cache[artist[:slug]]
-          cached
-        else
-          new = Artist.new(artist[:slug])
-          new.name = artist[:name]
-          Rort::Cache[new.slug] = new
-          new
-        end
-      end
-
       def external_favorites
         external.favorites.collect do |fav|
-          self.class.find_or_create(fav)
+          Artist.find_or_create(fav)
         end
       end
   end

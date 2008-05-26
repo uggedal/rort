@@ -33,12 +33,12 @@ module Rort::Models
     end
 
     def self.find_or_fetch(slug)
-      if cached = Rort::Cache[slug]
+      if cached = self.cached?(slug)
         cached
       else
         if fetched = Rort::External::Artist.as(slug)
           new = self.new(slug, fetched)
-          Rort::Cache[slug] = new
+          self.cache!(slug, new)
           new
         else
           nil
@@ -46,15 +46,39 @@ module Rort::Models
       end
     end
 
-    def self.key(slug)
+    def self.find_or_create(artist)
+      if cached = self.cached?(artist[:slug])
+        cached
+      else
+        new = Artist.new(artist[:slug])
+        new.name = artist[:name]
+        self.cache!(artist[:slug], new)
+        new
+      end
+    end
+
+    def self.activities_key(slug)
       "::activities::#{slug}::"
     end
+
     def self.activities_cached?(slug)
-      Rort::Cache[key(slug)]
+      Rort::Cache[activities_key(slug)]
     end
 
     def self.activities_cache!(slug, activities)
-      Rort::Cache[key(slug)] = activities
+      Rort::Cache[activities_key(slug)] = activities
+    end
+
+    def self.key(slug)
+      "::artist::#{slug}::"
+    end
+
+    def self.cached?(slug)
+      Rort::Cache[key(slug)]
+    end
+
+    def self.cache!(slug, artist)
+      Rort::Cache[key(slug)] = artist
     end
 
     private
