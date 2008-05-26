@@ -51,9 +51,10 @@ module Rort::Http
         <html>
           <head>
             <title>Last ned Ur&oslash;rt bruker-script</title>
-            <style type="text/css">
-              body { width: 40em; }
-            </style>
+            <link rel="stylesheet"
+                  href="/doc/style.css"
+                  type="text/css"
+                  media="screen">
           </head>
           <body>
             <h1>Last ned Ur&oslash;rt bruker-script</h1>
@@ -69,9 +70,8 @@ module Rort::Http
         <p>
           For &aring; installere dette bruker-scriptet m&aring; du benytte
           nettleseren <a href="http://firefox.no">Firefox</a> og
-          installere
-          <a href="https://addons.mozilla.org/en-US/firefox/addon/748">
-            Greasemonkey</a>,
+          ha installert
+          <a href="/doc/install.html" target="_blank">Greasemonkey</a>,
           et tillegg som gj&oslash;r det mulig &aring; endre
           eksisterende nettsider.
         </p>
@@ -97,6 +97,11 @@ module Rort::Http
         <p>
           Bruker-scriptet kan n&aring;
           <a href="/install/#{email}#{SCRIPT[type.to_sym]}">installeres</a>.
+        </p>
+        <p>
+          Etter 3 sekunder kan man klikke p&aring; <em>Install</em>
+          for &aring; installere Ur&oslash;rt bruker-scriptet.
+          <img src="/doc/install_5.png" alt="">
         </p>
           Ta turen over til
           <a href="http://nrk.no/urort">Ur&oslash;rt</a> og logg deg inn for
