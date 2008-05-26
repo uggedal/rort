@@ -28,7 +28,7 @@ module Rort
 
     unless @log[type]
       if $TESTING
-        @log[type] = Logger.new(STDOUT)
+        @log[type] = Logger.new(File.open("/dev/null", "r+"))
       else
         path = File.expand_path("../../logs/#{type}.log", __FILE__)
         file = File.open(path, File::WRONLY | File::APPEND | File::CREAT)
