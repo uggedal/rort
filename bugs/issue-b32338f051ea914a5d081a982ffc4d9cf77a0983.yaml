@@ -1,0 +1,20 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Fetch href of favorites on person fetch
+desc: |-
+  Now each artist is fetched on a Person.favorite_list call because of the
+  favorite urls. Could possibly store these on initialization of a Person.
+type: :bugfix
+component: server
+release: 
+reporter: Eivind Uggedal <eu@redflavor.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-05-26 16:05:31.065515 Z
+references: []
+
+id: b32338f051ea914a5d081a982ffc4d9cf77a0983
+log_events: 
+- - 2008-05-26 16:05:31.970555 Z
+  - Eivind Uggedal <eu@redflavor.com>
+  - created
+  - ""
