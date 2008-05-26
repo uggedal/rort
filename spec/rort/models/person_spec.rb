@@ -9,14 +9,16 @@ describe Person do
   end
 
   it 'should be able to find an existing user' do
+    reqs = $http_requests
     Person.fetch('uggedal').name.should == @person.name
+    ($http_requests - reqs).should == 1
   end
 
   it 'should should return nil for fetching an nonexistent person' do
     Person.fetch('SomeCrazyNonExistentArtist').should be_nil
   end
 
-  it 'should be able to fetch the favorites of an initialized artist' do
+  it 'should be able to fetch favorites of an initialized artist wo/http' do
     reqs = $http_requests
     @person.favorites.each do |fav|
       fav.name.should_not be_nil
@@ -50,11 +52,12 @@ describe Person do
   end
 
   it 'should provide an activity list with excludes' do
-    list = @person.activity_list
-
     @person.favorites.each do |fav|
+      Rort::Cache.del(Artist.key(fav.slug))
       Rort::Cache.del(Artist.activities_key(fav.slug))
     end
+
+    list = @person.activity_list
 
     list.size.should == 2
     list[:excludes].size.should > 1
@@ -64,9 +67,11 @@ describe Person do
   end
 
   it 'should provide an favorite list' do
+    reqs = $http_requests
     list = @person.favorite_list
     list.size.should > 1
     list.first.should be_include(:artist)
     list.first.should be_include(:artist_url)
+    ($http_requests -reqs).should == @person.favorites.size
   end
 end
