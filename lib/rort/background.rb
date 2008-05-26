@@ -4,12 +4,6 @@ require 'rort'
 module Rort::Background
 
   def log(slug, opts)
-
-    if $TESTING
-      yield
-      return
-    end
-
     Rort.logger(:bg).info "#{slug} #{opts.inspect} Starting..."
     start = Time.now
     yield

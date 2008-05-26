@@ -27,10 +27,14 @@ module Rort
     @log ||= {}
 
     unless @log[type]
-      path = File.expand_path("../../logs/#{type}.log", __FILE__)
-      file = File.open(path, File::WRONLY | File::APPEND | File::CREAT)
-      file.sync = true
-      @log[type] = Logger.new(file)
+      if $TESTING
+        @log[type] = Logger.new(STDOUT)
+      else
+        path = File.expand_path("../../logs/#{type}.log", __FILE__)
+        file = File.open(path, File::WRONLY | File::APPEND | File::CREAT)
+        file.sync = true
+        @log[type] = Logger.new(file)
+      end
     end
     @log[type]
   end
