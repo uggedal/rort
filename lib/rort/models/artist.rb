@@ -18,8 +18,8 @@ module Rort::Models
       @reviews ||= external.reviews
     end
 
-    def activities
-      unless activities = Artist.activities_cached?(slug)
+    def activities(force = false)
+      if force || !activities = Artist.activities_cached?(slug)
         collection = [blog.posts, concert.events, songs, reviews]
         median = find_median_size(collection)
         activities = collection.collect do |elements|

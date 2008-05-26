@@ -13,7 +13,7 @@ def fetch_activities(slug, opts)
   if opts[:activities] == :force || !Rort::Models::Artist.
                                       activities_cached?(slug)
     log(slug, opts) do
-      Rort::Models::Artist.fetch(slug).activities
+      Rort::Models::Artist.fetch(slug).activities(true)
     end
   end
 end
