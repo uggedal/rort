@@ -67,6 +67,11 @@ describe Person do
   end
 
   it 'should provide an favorite list' do
+    @person.favorites.each do |fav|
+      Rort::Cache.del(Artist.key(fav.slug))
+      Rort::Cache.del(Artist.activities_key(fav.slug))
+    end
+
     reqs = $http_requests
     list = @person.favorite_list
     list.size.should > 1
