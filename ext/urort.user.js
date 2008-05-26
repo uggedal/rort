@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name           Urørt
+// @name           Rørt
 // @version        0.2.0
 // @author         Eivind Uggedal <eu@redflavor.com>
 // @namespace      http://redflavor.com/
