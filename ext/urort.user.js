@@ -111,9 +111,11 @@ function withJQuery() {
 
   function setupDocumentation() {
     $('#activity-list').append(ele('h3', 'Hjelp'));
-    $('#activity-list').append(ele('p', ele('a href="{0}favorites"'.i(uri),
-                                            'Hva er favoritter?')));
-    $('#activity-list').append(ele('p', ele('a href="{0}uninstall"'.i(uri),
+    $('#activity-list').append(ele('p',
+      ele('a href="{0}doc/favorites.html"'.i(uri),
+      'Hva er favoritter?')));
+    $('#activity-list').append(ele('p',
+      ele('a href="{0}doc/uninstall.html"'.i(uri),
       'Hvordan fjerner jeg {0}?'.i(quote('Siste fra dine Favoritter')))));
   }
 

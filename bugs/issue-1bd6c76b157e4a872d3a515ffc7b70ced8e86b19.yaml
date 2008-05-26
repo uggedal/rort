@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Include userscript install box screenshot
+desc: ""
+type: :bugfix
+component: doc
+release: 
+reporter: Eivind Uggedal <eu@redflavor.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-05-26 02:29:31.783060 Z
+references: []
+
+id: 1bd6c76b157e4a872d3a515ffc7b70ced8e86b19
+log_events: 
+- - 2008-05-26 02:29:32.574487 Z
+  - Eivind Uggedal <eu@redflavor.com>
+  - created
+  - ""
