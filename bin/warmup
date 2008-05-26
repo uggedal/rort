@@ -4,14 +4,28 @@
 $: << File.expand_path("../../lib", __FILE__)
 require 'rort'
 
-active = Rort::Models::Respondent.filter do
+exp_respondents = Rort::Models::Respondent.filter do
   !:slug.nil? && :group == 'experiment'
 end
 
-Rort.logger(:warmup).info "Started warmup for #{active.count} respondents"
+Rort.logger(:warmup).info(
+  "Started warmup for #{exp_respondents.count} experiment respondents")
 
-active.each do |res|
+exp_respondents.each do |res|
   Rort::Models::Person.fetch(res.slug).favorites.each do |fav|
     Rort::Queue.push([fav.slug, {:activities => :force}])
+  end
+end
+
+con_respondents = Rort::Models::Respondent.filter do
+  !:slug.nil? && :group == 'control'
+end
+
+Rort.logger(:warmup).info(
+  "Started warmup for #{con_respondents.count} control respondents")
+
+con_respondents.each do |res|
+  Rort::Models::Person.fetch(res.slug).favorites.each do |fav|
+    Rort::Queue.push([fav.slug, {:favorites => :force}])
   end
 end

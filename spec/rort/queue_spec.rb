@@ -38,4 +38,13 @@ describe Rort::Queue do
   it 'shifting when there are no items should return nil' do
     Rort::Queue.shift.should be_nil
   end
+
+  it 'the queue should only store unique records' do
+    Rort::Queue.push(345)
+    Rort::Queue.push(345)
+    Rort::Queue.push(345)
+
+    Rort::Queue.shift.should == 345
+    Rort::Queue.shift.should be_nil
+  end
 end
