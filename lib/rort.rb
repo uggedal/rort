@@ -1,5 +1,5 @@
 module Rort
-  VERSION = %w(0 2 0).join('.').freeze
+  VERSION = %w(0 2 0) * '.'
 
   require 'rubygems'
 
