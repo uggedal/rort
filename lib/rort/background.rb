@@ -2,15 +2,16 @@ $: << File.expand_path("../..", __FILE__)
 require 'rort'
 
 def log(slug, opts)
-  Rort.logger(:bg).info "#{slug} | #{opts} | Starting..."
+  Rort.logger(:bg).info "#{slug} #{opts.inspect} Starting..."
   start = Time.now
   yield
   stop = Time.now
-  Rort.logger(:bg).info "#{slug} | #{opts} | Finished in #{stop-start} sec"
+  Rort.logger(:bg).info "#{slug} #{opts.inspect} Finished: #{stop-start} sec"
 end
 
 def fetch_activities(slug, opts)
-  if opts == :force || !Rort::Models::Artist.activities_cached?(slug)
+  if opts[:activities] == :force || !Rort::Models::Artist.
+                                      activities_cached?(slug)
     log(slug, opts) do
       Rort::Models::Artist.fetch(slug).activities
     end
@@ -18,7 +19,7 @@ def fetch_activities(slug, opts)
 end
 
 def fetch_favorites(slug, opts)
-  if opts == :force || !Rort::Models::Artist.cached?(slug)
+  if opts[:favorites] == :force || !Rort::Models::Artist.cached?(slug)
     log(slug, opts) do
       Rort::Models::Artist.fetch(slug)
     end
@@ -29,9 +30,9 @@ loop do
   slug, opts = Rort::Queue.shift
   if slug
     if opts.key? :activities
-      fetch_activities(slug, opts[:activities])
+      fetch_activities(slug, opts)
     elsif opts.key? :favorites
-      fetch_favorites(slug, opts[:favorites])
+      fetch_favorites(slug, opts)
     end
   end
   sleep 1
