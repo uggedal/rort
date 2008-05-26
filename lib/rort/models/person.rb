@@ -22,13 +22,15 @@ module Rort::Models
     def favorite_activities
       activities = []
       cached = 0
+      # TODO: Should retrieve activities from cache here
+      # so that artist objects don't have to be cached.
 
       # If no favorites with cached activities, return one favorite and put
       # rest in queue.
       # If favorites with cached activities, return them and put the rest in
       # queue.
       favorites.each do |fav|
-        if Rort::Cache[fav.slug + ':activities'] || cached == 0
+        if Artist.activities_cached?(fav.slug) || cached == 0
           cached += 1
           activities.concat(fav.activities)
         else

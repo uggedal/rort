@@ -11,7 +11,7 @@ end
 
 loop do
   if slug = Rort::Queue.shift
-    unless Rort::Cache[slug + ':activities']
+    unless Rort::Models::Artist.activities_cached?(slug)
       log(slug) do
         Rort::Models::Artist.find_or_fetch(slug).activities
       end
