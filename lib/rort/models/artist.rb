@@ -32,20 +32,30 @@ module Rort::Models
       activities
     end
 
+    # Fetch an artist and forcefully write it to cache,
+    # overwriting a potentially cached artist
+    def self.fetch(slug)
+      if fetched = Rort::External::Artist.as(slug)
+        new = self.new(slug, fetched)
+        self.cache!(slug, new)
+        new
+      else
+        nil
+      end
+    end
+
+    # Return an artist from cache if it's cached or
+    # fetch it on a cache miss.
     def self.find_or_fetch(slug)
       if cached = self.cached?(slug)
         cached
       else
-        if fetched = Rort::External::Artist.as(slug)
-          new = self.new(slug, fetched)
-          self.cache!(slug, new)
-          new
-        else
-          nil
-        end
+        self.fetch(slug)
       end
     end
 
+    # Return an artist form cache if it's cached or create a
+    # new artist with name and cache it on a cache miss.
     def self.find_or_create(artist)
       if cached = self.cached?(artist[:slug])
         cached
@@ -67,6 +77,10 @@ module Rort::Models
 
     def self.activities_cache!(slug, activities)
       Rort::Cache[activities_key(slug)] = activities
+    end
+
+    def self.activities_clean_cache!(slug)
+      Rort::Cache.del(activities_key(slug))
     end
 
     def self.key(slug)
