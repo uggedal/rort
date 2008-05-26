@@ -6,3 +6,10 @@ class Time
     time_ago(self)
   end
 end
+
+require 'hpricot'
+module Hpricot
+  module Traverse
+    alias_method :text, :inner_text
+  end
+end

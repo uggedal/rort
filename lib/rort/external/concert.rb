@@ -14,11 +14,11 @@ module Rort::External
       events = []
       (@doc/"#bandprofile-subpage > ul > li").each do |event|
 
-        location = event.at("span[@id$='_Label1']").inner_text.strip
-        datetime = event.at("span[@id$='_Label2']").inner_text.strip.split
-        title = event.at("span[@id$='_Label3']").inner_text.strip
-        comment_html = event.at("span[@id$='_Label4'] > p")
-        comment = comment_html.inner_text.strip if comment_html
+        location = (event%"span[@id$='_Label1']").text.strip
+        datetime = (event%"span[@id$='_Label2']").text.strip.split
+        title = (event%"span[@id$='_Label3']").text.strip
+        comment_html = (event%"span[@id$='_Label4'] > p")
+        comment = comment_html.text.strip if comment_html
 
         time = Time.local(*(parse_numeric_date(datetime[0]) +
                             parse_time(datetime[1])))

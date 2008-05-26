@@ -13,8 +13,8 @@ module Rort::External
     include Rort::Parsers
 
     def doc?
-      !(@doc.at("head > title").inner_text.strip =~
-          /^NRK Ur\303\270rt - Ur\303\270rt fant ikke frem$/)
+      !( (@doc%"head > title").text.strip =~
+          /^NRK Ur\303\270rt - Ur\303\270rt fant ikke frem$/ )
     end
 
     def existing?

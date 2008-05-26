@@ -20,26 +20,25 @@ module Rort::External
 
     def posts
       div = (@doc/"#bandprofile-subpage")
-      dates = div.search("div.posted-date").collect do |d|
-        date = d.inner_text.strip
-        pattern = /\w+, (\d\d) (\w+), (\d\d\d\d)$/
-        parse_textual_date(date, pattern)
+      dates = (div/"div.posted-date").collect do |d|
+        date = d.text.strip
+        parse_textual_date(date, /\w+, (\d\d) (\w+), (\d\d\d\d)$/)
       end
 
-      times = div.search("span.posted-by").collect do |s|
-        parse_time(s.inner_text.scan(/klokka (\d\d:\d\d)/).flatten.first)
+      times = (div/"span.posted-by").collect do |s|
+        parse_time(s.text[/klokka (\d\d:\d\d)/, 1])
       end
 
-      ids = div.search("a[text()*='Kommentar']").collect do |a|
-        a[:href].scan(/articleid=(\d+)/).flatten.first.to_i
+      ids = (div/"a[text()*='Kommentar']").collect do |a|
+        a[:href][/articleid=(\d+)/, 1].to_i
       end
 
       titles = []
       summaries = []
 
-      div.search("h4").each do |h4|
-        titles << h4.inner_text.strip
-        summaries << h4.next_sibling.inner_text.strip[0..100] + '...'
+      (div/"h4").each do |h4|
+        titles << h4.text.strip
+        summaries << h4.next_sibling.text.strip[0..100] + '...'
       end
 
       [dates, times, ids, titles, summaries].transpose.collect do |item|
