@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Create favorites docs with screenshots
+desc: ""
+type: :feature
+component: doc
+release: 
+reporter: Eivind Uggedal <eu@redflavor.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-05-26 02:34:18.248889 Z
+references: []
+
+id: 269c1a98709f1e889440981693d68fc2e507380c
+log_events: 
+- - 2008-05-26 02:34:19.280652 Z
+  - Eivind Uggedal <eu@redflavor.com>
+  - created
+  - ""
