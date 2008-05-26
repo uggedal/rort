@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Include browser crome in add to firefox screenshot
+desc: ""
+type: :bugfix
+component: doc
+release: 
+reporter: Eivind Uggedal <eu@redflavor.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-05-26 02:23:57.493028 Z
+references: []
+
+id: 200834531127241a6ba1455efbce1c1c047ef0ac
+log_events: 
+- - 2008-05-26 02:23:58.628725 Z
+  - Eivind Uggedal <eu@redflavor.com>
+  - created
+  - ""

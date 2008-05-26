@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Include browser tab screenshot in beginning of installation
+desc: ""
+type: :bugfix
+component: doc
+release: 
+reporter: Eivind Uggedal <eu@redflavor.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-05-26 02:24:40.932165 Z
+references: []
+
+id: a1ff2a831942e4bd86e33d92252a37286a096dcd
+log_events: 
+- - 2008-05-26 02:24:41.675112 Z
+  - Eivind Uggedal <eu@redflavor.com>
+  - created
+  - ""

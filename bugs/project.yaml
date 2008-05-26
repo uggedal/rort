@@ -8,6 +8,8 @@ components:
   name: server
 - !ditz.rubyforge.org,2008-03-06/component 
   name: client
+- !ditz.rubyforge.org,2008-03-06/component 
+  name: doc
 releases: 
 - !ditz.rubyforge.org,2008-03-06/release 
   name: 0.1.0
