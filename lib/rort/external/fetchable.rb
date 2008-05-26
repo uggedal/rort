@@ -69,9 +69,8 @@ module Rort::External
 
       def request(uri)
         begin
-          if $HTTP_DEBUG
+          if $TESTING
             $http_requests += 1
-            puts "Fetch: #{uri}"
           end
           open(uri)
         rescue OpenURI::HTTPError => e

@@ -17,11 +17,11 @@ describe Person do
   end
 
   it 'should be able to fetch the favorites of an initialized artist' do
-    should_not_use_http_request do
-      @person.favorites.each do |fav|
-        fav.name.should_not be_nil
-      end
+    reqs = $http_requests
+    @person.favorites.each do |fav|
+      fav.name.should_not be_nil
     end
+    reqs.should == $http_requests
   end
 
   it 'should collect a sorted list of recent activity of all favorites' do

@@ -12,10 +12,12 @@ describe Rort::External::Artist do
 
   it 'should only fetch the main document once for one object' do
     External::Artist.as('uggedal') do |a|
-      should_not_use_http_request do
-        a.name.should == 'Eivind Uggedal'
-        a.favorites.size.should > 1
-      end
+      reqs = $http_requests
+
+      a.name.should == 'Eivind Uggedal'
+      a.favorites.size.should > 1
+
+      reqs.should == $http_requests
     end
   end
 
