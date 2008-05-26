@@ -4,16 +4,14 @@
 $: << File.expand_path("../../lib", __FILE__)
 require 'rort'
 
-active = Rort::Models::Respondent.filter {!:slug.nil?}
+active = Rort::Models::Respondent.filter do
+  !:slug.nil? && :group == 'experiment'
+end
 
-Rort.logger(:warmup).info "Started warmup for #{active.count} requestors"
+Rort.logger(:warmup).info "Started warmup for #{active.count} respondents"
 
 active.each do |res|
   Rort::Models::Person.fetch(res.slug).favorites.each do |fav|
-    if Rort::Cache[fav.slug + ':activities']
-      Rort::Cache.del(fav.slug + ':activities')
-    end
-    Rort::Queue.push(fav.slug)
+    Rort::Queue.push([fav.slug, {:activities => :force}])
   end
 end
-
