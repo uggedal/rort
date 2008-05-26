@@ -9,6 +9,15 @@ module Rort
       def push(element)
         ary = Rort::Cache[QKEY]
         if ary
+          ary.each do |a|
+            if a.instance_of?(Array) && element.instance_of?(Array)
+              if a.first == element.first && a.last == element.last
+                return ary
+              end
+            else
+              return ary if a == element
+            end
+          end
           ary.push(element)
         else
           ary = [element]

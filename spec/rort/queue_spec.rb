@@ -40,6 +40,14 @@ describe Rort::Queue do
   end
 
   it 'the queue should only store unique records' do
+    Rort::Queue.push([:tada, {:some => 1}])
+    Rort::Queue.push([:tada, {:some => 2}])
+    Rort::Queue.push([:tada, {:some => 1}])
+
+    Rort::Queue.shift.should == [:tada, {:some => 1}]
+    Rort::Queue.shift.should == [:tada, {:some => 2}]
+    Rort::Queue.shift.should be_nil
+
     Rort::Queue.push(345)
     Rort::Queue.push(345)
     Rort::Queue.push(345)
