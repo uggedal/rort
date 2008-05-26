@@ -1,8 +1,9 @@
 module Rort::External
   class Concert < Fetchable
 
-    def initialize(slug)
+    def initialize(slug, artist=nil)
       @slug = slug
+      @artist = artist
       @doc = fetch "Konserter/#@slug"
     end
 

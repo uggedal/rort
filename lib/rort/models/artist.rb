@@ -3,7 +3,7 @@ module Rort::Models
   class Artist < User
 
     def blog
-      @blog ||= Rort::External::Blog.as(slug)
+      @blog ||= Rort::External::Blog.as(slug, external)
     end
 
     def songs
@@ -11,7 +11,7 @@ module Rort::Models
     end
 
     def concert
-      @concert ||= Rort::External::Concert.as(slug)
+      @concert ||= Rort::External::Concert.as(slug, external)
     end
 
     def reviews

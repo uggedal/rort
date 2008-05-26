@@ -4,8 +4,7 @@ include Rort::Models
 
 describe Artist do
 
-  before(:each) do
-    Rort::Cache.del('TheFernets')
+  before(:all) do
     @artist = Artist.find_or_fetch('TheFernets')
   end
 
@@ -34,8 +33,21 @@ describe Artist do
   end
 
   it 'should provide a sorted list of activities' do
-    activities = @artist.activities
+    Rort::Cache.del(Rort::Models::Artist.key('Katzenjammer'))
+    Rort::Cache.del(Rort::Models::Artist.activities_key('Katzenjammer'))
+
+    reqs = $http_requests
+
+    activities = Artist.find_or_fetch('Katzenjammer').activities
     activities.size.should > 1
     activities.first[:datetime].should > activities.last[:datetime]
+
+    diff = $http_requests - reqs
+
+    count = 1 # profile
+    count += Rort::Models::Artist.find_or_fetch('Katzenjammer').reviews.size
+    count += 1 # blog
+    count += 1 # concert
+    diff.should == count
   end
 end

@@ -1,13 +1,14 @@
 module Rort::External
   class Blog < Fetchable
 
-    def initialize(slug)
+    def initialize(slug, author=nil)
       @slug = slug
+      @author = author
       @doc = fetch "Blogg/#@slug"
     end
 
     def id
-      @id ||= Artist.as(@slug).id
+      @id ||= author.id
     end
 
     def author
