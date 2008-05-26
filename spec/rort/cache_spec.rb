@@ -6,18 +6,21 @@ describe Rort::Cache do
     Rort::Cache.del('uggedal')
     Rort::Cache.del('TheFernets')
 
-    @person = Artist.find_or_fetch('uggedal')
-    @artist = Artist.find_or_fetch('TheFernets')
+    @person = Rort::Models::Artist.find_or_fetch('uggedal')
+    @artist = Rort::Models::Artist.find_or_fetch('TheFernets')
   end
 
   it 'should be able to retrieve a single record from the cache' do
-    Rort::Cache['uggedal'].name.should == @person.name
+    Rort::Cache[Rort::Models::Artist.key('uggedal')].name.
+      should == @person.name
   end
 
   it 'should be able to retrieve several records from the cache' do
-    res = Rort::Cache[%w(uggedal TheFernets)]
-    res['uggedal'].name.should == @person.name
-    res['TheFernets'].name.should == @artist.name
+    keys = [Rort::Models::Artist.key('uggedal'),
+            Rort::Models::Artist.key('TheFernets')]
+    res = Rort::Cache[keys]
+    res[keys.first].name.should == @person.name
+    res[keys.last].name.should == @artist.name
   end
 
   it 'should provide nil for non-existant records' do
@@ -33,9 +36,10 @@ describe Rort::Cache do
   end
 
   it 'should be able to delete a record in the cache' do
-    Rort::Cache[@person.slug].should_not be_nil
-    Rort::Cache.del(@person.slug).should =~ /^DELETED/
-    Rort::Cache[@person.slug].should be_nil
+    key = Rort::Models::Artist.key(@person.slug)
+    Rort::Cache[key].should_not be_nil
+    Rort::Cache.del(key).should =~ /^DELETED/
+    Rort::Cache[key].should be_nil
   end
 
 end

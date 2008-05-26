@@ -53,7 +53,7 @@ describe Person do
     list = @person.activity_list
 
     @person.favorites.each do |fav|
-      Rort::Cache.del(fav.slug + ':activities')
+      Rort::Cache.del(Artist.activities_key(fav.slug))
     end
 
     list.size.should == 2
