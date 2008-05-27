@@ -48,6 +48,10 @@ module Rort
       def host
         @host ||= "localhost:11211"
       end
+
+      def size
+        @cache.stats[host]['bytes']
+      end
     end
   end
 end

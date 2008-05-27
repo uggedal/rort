@@ -56,3 +56,22 @@ task :status do
        "#{spec_lines}/#{code_lines} los/loc | " +
        "#{spec_lines * 100 / code_lines} %"
 end
+
+namespace :cache do
+
+  $: << File.expand_path("../lib", __FILE__)
+  require 'rort'
+
+  desc 'Show the size of the cache'
+  task :size do
+    size = Rort::Cache.size
+    case size
+    when 0..1024
+      puts "#{size}B"
+    when 1024..1024*1024
+      puts "#{size/1024}kB"
+    else
+      puts "#{size/(1024*1024)}MB"
+    end
+  end
+end
