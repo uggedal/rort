@@ -105,13 +105,17 @@ module Rort::External
     private
 
       def thumb_elements(header, path)
-        elements = (@doc%"h2[text()='#{header}']")
+        element = (@doc%"h2[text()='#{header}']")
 
-        return [] unless elements
+        return [] unless element
 
-        elements = elements.next_sibling.next_sibling
+        element = element.next_sibling
 
-        (elements/"a[@href^='../../#{path}']").collect do |e|
+        unless element[:class] || element[:class] == 'thumbgalery'
+          element = element.next_sibling
+        end
+
+        (element/"a[@href^='../../#{path}']").collect do |e|
           { :slug => e[:href][/\/#{path}\/(\w+)$/, 1],
             :name => yield(e) }
         end
