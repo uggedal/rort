@@ -18,9 +18,13 @@ module Rort::Models
       @reviews ||= external.reviews
     end
 
+    def url
+      @url ||= Rort::External::Artist.full_url(slug)
+    end
+
     def favorite
       {:artist => name,
-       :artist_url => external.full_url}
+       :artist_url => url}
     end
 
     def activities(force = false)
