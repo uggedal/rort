@@ -34,4 +34,8 @@ describe Rort::External::Fetchable do
   it 'should return nil with *as* if not existing' do
     External::Artist.as('NonExistantArtist').should be_nil
   end
+
+  it 'should provide an url for a given path' do
+    External::Fetchable.url('path').should == 'http://www11.nrk.no/urort/path'
+  end
 end

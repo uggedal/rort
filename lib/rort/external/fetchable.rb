@@ -31,8 +31,13 @@ module Rort::External
       end
     end
 
+    URL = 'http://www11.nrk.no/urort/'
+
+    def self.url(paths)
+      "#{URL}#{paths}"
+    end
+
     protected
-      URL = 'http://www11.nrk.no/urort/'
 
       def fetch(path)
         if res = request("#{URL}#{path}")
@@ -42,8 +47,8 @@ module Rort::External
         end
       end
 
-      def url(path ='')
-        "#{URL}#{path}"
+      def url(paths ='')
+        Fetchable.url(paths)
       end
 
       def activity_date(time)
