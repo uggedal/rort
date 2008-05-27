@@ -39,6 +39,15 @@ describe Rort::External::Artist do
     External::Artist.as('uggedal').path.should == 'Artist/uggedal'
   end
 
+  it 'should provide the path of a given slug' do
+    External::Artist.path('uggedal').should == 'Artist/uggedal'
+  end
+
+  it 'should provide the full url of a given slug' do
+    External::Artist.full_url('uggedal').
+      should == 'http://www11.nrk.no/urort/Artist/uggedal'
+  end
+
   it 'should provide favorites of the artist' do
     res = External::Artist.as('uggedal').favorites
     res.size.should > 1

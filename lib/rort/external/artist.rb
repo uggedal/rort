@@ -14,12 +14,20 @@ module Rort::External
       (@doc%"head > title").text.strip[/^NRK Ur\303\270rt - (.+)/, 1]
     end
 
+    def self.path(slug)
+      "Artist/#{slug}"
+    end
+
     def path
-      "Artist/#@slug"
+      Artist.path(@slug)
     end
 
     def full_url
       url(path)
+    end
+
+    def self.full_url(slug)
+      url(Artist.path(slug))
     end
 
     def favorites
