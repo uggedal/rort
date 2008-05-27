@@ -21,7 +21,7 @@ module Rort::Background
   end
 
   def fetch_favorites(slug, opts)
-    if opts[:favorites] == :force || !Rort::Models::Artist.cached?(slug)
+    if opts[:favorites] == :force || true # until we have favorite cache
       log(slug, opts) do
         Rort::Models::Artist.fetch(slug)
       end

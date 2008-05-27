@@ -46,13 +46,9 @@ module Rort::Models
     # Return an artist form cache if it's cached or create a
     # new artist with name and cache it on a cache miss.
     def self.find_or_create(artist)
-      if cached = self.cached?(artist[:slug])
-        cached
-      else
-        new = Artist.new(artist[:slug])
-        new.name = artist[:name]
-        new
-      end
+      new = Artist.new(artist[:slug])
+      new.name = artist[:name]
+      new
     end
 
     def self.activities_key(slug)
@@ -69,10 +65,6 @@ module Rort::Models
 
     def self.activities_clean_cache!(slug)
       Rort::Cache.del(activities_key(slug))
-    end
-
-    def self.cached?(slug)
-      false
     end
 
     private

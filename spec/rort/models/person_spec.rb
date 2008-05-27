@@ -53,7 +53,6 @@ describe Person do
 
   it 'should provide an activity list with excludes' do
     @person.favorites.each do |fav|
-      Rort::Cache.del(Artist.key(fav.slug))
       Rort::Cache.del(Artist.activities_key(fav.slug))
     end
 
@@ -68,7 +67,6 @@ describe Person do
 
   it 'should provide an favorite list' do
     @person.favorites.each do |fav|
-      Rort::Cache.del(Artist.key(fav.slug))
       Rort::Cache.del(Artist.activities_key(fav.slug))
     end
 
