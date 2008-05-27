@@ -43,7 +43,8 @@ function withJQuery() {
   var email = '#/#/#/#/#/'
   var uri = 'http://rort.redflavor.com/';
 
-  var userHref = $('ul#loggedinuser > li.item > a:first').attr('href');
+  var userHref = $('#loggedinmenu > #menuItems1 li.item > a:first')
+                   .attr('href');
 
   // Return silently if the user is not logged in
   if (userHref == undefined)
