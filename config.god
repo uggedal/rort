@@ -14,7 +14,7 @@ God::Contacts::Email.message_settings = {
 }
 
 God::Contacts::Email.server_settings = {
-  :address => "smtp.online.no",
+  :address => "smtp.dataguard.no",
   :port => 25
 }
 
