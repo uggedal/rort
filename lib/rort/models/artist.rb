@@ -44,16 +44,6 @@ module Rort::Models
       end
     end
 
-    # Return an artist from cache if it's cached or
-    # fetch it on a cache miss.
-    def self.find_or_fetch(slug)
-      if cached = self.cached?(slug)
-        cached
-      else
-        self.fetch(slug)
-      end
-    end
-
     # Return an artist form cache if it's cached or create a
     # new artist with name and cache it on a cache miss.
     def self.find_or_create(artist)

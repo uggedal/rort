@@ -5,15 +5,15 @@ include Rort::Models
 describe Artist do
 
   before(:all) do
-    @artist = Artist.find_or_fetch('TheFernets')
+    @artist = Artist.fetch('TheFernets')
   end
 
   it 'should be able to find an existing artist' do
-    Artist.find_or_fetch('TheFernets').name.should == @artist.name
+    Artist.fetch('TheFernets').name.should == @artist.name
   end
 
   it 'should should return nil for fetching an nonexistent person' do
-    Artist.find_or_fetch('SomeCrazyNonExistentArtist').should be_nil
+    Artist.fetch('SomeCrazyNonExistentArtist').should be_nil
   end
 
   it 'could have blog posts' do
@@ -38,14 +38,14 @@ describe Artist do
 
     reqs = $http_requests
 
-    activities = Artist.find_or_fetch('Katzenjammer').activities
+    activities = Artist.fetch('Katzenjammer').activities
     activities.size.should > 1
     activities.first[:datetime].should > activities.last[:datetime]
 
     diff = $http_requests - reqs
 
     count = 1 # profile
-    count += Rort::Models::Artist.find_or_fetch('Katzenjammer').reviews.size
+    count += Rort::Models::Artist.fetch('Katzenjammer').reviews.size
     count += 1 # blog
     count += 1 # concert
     diff.should == count

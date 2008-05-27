@@ -18,7 +18,7 @@ describe Rort::Background do
     diff = $http_requests - reqs
 
     count = 1 # profile
-    count += Rort::Models::Artist.find_or_fetch('TheFernets').reviews.size
+    count += Rort::Models::Artist.fetch('TheFernets').reviews.size
     count += 1 # blog
     count += 1 # concert
     diff.should == count
