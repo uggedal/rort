@@ -37,7 +37,6 @@ module Rort::Models
     def self.fetch(slug)
       if fetched = Rort::External::Artist.as(slug)
         new = self.new(slug, fetched)
-        self.cache!(slug, new)
         new
       else
         nil
@@ -52,7 +51,6 @@ module Rort::Models
       else
         new = Artist.new(artist[:slug])
         new.name = artist[:name]
-        self.cache!(artist[:slug], new)
         new
       end
     end
@@ -73,16 +71,8 @@ module Rort::Models
       Rort::Cache.del(activities_key(slug))
     end
 
-    def self.key(slug)
-      "::artist::#{slug}::"
-    end
-
     def self.cached?(slug)
-      Rort::Cache[key(slug)]
-    end
-
-    def self.cache!(slug, artist)
-      Rort::Cache[key(slug)] = artist
+      false
     end
 
     private

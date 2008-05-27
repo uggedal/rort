@@ -33,7 +33,6 @@ describe Artist do
   end
 
   it 'should provide a sorted list of activities' do
-    Rort::Cache.del(Rort::Models::Artist.key('Katzenjammer'))
     Rort::Cache.del(Rort::Models::Artist.activities_key('Katzenjammer'))
 
     reqs = $http_requests
