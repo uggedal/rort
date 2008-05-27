@@ -3,24 +3,24 @@ require File.join(File.dirname(__FILE__), '..', 'spec_helper')
 describe Rort::Cache do
 
   before(:each) do
-    Rort::Cache.del('uggedal')
-    Rort::Cache.del('TheFernets')
+    Rort::Cache.del('one')
+    Rort::Cache.del('two')
 
-    @person = Rort::Models::Artist.find_or_fetch('uggedal')
-    @artist = Rort::Models::Artist.find_or_fetch('TheFernets')
+    @one = [1, 2, 3, :a, :b, :c, {:a => 1, :b => 2}]
+    @two = [3, 2, 1, :c, :b, :a, {:b => 2, :a => 1}]
+
+    Rort::Cache['one'] = @one
+    Rort::Cache['two'] = @two
   end
 
   it 'should be able to retrieve a single record from the cache' do
-    Rort::Cache[Rort::Models::Artist.key('uggedal')].name.
-      should == @person.name
+    Rort::Cache['one'].should == @one
   end
 
   it 'should be able to retrieve several records from the cache' do
-    keys = [Rort::Models::Artist.key('uggedal'),
-            Rort::Models::Artist.key('TheFernets')]
-    res = Rort::Cache[keys]
-    res[keys.first].name.should == @person.name
-    res[keys.last].name.should == @artist.name
+    res = Rort::Cache[['one', 'two']]
+    res['one'].should == @one
+    res['two'].should == @two
   end
 
   it 'should provide nil for non-existant records' do
@@ -36,10 +36,9 @@ describe Rort::Cache do
   end
 
   it 'should be able to delete a record in the cache' do
-    key = Rort::Models::Artist.key(@person.slug)
-    Rort::Cache[key].should_not be_nil
-    Rort::Cache.del(key).should =~ /^DELETED/
-    Rort::Cache[key].should be_nil
+    Rort::Cache['one'].should_not be_nil
+    Rort::Cache.del('one').should =~ /^DELETED/
+    Rort::Cache['one'].should be_nil
   end
 
 end
