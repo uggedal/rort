@@ -21,7 +21,7 @@ task :install do
             mongrel
             memcache-client
             json
-            daemons
+            hpricot
             rspec
             god
             sqlite3-ruby
