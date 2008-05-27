@@ -18,6 +18,11 @@ module Rort::Models
       @reviews ||= external.reviews
     end
 
+    def favorite
+      {:artist => fav.name,
+       :artist_url => fav.external.full_url}
+    end
+
     def activities(force = false)
       if force || !activities = Artist.activities_cached?(slug)
         collection = [blog.posts, concert.events, songs, reviews]

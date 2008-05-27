@@ -8,8 +8,7 @@ module Rort::Models
 
     def favorite_list
       favorites.map do |fav|
-        {:artist => fav.name,
-         :artist_url => fav.external.full_url}
+        fav.favorite
       end
     end
 
