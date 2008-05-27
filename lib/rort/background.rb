@@ -20,22 +20,10 @@ module Rort::Background
     end
   end
 
-  def fetch_favorites(slug, opts)
-    if opts[:favorites] == :force || true # until we have favorite cache
-      log(slug, opts) do
-        Rort::Models::Artist.fetch(slug)
-      end
-    end
-  end
-
   def check_queue
     slug, opts = Rort::Queue.shift
     if slug
-      if opts.key? :activities
-        fetch_activities(slug, opts)
-      elsif opts.key? :favorites
-        fetch_favorites(slug, opts)
-      end
+      fetch_activities(slug, opts)
     end
   end
 end
