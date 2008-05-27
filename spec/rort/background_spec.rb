@@ -24,19 +24,6 @@ describe Rort::Background do
     diff.should == count
   end
 
-  it 'should be able fetch favorites electively' do
-    fetch_activities('TheFernets', {:favorites => :elective})
-    reqs = $http_requests
-    fetch_activities('TheFernets', {:favorites => :elective})
-    ($http_requests - reqs).should be_zero
-  end
-
-  it 'should be able fetch favorites forcefully' do
-    reqs = $http_requests
-    fetch_favorites('TheFernets', {:favorites => :force})
-    ($http_requests - reqs).should == 1
-  end
-
   it 'should not do anything when an empty queue is checked' do
     Rort::Queue.clean
     reqs = $http_requests
