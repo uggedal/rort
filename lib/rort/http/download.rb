@@ -50,14 +50,15 @@ module Rort::Http
           "http://www.w3.org/TR/html4/strict.dtd">
         <html>
           <head>
-            <title>Last ned Ur&oslash;rt bruker-script</title>
+            <title>
+              Installere ekstra funksjonalitet p&aring; Ur&oslash;rt
+            </title>
             <link rel="stylesheet"
                   href="/doc/style.css"
                   type="text/css"
                   media="screen">
           </head>
           <body id="main">
-            <h1>Last ned Ur&oslash;rt bruker-script</h1>
             #{body}
           </body>
         </html>
@@ -66,9 +67,13 @@ module Rort::Http
 
     def download_form(msg='')
       body = <<-EOS
+        <h1>
+          Installere ekstra funksjonalitet p&aring; Ur&oslash;rt
+        </h1>
         <p style="color:red;">#{msg}</p>
         <p>
-          For &aring; installere dette bruker-scriptet m&aring; du benytte
+          For &aring; installere ekstra funksjonalitet p&aring;
+          Ur&oslash;rt m&aring; du benytte
           nettleseren <a href="http://firefox.no">Firefox</a> og
           ha installert
           <a href="/doc/install.html" target="_blank">Greasemonkey</a>,
@@ -94,6 +99,10 @@ module Rort::Http
 
     def install_link(email, type)
       body = <<-EOS
+        <h1>
+          Installere ekstra funksjonalitet p&aring; Ur&oslash;rt:
+          Greasemonkey tillegg for Ur&oslash;rt
+        </h1>
         <p>
           Bruker-scriptet kan n&aring;
           <a href="/install/#{email}#{SCRIPT[type.to_sym]}">installeres</a>.
