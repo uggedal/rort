@@ -56,7 +56,7 @@ module Rort::Http
                   type="text/css"
                   media="screen">
           </head>
-          <body>
+          <body id="main">
             <h1>Last ned Ur&oslash;rt bruker-script</h1>
             #{body}
           </body>

@@ -1,8 +1,16 @@
-body {
+#main {
+  float: left;
   width: 40em;
 }
 
 img {
   display: block;
   margin: 1em 0 1em 1em
+}
+
+#notice {
+  background: #ffc;
+  float: left;
+  padding: 0.5em;
+  width: 10em;
 }
