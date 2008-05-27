@@ -19,8 +19,8 @@ module Rort::Models
     end
 
     def favorite
-      {:artist => fav.name,
-       :artist_url => fav.external.full_url}
+      {:artist => name,
+       :artist_url => external.full_url}
     end
 
     def activities(force = false)
