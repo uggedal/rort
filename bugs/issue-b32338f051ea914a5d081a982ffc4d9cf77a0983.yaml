@@ -7,8 +7,8 @@ type: :bugfix
 component: server
 release: 
 reporter: Eivind Uggedal <eu@redflavor.com>
-status: :unstarted
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2008-05-26 16:05:31.065515 Z
 references: []
 
@@ -17,4 +17,8 @@ log_events:
 - - 2008-05-26 16:05:31.970555 Z
   - Eivind Uggedal <eu@redflavor.com>
   - created
+  - ""
+- - 2008-05-27 16:17:28.154923 Z
+  - Eivind Uggedal <eu@redflavor.com>
+  - closed issue with disposition fixed
   - ""
