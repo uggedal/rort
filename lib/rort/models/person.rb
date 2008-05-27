@@ -28,7 +28,10 @@ module Rort::Models
       # If favorites with cached activities, return them and put the rest in
       # queue.
       favorites.each do |fav|
-        if Artist.activities_cached?(fav.slug) || cached == 0
+        if cached_activities = Artist.activities_cached?(fav.slug)
+          cached += 1
+          activities.concat(cached_activities)
+        elsif cached == 0
           cached += 1
           activities.concat(fav.activities)
         else
