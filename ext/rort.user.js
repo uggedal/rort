@@ -50,7 +50,7 @@ function withJQuery() {
   if (userHref == undefined)
     return;
 
-  var user = userHref.match(/\/Person\/(\w+)/)[1];
+  var user = userHref.match(/\/Person\/(.+)/)[1];
 
   // String interpolation with {}. Partly taken from Remedial
   // by Douglas Crockford (http://javascript.crockford.com/remedial.html)

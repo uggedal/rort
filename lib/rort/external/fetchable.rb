@@ -77,7 +77,8 @@ module Rort::External
           if $TESTING
             $http_requests += 1
           end
-          open(uri)
+          encoded = URI.escape(uri)
+          open(encoded)
         rescue OpenURI::HTTPError => e
           nil
         end
