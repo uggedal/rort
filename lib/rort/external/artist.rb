@@ -3,7 +3,7 @@ module Rort::External
 
     def initialize(slug)
       @slug = slug
-      @doc = fetch "Artist/#@slug"
+      @doc = fetch path
     end
 
     def id
