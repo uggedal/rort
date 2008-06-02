@@ -106,7 +106,7 @@ function withJQuery() {
     $('#activity-list').append(ele('h3', 'Dine favoritter'));
     $('#activity-list').append(ele("ul id='excludes'", ''));
     $('#activity-list').append(ele('p',
-      'Bruk pekerne til dine favoritter for &aring; holde seg ' +
+      'Bruk pekerne til dine favoritter for &aring; holde deg ' +
       'oppdatert med hva de foretar seg.'));
   }
 
