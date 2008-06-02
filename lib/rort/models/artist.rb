@@ -30,12 +30,8 @@ module Rort::Models
     def activities(force = false)
       if force || !activities = Artist.activities_cached?(slug)
         collection = [blog.posts, concert.events, songs, reviews]
-        median = find_median_size(collection)
-        activities = collection.collect do |elements|
-          reverse_sort_by_datetime(elements)[0...median]
-        end
 
-        activities = reverse_sort_by_datetime(activities.flatten)
+        activities = reverse_sort_by_datetime(collection.flatten)
         Artist.activities_cache!(slug, activities)
       end
       activities
@@ -75,17 +71,5 @@ module Rort::Models
     def self.activities_clean_cache!(slug)
       Rort::Cache.del(activities_key(slug))
     end
-
-    private
-
-      def find_median_size(ary)
-        sorted = ary.sort {|a, b| a.size <=> b.size}
-        half = sorted.size / 2
-        if half % 2 == 0
-          sorted[half-1].size + sorted[half].size / 2
-        else
-          sorted[half].size
-        end
-      end
   end
 end
