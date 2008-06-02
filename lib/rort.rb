@@ -12,7 +12,7 @@ module Rort
   require 'rort/http'
   require 'rort/queue'
   
-  MAX_ACTIVITIES = 15
+  MAX_ACTIVITIES = 10
 
   Cache.enable!
   Cache.expiry = 60*60*12 # 12 hr cache ttl

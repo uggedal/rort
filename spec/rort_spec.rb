@@ -11,6 +11,6 @@ describe Rort do
   end
 
   it 'should provide the number of max activities to be exported' do
-    Rort::MAX_ACTIVITIES.should == 15
+    Rort::MAX_ACTIVITIES.should == 10
   end
 end
