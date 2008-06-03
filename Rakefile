@@ -40,8 +40,15 @@ end
 
 desc 'Show code/spec status'
 task :status do
-  code = FileList['lib/**/*.rb']
-  specs = FileList['spec/**/*_spec.rb']
+  code = FileList['lib/*.rb']
+  code << FileList['lib/**/*.rb']
+  code << FileList['lib/**/**/*.rb']
+  code.flatten!
+
+  specs = FileList['spec/*_spec.rb']
+  specs << FileList['spec/**/*_spec.rb']
+  specs << FileList['spec/**/**/*_spec.rb']
+  specs.flatten!
 
   code_lines = code.inject(0) do |sum, f|
     sum + File.open(f).readlines.size
