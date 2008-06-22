@@ -8,9 +8,6 @@ exp_respondents = Rort::Models::Respondent.filter do
   !:slug.nil? && :group == 'experiment'
 end
 
-Rort.logger(:warmup).info(
-  "Started warmup for #{exp_respondents.count} experiment respondents")
-
 activity_slugs = []
 exp_respondents.each do |res|
   Rort::Models::Person.fetch(res.slug).favorites.each do |fav|
@@ -19,6 +16,9 @@ exp_respondents.each do |res|
 end
 
 activity_slugs.uniq!
+
+Rort.logger(:warmup).info(
+  "Started warmup: #{exp_respondents.count}/#{activity_slugs.size} exp/fav")
 
 activity_slugs.each do |slug|
   Rort::Queue.push([slug, {:activities => :force}])
