@@ -7,7 +7,7 @@ module Rort::External
     end
 
     def id
-      (@doc%"#WebPart_gwpblog > a#rsslink")[:href][/subjectid=(\d+)/, 1]
+      (@doc%"a#rsslink")[:href][/subjectid=(\d+)/, 1]
     end
 
     def name
