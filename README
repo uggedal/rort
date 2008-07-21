@@ -1,16 +1,21 @@
-= rort
+-*-markdown-*-
+rort
+====
 
-* by Eivind Uggedal <eu@redflavor.com>
+by Eivind Uggedal <eu@redflavor.com>
 
-== DESCRIPTION:
+Description
+-----------
   
-A client/server implementation of an activity stream for NRK Urørt.
+A client/server implementation of an activity stream for [NRK Urørt][1].
 Part of my master thesis on *Social Navigation on the Social Web*.
 
-== SYNOPSIS:
+Synopsis
+--------
 
   rake -T
 
-== INSTALL:
+Install
+-------
 
   rake install
